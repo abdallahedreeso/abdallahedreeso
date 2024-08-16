@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @abdallahedreeso
-- 👀 I’m interested in - Web Develpment, Coding
-- 🌱 I’m currently learning - React
+- 👀 I’m a Frontend Developer (Vue.js)
+- 🌱 I’m currently learning - React.js
 - 📫 How to reach me - https://www.linkedin.com/in/abdallah-edrees/
 
 <!---
