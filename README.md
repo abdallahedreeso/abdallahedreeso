@@ -1,6 +1,5 @@
 - 👋 Hi, I’m @abdallahedreeso
-- 👀 I’m a Frontend Developer (Vue.js)
-- 🌱 I’m currently learning - React.js
+- 👀 I’m a Frontend Developer | React.js, Vue.js, Nuxt.js
 - 📫 How to reach me - https://www.linkedin.com/in/abdallah-edrees/
 
 <!---
