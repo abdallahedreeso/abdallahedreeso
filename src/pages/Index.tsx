@@ -1,13 +1,34 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { ThemeProvider } from "@/components/theme-provider"
+import { Navigation } from "@/components/navigation"
+import { HeroSection } from "@/components/hero-section"
+import { AboutSection } from "@/components/about-section"
+import { ProjectsSection } from "@/components/projects-section"
+import { SkillsSection } from "@/components/skills-section"
+import { ContactSection } from "@/components/contact-section"
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
+      <div className="min-h-screen bg-background text-foreground">
+        <Navigation />
+        <main>
+          <HeroSection />
+          <AboutSection />
+          <ProjectsSection />
+          <SkillsSection />
+          <ContactSection />
+        </main>
+        
+        {/* Footer */}
+        <footer className="bg-card border-t border-border py-8">
+          <div className="container mx-auto px-4 lg:px-8 text-center">
+            <p className="text-muted-foreground">
+              © 2024 Abdallah Edrees. Built with React, TypeScript & Tailwind CSS.
+            </p>
+          </div>
+        </footer>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 
