@@ -7,29 +7,35 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/hooks/use-toast"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { cn } from "@/lib/utils"
+
+const contactSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  subject: z.string().min(5, "Subject must be at least 5 characters").max(100, "Subject must be less than 100 characters"),
+  message: z.string().min(10, "Message must be at least 10 characters").max(1000, "Message must be less than 1000 characters")
+})
+
+type ContactFormData = z.infer<typeof contactSchema>
 
 export function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: ""
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [emailCopied, setEmailCopied] = useState(false)
   const { toast } = useToast()
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+    reset
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    mode: "onChange"
+  })
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-
+  const onSubmit = async (data: ContactFormData) => {
     // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 2000))
 
@@ -38,8 +44,7 @@ export function ContactSection() {
       description: "Thank you for reaching out. I'll get back to you soon.",
     })
 
-    setFormData({ name: "", email: "", subject: "", message: "" })
-    setIsSubmitting(false)
+    reset()
   }
 
   const copyEmail = async () => {
@@ -130,62 +135,118 @@ export function ContactSection() {
                 <CardTitle className="text-2xl">Send me a message</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Name</Label>
+                      <Label htmlFor="name">Name *</Label>
                       <Input
                         id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
+                        {...register("name")}
                         placeholder="Your full name"
-                        required
+                        className={cn(
+                          "transition-colors duration-200",
+                          errors.name 
+                            ? "border-destructive focus-visible:ring-destructive" 
+                            : "focus-visible:ring-primary"
+                        )}
+                        aria-invalid={!!errors.name}
+                        aria-describedby={errors.name ? "name-error" : undefined}
                       />
+                      {errors.name && (
+                        <p 
+                          id="name-error" 
+                          className="text-sm text-destructive animate-fade-in"
+                          role="alert"
+                        >
+                          {errors.name.message}
+                        </p>
+                      )}
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
+                      <Label htmlFor="email">Email *</Label>
                       <Input
                         id="email"
-                        name="email"
                         type="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
+                        {...register("email")}
                         placeholder="your.email@example.com"
-                        required
+                        className={cn(
+                          "transition-colors duration-200",
+                          errors.email 
+                            ? "border-destructive focus-visible:ring-destructive" 
+                            : "focus-visible:ring-primary"
+                        )}
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? "email-error" : undefined}
                       />
+                      {errors.email && (
+                        <p 
+                          id="email-error" 
+                          className="text-sm text-destructive animate-fade-in"
+                          role="alert"
+                        >
+                          {errors.email.message}
+                        </p>
+                      )}
                     </div>
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="subject">Subject</Label>
+                    <Label htmlFor="subject">Subject *</Label>
                     <Input
                       id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
+                      {...register("subject")}
                       placeholder="What's this about?"
-                      required
+                      className={cn(
+                        "transition-colors duration-200",
+                        errors.subject 
+                          ? "border-destructive focus-visible:ring-destructive" 
+                          : "focus-visible:ring-primary"
+                      )}
+                      aria-invalid={!!errors.subject}
+                      aria-describedby={errors.subject ? "subject-error" : undefined}
                     />
+                    {errors.subject && (
+                      <p 
+                        id="subject-error" 
+                        className="text-sm text-destructive animate-fade-in"
+                        role="alert"
+                      >
+                        {errors.subject.message}
+                      </p>
+                    )}
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
+                    <Label htmlFor="message">Message *</Label>
                     <Textarea
                       id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
+                      {...register("message")}
                       placeholder="Tell me about your project..."
                       rows={6}
-                      required
+                      className={cn(
+                        "transition-colors duration-200 resize-none",
+                        errors.message 
+                          ? "border-destructive focus-visible:ring-destructive" 
+                          : "focus-visible:ring-primary"
+                      )}
+                      aria-invalid={!!errors.message}
+                      aria-describedby={errors.message ? "message-error" : undefined}
                     />
+                    {errors.message && (
+                      <p 
+                        id="message-error" 
+                        className="text-sm text-destructive animate-fade-in"
+                        role="alert"
+                      >
+                        {errors.message.message}
+                      </p>
+                    )}
                   </div>
                   
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300"
-                    disabled={isSubmitting}
+                    className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300 disabled:opacity-50"
+                    disabled={isSubmitting || !isValid}
                   >
                     {isSubmitting ? (
                       <div className="flex items-center gap-2">

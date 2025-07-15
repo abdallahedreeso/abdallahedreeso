@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { ChevronDown, Github, Linkedin, Mail } from "lucide-react"
+import { ChevronDown, Github, Linkedin, Mail, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import chibiDeveloper from "@/assets/chibi-developer.png"
 
@@ -68,13 +68,16 @@ export function HeroSection() {
                 size="lg"
                 className="bg-gradient-primary hover:shadow-glow transition-all duration-300"
                 onClick={() => {
-                  const projectsSection = document.querySelector("#projects")
-                  if (projectsSection) {
-                    projectsSection.scrollIntoView({ behavior: "smooth" })
-                  }
+                  const link = document.createElement('a')
+                  link.href = '/resume.pdf'
+                  link.download = 'Abdallah_Edrees_Resume.pdf'
+                  document.body.appendChild(link)
+                  link.click()
+                  document.body.removeChild(link)
                 }}
               >
-                View My Work
+                <Download className="h-4 w-4 mr-2" />
+                Download Resume
               </Button>
               <Button
                 variant="outline"
