@@ -6,55 +6,64 @@ import { Button } from "@/components/ui/button"
 
 const projects = [
   {
-    title: "E-Commerce Dashboard",
-    description: "A comprehensive admin dashboard for managing e-commerce operations with real-time analytics, inventory management, and customer insights.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
-    tech: ["React", "TypeScript", "Tailwind CSS", "Chart.js", "Supabase"],
+    title: "My Dream Place",
+    description: "A comprehensive room booking web application developed during my internship at Algoriza. Features real-time data updates through open-source APIs, ensuring an efficient and intuitive booking process for users.",
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+    tech: ["Vue.js", "Nuxt.js", "JavaScript", "API Integration", "Real-time Updates"],
     liveDemo: "#",
     github: "#",
     featured: true
   },
   {
-    title: "Task Management App",
-    description: "A collaborative task management application with real-time updates, team collaboration features, and advanced filtering options.",
-    image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=400&fit=crop",
-    tech: ["Vue.js", "Pinia", "Vuetify", "Socket.io", "Node.js"],
+    title: "Real-Estate Management",
+    description: "A comprehensive real estate management platform for property listings, client management, and transaction handling. Built with modern frontend technologies for optimal user experience.",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop",
+    tech: ["Vue.js", "Nuxt.js", "Pinia", "Vuetify", "TypeScript"],
     liveDemo: "#",
     github: "#",
     featured: true
   },
   {
-    title: "Weather Forecast App",
-    description: "A beautiful weather application with detailed forecasts, interactive maps, and location-based weather alerts.",
-    image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop",
-    tech: ["React", "Redux", "Material-UI", "OpenWeather API"],
+    title: "OTAS - Online Travel Agency System",
+    description: "A comprehensive platform serving travel agencies by providing customizable web applications. Contributed to the system architecture and user interface development during my time at SolutionPlus.",
+    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=400&fit=crop",
+    tech: ["Vue.js", "Nuxt.js", "TypeScript", "Pinia", "Vuetify"],
+    liveDemo: "#",
+    github: "#",
+    featured: true
+  },
+  {
+    title: "IFTMena Platform",
+    description: "Led the development of the International Federation for Travel platform, focusing on creating a robust and scalable solution for travel industry professionals.",
+    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&h=400&fit=crop",
+    tech: ["Vue.js", "Nuxt.js", "TypeScript", "API Integration"],
     liveDemo: "#",
     github: "#",
     featured: false
   },
   {
-    title: "Portfolio Website",
-    description: "A responsive portfolio website showcasing modern design principles with smooth animations and optimal performance.",
-    image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=400&fit=crop",
-    tech: ["Next.js", "Framer Motion", "Tailwind CSS", "MDX"],
+    title: "Headphone Store Landing Page",
+    description: "A modern and responsive landing page for a headphone store, featuring elegant design, smooth animations, and optimized performance for better user engagement.",
+    image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&h=400&fit=crop",
+    tech: ["HTML5", "CSS3", "JavaScript", "Responsive Design"],
     liveDemo: "#",
     github: "#",
     featured: false
   },
   {
-    title: "Social Media Dashboard",
-    description: "An analytics dashboard for social media management with post scheduling, engagement tracking, and performance insights.",
-    image: "https://images.unsplash.com/photo-1611605698335-8b1569810432?w=600&h=400&fit=crop",
-    tech: ["React", "TypeScript", "D3.js", "Express.js", "MongoDB"],
+    title: "Tradex Platform",
+    description: "A trading platform interface designed for financial operations, featuring real-time data visualization and user-friendly trading tools.",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=400&fit=crop",
+    tech: ["React.js", "TypeScript", "Chart.js", "API Integration"],
     liveDemo: "#",
     github: "#",
     featured: false
   },
   {
-    title: "Recipe Finder App",
-    description: "A recipe discovery application with advanced search filters, meal planning features, and nutritional information.",
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=400&fit=crop",
-    tech: ["Vue.js", "Nuxt.js", "Tailwind CSS", "Spoonacular API"],
+    title: "Smart Library System",
+    description: "Graduation project combining embedded systems and desktop application development for intelligent library management with automated book tracking and user management.",
+    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=400&fit=crop",
+    tech: ["Desktop App", "Embedded Systems", "Database", "C++"],
     liveDemo: "#",
     github: "#",
     featured: false

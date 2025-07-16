@@ -5,12 +5,12 @@ import { Progress } from "@/components/ui/progress"
 
 const skillCategories = [
   {
-    title: "Frontend Frameworks",
+    title: "Frontend Frameworks & Libraries",
     skills: [
-      { name: "React", level: 95, icon: "⚛️" },
-      { name: "Vue.js", level: 90, icon: "💚" },
-      { name: "Next.js", level: 85, icon: "▲" },
-      { name: "Nuxt.js", level: 80, icon: "💚" },
+      { name: "Vue.js", level: 95, icon: "💚" },
+      { name: "Nuxt.js", level: 95, icon: "💚" },
+      { name: "React.js", level: 90, icon: "⚛️" },
+      { name: "jQuery", level: 85, icon: "📘" },
     ]
   },
   {
@@ -23,39 +23,50 @@ const skillCategories = [
     ]
   },
   {
-    title: "Styling & UI",
+    title: "Styling & UI Frameworks",
     skills: [
       { name: "Tailwind CSS", level: 95, icon: "🌊" },
-      { name: "Material UI", level: 85, icon: "🎨" },
-      { name: "Styled Components", level: 80, icon: "💅" },
-      { name: "SASS/SCSS", level: 90, icon: "🎯" },
+      { name: "Vuetify", level: 90, icon: "💜" },
+      { name: "Ant Design", level: 85, icon: "🐜" },
+      { name: "Bootstrap", level: 90, icon: "🅱️" },
+      { name: "Sass/SCSS", level: 90, icon: "🎯" },
+    ]
+  },
+  {
+    title: "State Management & Validation",
+    skills: [
+      { name: "Pinia", level: 95, icon: "🍍" },
+      { name: "Vuex", level: 90, icon: "📦" },
+      { name: "VeeValidate", level: 85, icon: "✅" },
+      { name: "Vuelidate", level: 85, icon: "✅" },
     ]
   },
   {
     title: "Tools & Technologies",
     skills: [
-      { name: "Git & GitHub", level: 90, icon: "🐙" },
-      { name: "Webpack", level: 75, icon: "📦" },
-      { name: "Vite", level: 85, icon: "⚡" },
-      { name: "Docker", level: 70, icon: "🐳" },
+      { name: "Git & GitHub", level: 95, icon: "🐙" },
+      { name: "ESLint", level: 85, icon: "🔍" },
+      { name: "Figma", level: 85, icon: "🎨" },
+      { name: "Vue Test Utils", level: 80, icon: "🧪" },
     ]
   },
   {
     title: "Backend & Database",
     skills: [
-      { name: "Node.js", level: 80, icon: "🟢" },
       { name: "Supabase", level: 85, icon: "⚡" },
-      { name: "Firebase", level: 75, icon: "🔥" },
+      { name: "Node.js", level: 75, icon: "🟢" },
+      { name: "Express", level: 70, icon: "🚂" },
       { name: "MongoDB", level: 70, icon: "🍃" },
+      { name: "MySQL", level: 70, icon: "🐬" },
     ]
   },
   {
-    title: "Design & Animation",
+    title: "Additional Languages",
     skills: [
-      { name: "Figma", level: 85, icon: "🎨" },
-      { name: "Framer Motion", level: 90, icon: "🎭" },
-      { name: "Adobe XD", level: 75, icon: "🔮" },
-      { name: "GSAP", level: 70, icon: "🎬" },
+      { name: "Python", level: 65, icon: "🐍" },
+      { name: "Java", level: 60, icon: "☕" },
+      { name: "C++", level: 60, icon: "🔧" },
+      { name: "C", level: 60, icon: "⚙️" },
     ]
   }
 ]

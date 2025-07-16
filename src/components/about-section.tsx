@@ -5,36 +5,52 @@ import { Badge } from "@/components/ui/badge"
 
 const experiences = [
   {
-    title: "Senior Frontend Developer",
-    company: "Tech Solutions Inc.",
-    period: "2022 - Present",
-    location: "Remote",
-    description: "Leading frontend development for enterprise applications using React, TypeScript, and modern web technologies.",
-    achievements: ["Led team of 4 developers", "Improved app performance by 40%", "Implemented new design system"]
-  },
-  {
     title: "Frontend Developer",
-    company: "Digital Agency",
-    period: "2020 - 2022",
+    company: "SolutionPlus",
+    period: "Jul 2024 - Present",
     location: "Cairo, Egypt",
-    description: "Developed responsive web applications and collaborated with design teams to create stunning user experiences.",
-    achievements: ["Built 15+ client websites", "Reduced load times by 60%", "Mentored junior developers"]
+    description: "Frontend developer specializing in Vue.js/Nuxt.js and React.js, known for attention to detail in developing responsive, user-friendly interfaces and integrating APIs for seamless web experiences.",
+    achievements: [
+      "Contributed to OTAS (Online Travel Agency System) serving travel agencies",
+      "Led development of IFTMena (International Federation for Travel)",
+      "Contributed to upgrade from Vue 2/Nuxt 2 to Vue 3/Nuxt 3",
+      "Collaborated within Agile framework for iterative development"
+    ]
   },
   {
-    title: "Junior Web Developer",
-    company: "Startup Hub",
-    period: "2019 - 2020",
-    location: "Alexandria, Egypt",
-    description: "Started my journey in web development, focusing on JavaScript fundamentals and modern frameworks.",
-    achievements: ["Completed 25+ projects", "Learned React & Vue.js", "Built first portfolio"]
+    title: "Frontend Intern",
+    company: "Algoriza",
+    period: "Oct 2023 - Dec 2023",
+    location: "Cairo, Egypt",
+    description: "Developed comprehensive web applications focusing on user experience and real-time data integration.",
+    achievements: [
+      "Developed Dream Place room booking web application",
+      "Integrated open-source APIs for real-time data updates",
+      "Ensured efficient and intuitive booking process",
+      "Earned Frontend internship certification"
+    ]
+  }
+]
+
+const education = [
+  {
+    degree: "Bachelor's Degree",
+    institution: "Faculty of Computers and Informatics, Zagazig University",
+    period: "Sep 2017 - Sep 2021",
+    details: "Graduation Project: Smart Library (Embedded system and Desktop App)"
+  },
+  {
+    degree: "Frontend Development Scholarship",
+    institution: "National Telecommunication Institute (NTI)",
+    period: "Mar 2023 - Apr 2023",
+    details: "Specialized training in modern web development technologies"
   }
 ]
 
 const certifications = [
-  "React Professional Certification",
-  "Vue.js Advanced Patterns",
-  "AWS Frontend Development",
-  "Google Web Vitals Expert"
+  "Algoriza: Frontend Internship (Credential ID: 875001)",
+  "National Telecommunication Institute (NTI): Web Development",
+  "Coursera (University of Michigan): Frontend Development"
 ]
 
 export function AboutSection() {

@@ -49,7 +49,7 @@ export function ContactSection() {
 
   const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText("abdallah.edrees@example.com")
+      await navigator.clipboard.writeText("abdallahedreeso2@gmail.com")
       setEmailCopied(true)
       toast({
         title: "Email copied!",
@@ -65,14 +65,14 @@ export function ContactSection() {
     {
       icon: Mail,
       label: "Email",
-      value: "abdallah.edrees@example.com",
+      value: "abdallahedreeso2@gmail.com",
       action: copyEmail
     },
     {
       icon: Phone,
       label: "Phone",
-      value: "+20 123 456 7890",
-      action: () => window.open("tel:+201234567890")
+      value: "(+20) 1128616166",
+      action: () => window.open("tel:+201128616166")
     },
     {
       icon: MapPin,
@@ -86,19 +86,19 @@ export function ContactSection() {
     {
       icon: Github,
       label: "GitHub",
-      url: "https://github.com/abdallah-edrees",
+      url: "https://github.com/abdallahedreeso",
       color: "hover:text-gray-800 dark:hover:text-gray-200"
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      url: "https://linkedin.com/in/abdallah-edrees",
+      url: "https://linkedin.com/in/abdallahedreeso/",
       color: "hover:text-blue-600"
     },
     {
       icon: Mail,
       label: "Email",
-      url: "mailto:abdallah.edrees@example.com",
+      url: "mailto:abdallahedreeso2@gmail.com",
       color: "hover:text-red-600"
     }
   ]

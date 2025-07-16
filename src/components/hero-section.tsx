@@ -53,8 +53,8 @@ export function HeroSection() {
                 Frontend Developer
               </h2>
               <p className="text-lg text-muted-foreground max-w-lg mx-auto lg:mx-0">
-                Crafting delightful and scalable interfaces with React, Vue & modern web tools.
-                Turning ideas into beautiful, interactive experiences.
+                Specializing in Vue.js/Nuxt.js and React.js. Known for attention to detail in developing 
+                responsive, user-friendly interfaces and integrating APIs for seamless web experiences.
               </p>
             </motion.div>
 
@@ -100,14 +100,20 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 1 }}
               className="flex justify-center lg:justify-start space-x-4"
             >
-              <Button variant="ghost" size="sm" className="hover:text-primary">
-                <Github className="h-5 w-5" />
+              <Button variant="ghost" size="sm" className="hover:text-primary" asChild>
+                <a href="https://github.com/abdallahedreeso" target="_blank" rel="noopener noreferrer">
+                  <Github className="h-5 w-5" />
+                </a>
               </Button>
-              <Button variant="ghost" size="sm" className="hover:text-primary">
-                <Linkedin className="h-5 w-5" />
+              <Button variant="ghost" size="sm" className="hover:text-primary" asChild>
+                <a href="https://linkedin.com/in/abdallahedreeso/" target="_blank" rel="noopener noreferrer">
+                  <Linkedin className="h-5 w-5" />
+                </a>
               </Button>
-              <Button variant="ghost" size="sm" className="hover:text-primary">
-                <Mail className="h-5 w-5" />
+              <Button variant="ghost" size="sm" className="hover:text-primary" asChild>
+                <a href="mailto:abdallahedreeso2@gmail.com">
+                  <Mail className="h-5 w-5" />
+                </a>
               </Button>
             </motion.div>
           </motion.div>
