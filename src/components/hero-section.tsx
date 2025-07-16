@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { ChevronDown, Github, Linkedin, Mail, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import chibiDeveloper from "@/assets/chibi-developer.png"
+import chibiEdreeso from "@/assets/chibi-edreeso.webp"
 
 export function HeroSection() {
   const scrollToNext = () => {
@@ -132,7 +132,7 @@ export function HeroSection() {
                 className="relative z-10"
               >
                 <img
-                  src={chibiDeveloper}
+                  src={chibiEdreeso}
                   alt="Abdallah Edrees - Frontend Developer"
                   className="w-80 h-80 object-contain"
                 />
