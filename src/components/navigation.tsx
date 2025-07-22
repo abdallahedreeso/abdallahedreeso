@@ -1,8 +1,18 @@
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
-import { ThemeToggle } from "./theme-toggle"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Menu } from "lucide-react";
+import { ThemeToggle } from "./theme-toggle";
+import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -10,31 +20,31 @@ const navItems = [
   { name: "Projects", href: "#projects" },
   { name: "Skills", href: "#skills" },
   { name: "Contact", href: "#contact" },
-]
+];
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
+      setIsScrolled(window.scrollY > 50);
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href)
+    const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({
         behavior: "smooth",
         block: "start",
-      })
+      });
     }
-    setIsMobileMenuOpen(false)
-  }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <motion.nav
@@ -75,40 +85,52 @@ export function Navigation() {
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-2">
             <ThemeToggle />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            <Drawer
+              direction="left"
+              open={isMobileMenuOpen}
+              onOpenChange={setIsMobileMenuOpen}
             >
-              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </Button>
+              <DrawerTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  <Menu size={20} />
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent className="h-full top-0 right-0 mt-0 w-64 rounded-none">
+                <div className="mx-auto w-16 h-2 flex-shrink-0 rounded-full bg-zinc-300 dark:bg-zinc-500" />
+                <DrawerHeader>
+                  <DrawerTitle>
+                    {/* Logo */}
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      className="text-2xl font-bold text-primary cursor-pointer"
+                      onClick={() => scrollToSection("#home")}
+                    >
+                      AE
+                    </motion.div>
+                  </DrawerTitle>
+                </DrawerHeader>
+                <div className="grid gap-1 p-4">
+                  {navItems.map((item) => (
+                    <DrawerClose asChild key={item.name}>
+                      <button
+                        onClick={() => scrollToSection(item.href)}
+                        className="block w-full text-left px-4 py-2 text-foreground hover:text-primary transition-colors"
+                      >
+                        {item.name}
+                      </button>
+                    </DrawerClose>
+                  ))}
+                </div>
+                <DrawerFooter className="mt-auto">
+                  <DrawerClose asChild>
+                    <Button variant="outline">Close</Button>
+                  </DrawerClose>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden border-t border-border bg-background/95 backdrop-blur-md"
-            >
-              <div className="py-4 space-y-4">
-                {navItems.map((item) => (
-                  <button
-                    key={item.name}
-                    onClick={() => scrollToSection(item.href)}
-                    className="block w-full text-left px-4 py-2 text-foreground hover:text-primary transition-colors"
-                  >
-                    {item.name}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </motion.nav>
-  )
+  );
 }

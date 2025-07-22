@@ -32,7 +32,11 @@ cd <YOUR_PROJECT_NAME>
 # Step 3: Install the necessary dependencies.
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Set up environment variables
+# Copy the .env.example file to .env and fill in your EmailJS credentials
+cp .env.example .env
+
+# Step 5: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
@@ -48,6 +52,26 @@ npm run dev
 - Click on the "Code" button (green button) near the top right.
 - Select the "Codespaces" tab.
 - Click on "New codespace" to launch a new Codespace environment.
+
+## Environment Variables
+
+This project uses environment variables for EmailJS configuration. To set up:
+
+1. Copy the `.env.example` file to create a new `.env` file:
+   ```sh
+   cp .env.example .env
+   ```
+
+2. Edit the `.env` file and replace the placeholder values with your actual EmailJS credentials:
+   ```
+   VITE_EMAILJS_SERVICE_ID=your_service_id
+   VITE_EMAILJS_TEMPLATE_ID=your_template_id
+   VITE_EMAILJS_PUBLIC_KEY=your_public_key
+   ```
+
+3. You can obtain these credentials by signing up at [EmailJS](https://www.emailjs.com/) and creating a service and template.
+
+**Note:** The `.env` file is excluded from version control to protect your credentials.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
 ## What technologies are used for this project?

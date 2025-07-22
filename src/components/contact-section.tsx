@@ -1,107 +1,161 @@
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Github, Linkedin, Send, Copy, CheckCircle } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { useToast } from "@/hooks/use-toast"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { cn } from "@/lib/utils"
+import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Github,
+  Linkedin,
+  Send,
+  Copy,
+  CheckCircle,
+} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { cn } from "@/lib/utils";
+import emailjs from '@emailjs/browser';
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name must be less than 50 characters"),
   email: z.string().email("Please enter a valid email address"),
-  subject: z.string().min(5, "Subject must be at least 5 characters").max(100, "Subject must be less than 100 characters"),
-  message: z.string().min(10, "Message must be at least 10 characters").max(1000, "Message must be less than 1000 characters")
-})
+  subject: z
+    .string()
+    .min(5, "Subject must be at least 5 characters")
+    .max(100, "Subject must be less than 100 characters"),
+  message: z
+    .string()
+    .min(10, "Message must be at least 10 characters")
+    .max(1000, "Message must be less than 1000 characters"),
+});
 
-type ContactFormData = z.infer<typeof contactSchema>
+type ContactFormData = z.infer<typeof contactSchema>;
+
+// EmailJS configuration from environment variables
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 export function ContactSection() {
-  const [emailCopied, setEmailCopied] = useState(false)
-  const { toast } = useToast()
+  const [emailCopied, setEmailCopied] = useState(false);
+  const [sendingEmail, setSendingEmail] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const { toast } = useToast();
   
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  }, []);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-    reset
+    reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
-    mode: "onChange"
-  })
+    mode: "onChange",
+  });
 
   const onSubmit = async (data: ContactFormData) => {
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
-
-    toast({
-      title: "Message sent successfully!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-    })
-
-    reset()
-  }
+    try {
+      setSendingEmail(true);
+      
+      const templateParams = {
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+      };
+      
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams
+      );
+            
+      toast({
+        title: "Message sent successfully!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+      
+      reset();
+    } catch (error) {
+      console.error('Error sending email:', error);
+      toast({
+        title: "Failed to send message",
+        description: "There was an error sending your message. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setSendingEmail(false);
+    }
+  };
 
   const copyEmail = async () => {
     try {
-      await navigator.clipboard.writeText("abdallahedreeso2@gmail.com")
-      setEmailCopied(true)
+      await navigator.clipboard.writeText("abdallahedreeso2@gmail.com");
+      setEmailCopied(true);
       toast({
         title: "Email copied!",
         description: "Email address has been copied to your clipboard.",
-      })
-      setTimeout(() => setEmailCopied(false), 2000)
+      });
+      setTimeout(() => setEmailCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy email:", err)
+      console.error("Failed to copy email:", err);
     }
-  }
+  };
 
   const contactInfo = [
     {
       icon: Mail,
       label: "Email",
       value: "abdallahedreeso2@gmail.com",
-      action: copyEmail
+      action: copyEmail,
     },
     {
       icon: Phone,
       label: "Phone",
       value: "(+20) 1128616166",
-      action: () => window.open("tel:+201128616166")
+      action: () => window.open("tel:+201128616166"),
     },
     {
       icon: MapPin,
       label: "Location",
       value: "Cairo, Egypt",
-      action: () => {}
-    }
-  ]
+      action: () => {},
+    },
+  ];
 
   const socialLinks = [
     {
       icon: Github,
       label: "GitHub",
       url: "https://github.com/abdallahedreeso",
-      color: "hover:text-gray-800 dark:hover:text-gray-200"
+      color: "hover:text-gray-800 dark:hover:text-gray-200",
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
       url: "https://linkedin.com/in/abdallahedreeso/",
-      color: "hover:text-blue-600"
+      color: "hover:text-blue-600",
     },
     {
       icon: Mail,
       label: "Email",
       url: "mailto:abdallahedreeso2@gmail.com",
-      color: "hover:text-red-600"
-    }
-  ]
+      color: "hover:text-red-600",
+    },
+  ];
 
   return (
     <section id="contact" className="py-20 bg-muted/30">
@@ -117,27 +171,28 @@ export function ContactSection() {
             Get In <span className="text-primary">Touch</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            I'm always excited to work on new projects and collaborate with amazing people.
-            Let's discuss how we can bring your ideas to life!
+            I'm always excited to work on new projects and collaborate with
+            amazing people. Let's discuss how we can bring your ideas to life!
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="flex flex-col lg:flex-row gap-12">
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
+            className="flex-1"
           >
             <Card className="shadow-elegant hover:shadow-glow transition-shadow duration-300">
               <CardHeader>
                 <CardTitle className="text-2xl">Send me a message</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
+                <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  <div className="flex flex-col md:flex-row gap-4">
+                    <div className="space-y-2 flex-1">
                       <Label htmlFor="name">Name *</Label>
                       <Input
                         id="name"
@@ -145,16 +200,18 @@ export function ContactSection() {
                         placeholder="Your full name"
                         className={cn(
                           "transition-colors duration-200",
-                          errors.name 
-                            ? "border-destructive focus-visible:ring-destructive" 
+                          errors.name
+                            ? "border-destructive focus-visible:ring-destructive"
                             : "focus-visible:ring-primary"
                         )}
                         aria-invalid={!!errors.name}
-                        aria-describedby={errors.name ? "name-error" : undefined}
+                        aria-describedby={
+                          errors.name ? "name-error" : undefined
+                        }
                       />
                       {errors.name && (
-                        <p 
-                          id="name-error" 
+                        <p
+                          id="name-error"
                           className="text-sm text-destructive animate-fade-in"
                           role="alert"
                         >
@@ -162,7 +219,7 @@ export function ContactSection() {
                         </p>
                       )}
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 flex-1">
                       <Label htmlFor="email">Email *</Label>
                       <Input
                         id="email"
@@ -171,16 +228,18 @@ export function ContactSection() {
                         placeholder="your.email@example.com"
                         className={cn(
                           "transition-colors duration-200",
-                          errors.email 
-                            ? "border-destructive focus-visible:ring-destructive" 
+                          errors.email
+                            ? "border-destructive focus-visible:ring-destructive"
                             : "focus-visible:ring-primary"
                         )}
                         aria-invalid={!!errors.email}
-                        aria-describedby={errors.email ? "email-error" : undefined}
+                        aria-describedby={
+                          errors.email ? "email-error" : undefined
+                        }
                       />
                       {errors.email && (
-                        <p 
-                          id="email-error" 
+                        <p
+                          id="email-error"
                           className="text-sm text-destructive animate-fade-in"
                           role="alert"
                         >
@@ -189,7 +248,7 @@ export function ContactSection() {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="subject">Subject *</Label>
                     <Input
@@ -198,16 +257,18 @@ export function ContactSection() {
                       placeholder="What's this about?"
                       className={cn(
                         "transition-colors duration-200",
-                        errors.subject 
-                          ? "border-destructive focus-visible:ring-destructive" 
+                        errors.subject
+                          ? "border-destructive focus-visible:ring-destructive"
                           : "focus-visible:ring-primary"
                       )}
                       aria-invalid={!!errors.subject}
-                      aria-describedby={errors.subject ? "subject-error" : undefined}
+                      aria-describedby={
+                        errors.subject ? "subject-error" : undefined
+                      }
                     />
                     {errors.subject && (
-                      <p 
-                        id="subject-error" 
+                      <p
+                        id="subject-error"
                         className="text-sm text-destructive animate-fade-in"
                         role="alert"
                       >
@@ -215,7 +276,7 @@ export function ContactSection() {
                       </p>
                     )}
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="message">Message *</Label>
                     <Textarea
@@ -225,16 +286,18 @@ export function ContactSection() {
                       rows={6}
                       className={cn(
                         "transition-colors duration-200 resize-none",
-                        errors.message 
-                          ? "border-destructive focus-visible:ring-destructive" 
+                        errors.message
+                          ? "border-destructive focus-visible:ring-destructive"
                           : "focus-visible:ring-primary"
                       )}
                       aria-invalid={!!errors.message}
-                      aria-describedby={errors.message ? "message-error" : undefined}
+                      aria-describedby={
+                        errors.message ? "message-error" : undefined
+                      }
                     />
                     {errors.message && (
-                      <p 
-                        id="message-error" 
+                      <p
+                        id="message-error"
                         className="text-sm text-destructive animate-fade-in"
                         role="alert"
                       >
@@ -242,13 +305,13 @@ export function ContactSection() {
                       </p>
                     )}
                   </div>
-                  
+
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300 disabled:opacity-50"
+                    className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300"
                     disabled={isSubmitting || !isValid}
                   >
-                    {isSubmitting ? (
+                    {isSubmitting || sendingEmail ? (
                       <div className="flex items-center gap-2">
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         Sending...
@@ -271,7 +334,7 @@ export function ContactSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-8 flex-1"
           >
             {/* Contact Details */}
             <Card className="shadow-elegant hover:shadow-glow transition-shadow duration-300">
@@ -292,8 +355,10 @@ export function ContactSection() {
                     <div className="p-2 bg-primary/10 rounded-lg">
                       <info.icon className="h-5 w-5 text-primary" />
                     </div>
-                    <div className="flex-grow">
-                      <h4 className="font-semibold text-foreground">{info.label}</h4>
+                    <div className="flex-grow overflow-x-auto md:overflow-auto">
+                      <h4 className="font-semibold text-foreground">
+                        {info.label}
+                      </h4>
                       <p className="text-muted-foreground">{info.value}</p>
                     </div>
                     {info.label === "Email" && (
@@ -339,24 +404,24 @@ export function ContactSection() {
                 </p>
               </CardContent>
             </Card>
-
-            {/* Quick Response Info */}
-            <Card className="shadow-elegant">
-              <CardContent className="p-6 text-center">
-                <div className="mb-4">
-                  <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
-                  </div>
-                  <h3 className="font-semibold text-foreground">Quick Response</h3>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  I typically respond to messages within 24 hours. Looking forward to hearing from you!
-                </p>
-              </CardContent>
-            </Card>
           </motion.div>
         </div>
+        {/* Quick Response Info */}
+        <Card className="mt-10 max-w-3xl mx-auto shadow-elegant hover:shadow-glow transition-shadow duration-300">
+          <CardContent className="p-6 text-center">
+            <div className="mb-4">
+              <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
+              </div>
+              <h3 className="font-semibold text-foreground">Quick Response</h3>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              I typically respond to messages within 24 hours. Looking forward
+              to hearing from you!
+            </p>
+          </CardContent>
+        </Card>
       </div>
     </section>
-  )
+  );
 }

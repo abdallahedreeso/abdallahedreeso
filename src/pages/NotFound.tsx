@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Home, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeProvider } from "@/components/theme-provider";
-import chibiDeveloper from "@/assets/chibi-developer.png";
+import chibiEdreeso from "@/assets/chibi-edreeso.webp"
 
 const NotFound = () => {
   const location = useLocation();
@@ -33,8 +33,8 @@ const NotFound = () => {
             className="mb-8"
           >
             <img
-              src={chibiDeveloper}
-              alt="404 - Chibi Developer"
+              src={chibiEdreeso}
+              alt="404 - Chibi Edreeso"
               className="w-64 h-64 mx-auto mb-6 object-contain"
             />
           </motion.div>

@@ -14,7 +14,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center bg-gradient-subtle relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center bg-gradient-subtle relative overflow-hidden pt-16"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -38,7 +38,7 @@ export function HeroSection() {
               className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6"
             >
               Abdallah{" "}
-              <span className="text-primary bg-gradient-primary bg-clip-text text-transparent">
+              <span className=" bg-gradient-primary bg-clip-text text-transparent">
                 Edrees
               </span>
             </motion.h1>
@@ -49,7 +49,7 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="mb-6"
             >
-              <h2 className="text-xl md:text-2xl text-secondary mb-4">
+              <h2 className="text-xl md:text-2xl text-muted-foreground mb-4">
                 Frontend Developer
               </h2>
               <p className="text-lg text-muted-foreground max-w-lg mx-auto lg:mx-0">
@@ -140,7 +140,7 @@ export function HeroSection() {
                 <img
                   src={chibiEdreeso}
                   alt="Abdallah Edrees - Frontend Developer"
-                  className="w-80 h-80 object-contain"
+                  className="w-64 h-64 md:w-80 md:h-80 object-contain"
                 />
               </motion.div>
               <div className="absolute inset-0 bg-gradient-primary opacity-20 rounded-full blur-2xl scale-110" />

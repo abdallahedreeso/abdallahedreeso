@@ -7,66 +7,65 @@ const skillCategories = [
   {
     title: "Frontend Frameworks & Libraries",
     skills: [
-      { name: "Vue.js", level: 95, icon: "💚" },
-      { name: "Nuxt.js", level: 95, icon: "💚" },
-      { name: "React.js", level: 90, icon: "⚛️" },
-      { name: "jQuery", level: 85, icon: "📘" },
+      { name: "Vue.js", icon: "💚" },
+      { name: "Nuxt.js", icon: "💚" },
+      { name: "React.js", icon: "⚛️" },
     ]
   },
   {
     title: "Programming Languages",
     skills: [
-      { name: "JavaScript", level: 95, icon: "🟨" },
-      { name: "TypeScript", level: 90, icon: "🔷" },
-      { name: "HTML5", level: 98, icon: "🟠" },
-      { name: "CSS3", level: 95, icon: "🔵" },
+      { name: "JavaScript", icon: "🟨" },
+      { name: "TypeScript", icon: "🔷" },
+      { name: "HTML5", icon: "🟠" },
+      { name: "CSS3", icon: "🔵" },
     ]
   },
   {
     title: "Styling & UI Frameworks",
     skills: [
-      { name: "Tailwind CSS", level: 95, icon: "🌊" },
-      { name: "Vuetify", level: 90, icon: "💜" },
-      { name: "Ant Design", level: 85, icon: "🐜" },
-      { name: "Bootstrap", level: 90, icon: "🅱️" },
-      { name: "Sass/SCSS", level: 90, icon: "🎯" },
+      { name: "Tailwind CSS", icon: "🌊" },
+      { name: "Vuetify", icon: "💜" },
+      { name: "Ant Design", icon: "🐜" },
+      { name: "Bootstrap", icon: "🅱️" },
+      { name: "Sass/SCSS", icon: "🎯" },
     ]
   },
   {
     title: "State Management & Validation",
     skills: [
-      { name: "Pinia", level: 95, icon: "🍍" },
-      { name: "Vuex", level: 90, icon: "📦" },
-      { name: "VeeValidate", level: 85, icon: "✅" },
-      { name: "Vuelidate", level: 85, icon: "✅" },
+      { name: "Pinia", icon: "🍍" },
+      { name: "Vuex", icon: "📦" },
+      { name: "VeeValidate", icon: "✅" },
+      { name: "Vuelidate", icon: "✅" },
     ]
   },
   {
     title: "Tools & Technologies",
     skills: [
-      { name: "Git & GitHub", level: 95, icon: "🐙" },
-      { name: "ESLint", level: 85, icon: "🔍" },
-      { name: "Figma", level: 85, icon: "🎨" },
-      { name: "Vue Test Utils", level: 80, icon: "🧪" },
+      { name: "Git & GitHub", icon: "🐙" },
+      { name: "ESLint", icon: "🔍" },
+      { name: "Figma", icon: "🎨" },
+      { name: "Vue Test Utils", icon: "🧪" },
     ]
   },
   {
     title: "Backend & Database",
     skills: [
-      { name: "Supabase", level: 85, icon: "⚡" },
-      { name: "Node.js", level: 75, icon: "🟢" },
-      { name: "Express", level: 70, icon: "🚂" },
-      { name: "MongoDB", level: 70, icon: "🍃" },
-      { name: "MySQL", level: 70, icon: "🐬" },
+      { name: "Supabase", icon: "⚡" },
+      { name: "Node.js", icon: "🟢" },
+      { name: "Express", icon: "🚂" },
+      { name: "MongoDB", icon: "🍃" },
+      { name: "MySQL", icon: "🐬" },
     ]
   },
   {
     title: "Additional Languages",
     skills: [
-      { name: "Python", level: 65, icon: "🐍" },
-      { name: "Java", level: 60, icon: "☕" },
-      { name: "C++", level: 60, icon: "🔧" },
-      { name: "C", level: 60, icon: "⚙️" },
+      { name: "Python", icon: "🐍" },
+      { name: "Java", icon: "☕" },
+      { name: "C++", icon: "🔧" },
+      { name: "C", icon: "⚙️" },
     ]
   }
 ]
@@ -129,14 +128,9 @@ export function SkillsSection() {
                             <span className="text-lg">{skill.icon}</span>
                             <span className="font-medium text-foreground">{skill.name}</span>
                           </div>
-                          <span className="text-sm text-muted-foreground">
-                            {skill.level}%
-                          </span>
+                          
                         </div>
-                        <Progress 
-                          value={skill.level} 
-                          className="h-2"
-                        />
+                        
                       </motion.div>
                     ))}
                   </div>
@@ -176,43 +170,6 @@ export function SkillsSection() {
               </motion.div>
             ))}
           </div>
-        </motion.div>
-
-        {/* Learning Goals */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center"
-        >
-          <Card className="max-w-2xl mx-auto shadow-elegant">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-foreground mb-4">
-                Currently <span className="text-primary">Learning</span>
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                I'm always expanding my knowledge and staying current with the latest trends
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                {["Three.js", "WebGL", "GraphQL", "Rust", "Web3", "AI/ML"].map((tech, index) => (
-                  <motion.div
-                    key={tech}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <Badge 
-                      className="px-3 py-1 bg-gradient-primary text-primary-foreground hover:shadow-glow transition-shadow"
-                    >
-                      {tech}
-                    </Badge>
-                  </motion.div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
         </motion.div>
       </div>
     </section>

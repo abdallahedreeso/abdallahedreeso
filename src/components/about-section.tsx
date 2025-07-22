@@ -48,10 +48,31 @@ const education = [
 ]
 
 const certifications = [
-  "Algoriza: Frontend Internship (Credential ID: 875001)",
-  "National Telecommunication Institute (NTI): Web Development",
-  "Coursera (University of Michigan): Frontend Development"
+  {
+    title: "DEPI: React Web Developer",
+    url: "https://drive.google.com/file/d/14alTqr449uyQ8qYAnVttMIzcyDklO_P-/view?usp=sharing"
+  },
+  {
+    title: "SolutionPlus: Frontend Internship",
+    url: "https://solutionplus.net/certificates/9645762061"
+  },
+  {
+    title: "Algoriza: Frontend Internship (Credential ID: 875001)",
+    url: "https://interns.algoriza.com/"
+  },
+  {
+    title: "National Telecommunication Institute (NTI): Web Development",
+    url: "https://drive.google.com/file/d/14alTqr449uyQ8qYAnVttMIzcyDklO_P-/view?usp=sharing"
+  },
+  {
+    title: "Coursera (University of Michigan): Frontend Development",
+    url: "https://www.coursera.org/account/accomplishments/specialization/certificate/6UHZGQMSYPV9"
+  },
 ]
+
+const yearsOfExperience = () => {
+  return Math.floor((new Date().getTime() - new Date('2024-07-01').getTime()) / (1000 * 60 * 60 * 24 * 365))
+}
 
 export function AboutSection() {
   return (
@@ -68,7 +89,7 @@ export function AboutSection() {
             About <span className="text-primary">Me</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            I'm a passionate frontend developer with over 4 years of experience creating beautiful,
+            I'm a passionate frontend developer with over {yearsOfExperience()} years of experience creating beautiful,
             functional, and user-friendly web applications. I love turning complex problems into
             simple, elegant solutions that users enjoy interacting with.
           </p>
@@ -101,7 +122,7 @@ export function AboutSection() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-sm text-muted-foreground mb-2">Experience</h4>
-                    <p className="text-foreground">4+ Years</p>
+                    <p className="text-foreground">{yearsOfExperience()}+ Years</p>
                   </div>
                   <div>
                     <h4 className="font-semibold text-sm text-muted-foreground mb-2">Location</h4>
@@ -141,16 +162,18 @@ export function AboutSection() {
                 <div className="grid gap-3">
                   {certifications.map((cert, index) => (
                     <motion.div
-                      key={cert}
+                      key={cert.title}
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                       viewport={{ once: true }}
                     >
-                      <Badge variant="secondary" className="w-full justify-start py-2 px-3">
-                        <Award className="h-4 w-4 mr-2" />
-                        {cert}
-                      </Badge>
+                      <a href={cert.url} target="_blank" rel="noopener noreferrer">
+                        <Badge variant="secondary" className="w-full justify-start py-2 px-3">
+                          <Award className="h-4 w-4 mr-2" />
+                          {cert.title}
+                        </Badge>
+                      </a>
                     </motion.div>
                   ))}
                 </div>

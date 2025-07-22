@@ -15,15 +15,16 @@ const Index = () => {
           <HeroSection />
           <AboutSection />
           <ProjectsSection />
-          <SkillsSection />
-          <ContactSection />
+          <SkillsSection /> 
+          <ContactSection /> 
         </main>
         
         {/* Footer */}
         <footer className="bg-card border-t border-border py-8">
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <p className="text-muted-foreground">
-              © 2024 Abdallah Edrees. Built with React, TypeScript & Tailwind CSS.
+              &copy;2025 Abdallah Edrees. Built with React.js, TypeScript & Shadcn.
+
             </p>
           </div>
         </footer>
