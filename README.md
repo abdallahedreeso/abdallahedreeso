@@ -51,7 +51,7 @@ A modern, responsive portfolio website built with React, TypeScript, and Shadcn 
 
 ## 🌐 Deployment
 
-This site is deployed and accessible at [abdallahedreeso.lovable.app](https://abdallahedreeso.lovable.app/).
+This site is deployed and accessible at [abdallahedreeso.vercel.app](https://abdallahedreeso.vercel.app/).
 
 ## 📬 Contact
 
