@@ -1,4 +1,4 @@
-# Abdallah Edrees - Frontend Developer Portfolio
+# Abdallah Edrees - Frontend Developer
 
 <p align="center">
   <img src="./src/assets/screen/screen.png" alt="Portfolio Screenshot" width="100%" />
