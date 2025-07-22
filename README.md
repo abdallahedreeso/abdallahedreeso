@@ -49,13 +49,6 @@ A modern, responsive portfolio website built with React, TypeScript, and Shadcn 
 - **TanStack Query**: Data fetching and state management
 - **React Router DOM**: Routing for React applications
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js (v16 or higher)
-- npm or yarn
-
 ## 🌐 Deployment
 
 This site is deployed and accessible at [abdallahedreeso.lovable.app](https://abdallahedreeso.lovable.app/).
