@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
-import emailjs from '@emailjs/browser';
+import { supabase } from "@/integrations/supabase/client";
 
 const contactSchema = z.object({
   name: z
@@ -40,21 +40,11 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-// EmailJS configuration
-const EMAILJS_SERVICE_ID = "service_cb0wru4";
-const EMAILJS_TEMPLATE_ID = "template_1x1sqan";
-const EMAILJS_PUBLIC_KEY = "DnZGUzJxWWvVUShSZ";
-
 export function ContactSection() {
   const [emailCopied, setEmailCopied] = useState(false);
   const [sendingEmail, setSendingEmail] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
-  
-  // Initialize EmailJS
-  useEffect(() => {
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-  }, []);
 
   const {
     register,
@@ -70,18 +60,19 @@ export function ContactSection() {
     try {
       setSendingEmail(true);
       
-      const templateParams = {
-        name: data.name,
-        email: data.email,
-        subject: data.subject,
-        message: data.message,
-      };
-      
-      const response = await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        templateParams
-      );
+      // Call the Supabase edge function to send email securely
+      const { data: result, error } = await supabase.functions.invoke('send-email', {
+        body: {
+          name: data.name,
+          email: data.email,
+          subject: data.subject,
+          message: data.message,
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
             
       toast({
         title: "Message sent successfully!",
