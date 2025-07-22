@@ -25,10 +25,26 @@ const navItems = [
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("#home");
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      
+      // Determine active section based on scroll position
+      const sections = navItems.map(item => item.href);
+      const currentSection = sections.find(section => {
+        const element = document.querySelector(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        }
+        return false;
+      });
+      
+      if (currentSection) {
+        setActiveSection(currentSection);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -42,6 +58,7 @@ export function Navigation() {
         behavior: "smooth",
         block: "start",
       });
+      setActiveSection(href);
     }
     setIsMobileMenuOpen(false);
   };
@@ -73,10 +90,10 @@ export function Navigation() {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="relative text-foreground hover:text-primary transition-colors group"
+                className={`relative ${activeSection === item.href ? 'text-primary font-medium' : 'text-foreground'} hover:text-primary transition-colors group`}
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${activeSection === item.href ? 'w-full' : 'w-0'} group-hover:w-full`} />
               </button>
             ))}
             <ThemeToggle />
@@ -114,7 +131,7 @@ export function Navigation() {
                     <DrawerClose asChild key={item.name}>
                       <button
                         onClick={() => scrollToSection(item.href)}
-                        className="block w-full text-left px-4 py-2 text-foreground hover:text-primary transition-colors"
+                        className={`block w-full text-left px-4 py-2 ${activeSection === item.href ? 'text-primary font-medium bg-primary/10 rounded-md' : 'text-foreground'} hover:text-primary transition-colors`}
                       >
                         {item.name}
                       </button>

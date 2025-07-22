@@ -84,7 +84,12 @@ export function ContactSection() {
       );
             
       toast({
-        title: "Message sent successfully!",
+        title: (
+          <div className="flex items-center">
+            Message sent successfully!
+            <CheckCircle className="ml-2 h-5 w-5 text-green-500" />
+          </div>
+        ),
         description: "Thank you for reaching out. I'll get back to you soon.",
       });
       
@@ -106,7 +111,12 @@ export function ContactSection() {
       await navigator.clipboard.writeText("abdallahedreeso2@gmail.com");
       setEmailCopied(true);
       toast({
-        title: "Email copied!",
+        title: (
+          <div className="flex items-center">
+            Email copied!
+            <CheckCircle className="ml-2 h-5 w-5 text-green-500" />
+          </div>
+        ),
         description: "Email address has been copied to your clipboard.",
       });
       setTimeout(() => setEmailCopied(false), 2000);
