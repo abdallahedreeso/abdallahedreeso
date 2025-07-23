@@ -3,12 +3,13 @@ import { ExternalLink, Github, Eye } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import realestateProject from "@/assets/projects/real-state.png"
 
 const projects = [
   {
     title: "Real-Estate Management",
     description: "A comprehensive real estate management platform for property listings, client management, and transaction handling. Built with modern frontend technologies for optimal user experience.",
-    image: "/src/assets/projects/real-state.png",
+    image: realestateProject,
     tech: ["React.js", "Supabase", "Clerk.js", "AntDesign", "Tailwind"],
     liveDemo: "https://real-estate-management-mu.vercel.app/",
     github: "https://github.com/abdallahedreeso/real-estate-management",
