@@ -41,9 +41,10 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 // EmailJS configuration
-const EMAILJS_SERVICE_ID = "service_cb0wru4";
-const EMAILJS_TEMPLATE_ID = "template_1x1sqan";
-const EMAILJS_PUBLIC_KEY = "DnZGUzJxWWvVUShSZ";
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "";
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "";
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "";
+
 
 export function ContactSection() {
   const [emailCopied, setEmailCopied] = useState(false);
