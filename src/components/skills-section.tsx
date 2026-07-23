@@ -1,177 +1,111 @@
-import { motion } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
+import { motion } from "framer-motion";
+import { BentoCard } from "@/components/ui/bento-card";
 
 const skillCategories = [
   {
-    title: "Frontend Frameworks & Libraries",
+    id: "skill-1",
+    title: "Core Ecosystem & Frameworks",
+    subtitle: "PRIMARY ARCHITECTURE",
+    badge: "Expertise",
+    colSpan: "lg:col-span-2 md:col-span-2",
     skills: [
-      { name: "Vue.js", icon: "💚" },
-      { name: "Nuxt.js", icon: "💚" },
-      { name: "React.js", icon: "⚛️" },
-    ]
+      { name: "Vue.js / Nuxt 3", icon: "💚", detail: "SSR & Composition API" },
+      { name: "React.js / Next.js", icon: "⚛️", detail: "RSC & Custom Hooks" },
+      { name: "TypeScript", icon: "🔷", detail: "Strict Type Systems" },
+      { name: "JavaScript (ESNext)", icon: "🟨", detail: "Async & Performance" },
+    ],
   },
   {
-    title: "Programming Languages",
+    id: "skill-2",
+    title: "Graphics & UI Systems",
+    subtitle: "DESIGN ENGINE",
+    badge: "Visuals",
+    colSpan: "lg:col-span-1 md:col-span-1",
     skills: [
-      { name: "JavaScript", icon: "🟨" },
-      { name: "TypeScript", icon: "🔷" },
-      { name: "HTML5", icon: "🟠" },
-      { name: "CSS3", icon: "🔵" },
-    ]
+      { name: "Three.js / R3F", icon: "🌐", detail: "WebGL Shaders" },
+      { name: "Tailwind CSS", icon: "🌊", detail: "Design Tokens" },
+      { name: "Framer Motion", icon: "⚡", detail: "Physics Micro-interactions" },
+      { name: "Shadcn / Radix", icon: "🧩", detail: "Accessible Primitives" },
+    ],
   },
   {
-    title: "Styling & UI Frameworks",
+    id: "skill-3",
+    title: "State & Data Validation",
+    subtitle: "DATA PIPELINE",
+    badge: "State",
+    colSpan: "lg:col-span-1 md:col-span-1",
     skills: [
-      { name: "Tailwind CSS", icon: "🌊" },
-      { name: "Vuetify", icon: "💜" },
-      { name: "Ant Design", icon: "🐜" },
-      { name: "Bootstrap", icon: "🅱️" },
-      { name: "Sass/SCSS", icon: "🎯" },
-    ]
+      { name: "Zustand & Pinia", icon: "📦", detail: "Global State Management" },
+      { name: "Zod & VeeValidate", icon: "🛡️", detail: "Runtime Schema Guards" },
+      { name: "TanStack Query", icon: "🔄", detail: "Async Cache Hydration" },
+    ],
   },
   {
-    title: "State Management & Validation",
+    id: "skill-4",
+    title: "Backend Integration & Cloud",
+    subtitle: "SERVICES & APIS",
+    badge: "Infrastructure",
+    colSpan: "lg:col-span-2 md:col-span-2",
     skills: [
-      { name: "Pinia", icon: "🍍" },
-      { name: "Vuex", icon: "📦" },
-      { name: "VeeValidate", icon: "✅" },
-      { name: "Vuelidate", icon: "✅" },
-    ]
+      { name: "Supabase & Postgres", icon: "⚡", detail: "RLS & Realtime Channels" },
+      { name: "Node.js / Express", icon: "🟢", detail: "Microservice APIs" },
+      { name: "REST & WebSockets", icon: "📡", detail: "Sub-50ms Latency Streams" },
+      { name: "Git & CI/CD Pipelines", icon: "🐙", detail: "Automated Deployments" },
+    ],
   },
-  {
-    title: "Tools & Technologies",
-    skills: [
-      { name: "Git & GitHub", icon: "🐙" },
-      { name: "ESLint", icon: "🔍" },
-      { name: "Figma", icon: "🎨" },
-      { name: "Vue Test Utils", icon: "🧪" },
-    ]
-  },
-  {
-    title: "Backend & Database",
-    skills: [
-      { name: "Supabase", icon: "⚡" },
-      { name: "Node.js", icon: "🟢" },
-      { name: "Express", icon: "🚂" },
-      { name: "MongoDB", icon: "🍃" },
-      { name: "MySQL", icon: "🐬" },
-    ]
-  },
-  {
-    title: "Additional Languages",
-    skills: [
-      { name: "Python", icon: "🐍" },
-      { name: "Java", icon: "☕" },
-      { name: "C++", icon: "🔧" },
-      { name: "C", icon: "⚙️" },
-    ]
-  }
-]
-
-const tools = [
-  "VS Code", "Postman", "Chrome DevTools", "Figma", "Notion", 
-  "Slack", "Jira", "Linear", "Vercel", "Netlify"
-]
+];
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="py-20 bg-background">
+    <section id="skills" className="py-24 relative z-10">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Skills & <span className="text-primary">Expertise</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-4">
+            Technical Competencies
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
+            Architecture <span className="text-blue-500">& Tech Stack</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            I'm passionate about staying up-to-date with the latest technologies and continuously
-            improving my skill set to deliver cutting-edge solutions.
+          <p className="text-neutral-400 text-base md:text-lg max-w-2xl mx-auto">
+            Deep technical specialization in modern frontend engineering, low-latency state synchronization, and reactive WebGL interfaces.
           </p>
         </motion.div>
 
-        {/* Skills Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {skillCategories.map((category, categoryIndex) => (
-            <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-              viewport={{ once: true }}
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
+          {skillCategories.map((cat) => (
+            <BentoCard
+              key={cat.id}
+              id={cat.id}
+              title={cat.title}
+              subtitle={cat.subtitle}
+              badge={cat.badge}
+              className={cat.colSpan}
             >
-              <Card className="shadow-elegant hover:shadow-glow transition-all duration-300 hover:scale-[1.02] h-full">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-6 text-center">
-                    {category.title}
-                  </h3>
-                  <div className="space-y-4">
-                    {category.skills.map((skill, skillIndex) => (
-                      <motion.div
-                        key={skill.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          duration: 0.5, 
-                          delay: categoryIndex * 0.1 + skillIndex * 0.05 
-                        }}
-                        viewport={{ once: true }}
-                        className="space-y-2"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg">{skill.icon}</span>
-                            <span className="font-medium text-foreground">{skill.name}</span>
-                          </div>
-                          
-                        </div>
-                        
-                      </motion.div>
-                    ))}
+              <div className="space-y-3 mt-2">
+                {cat.skills.map((s) => (
+                  <div
+                    key={s.name}
+                    className="flex items-center justify-between p-2.5 rounded-xl bg-neutral-900/60 border border-white/5 hover:border-blue-500/30 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-base">{s.icon}</span>
+                      <span className="text-sm font-semibold text-white">{s.name}</span>
+                    </div>
+                    <span className="text-[11px] font-mono text-neutral-400">{s.detail}</span>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+                ))}
+              </div>
+            </BentoCard>
           ))}
         </div>
-
-        {/* Tools & Software */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <h3 className="text-3xl font-bold text-foreground mb-8">
-            Tools & <span className="text-primary">Software</span>
-          </h3>
-          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-            {tools.map((tool, index) => (
-              <motion.div
-                key={tool}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <Badge 
-                  variant="secondary" 
-                  className="px-4 py-2 text-sm hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
-                >
-                  {tool}
-                </Badge>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
-  )
+  );
 }

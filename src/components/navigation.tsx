@@ -7,7 +7,6 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -29,15 +28,14 @@ export function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 30);
       
-      // Determine active section based on scroll position
       const sections = navItems.map(item => item.href);
       const currentSection = sections.find(section => {
         const element = document.querySelector(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+          return rect.top <= 120 && rect.bottom >= 120;
         }
         return false;
       });
@@ -47,7 +45,7 @@ export function Navigation() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -69,7 +67,7 @@ export function Navigation() {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/95 backdrop-blur-md border-b border-border shadow-elegant"
+          ? "bg-white/80 dark:bg-[#030303]/80 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800/80 shadow-md"
           : "bg-transparent"
       }`}
     >
@@ -78,10 +76,15 @@ export function Navigation() {
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-2xl font-bold text-primary cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer group"
             onClick={() => scrollToSection("#home")}
           >
-            AE
+            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center font-mono font-bold text-blue-500 text-sm group-hover:bg-blue-500 group-hover:text-white transition-all">
+              AE
+            </div>
+            <span className="font-extrabold text-neutral-900 dark:text-white text-base tracking-tight hidden sm:inline">
+              Abdallah Edrees
+            </span>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -90,13 +93,24 @@ export function Navigation() {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className={`relative ${activeSection === item.href ? 'text-primary font-medium' : 'text-foreground'} hover:text-primary transition-colors group`}
+                className={`relative text-xs font-mono tracking-widest uppercase transition-colors ${
+                  activeSection === item.href
+                    ? "text-blue-500 font-bold"
+                    : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
+                }`}
               >
                 {item.name}
-                <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${activeSection === item.href ? 'w-full' : 'w-0'} group-hover:w-full`} />
+                {activeSection === item.href && (
+                  <motion.span
+                    layoutId="activeNavIndicator"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-500 shadow-glow"
+                  />
+                )}
               </button>
             ))}
-            <ThemeToggle />
+            <div className="pl-4 border-l border-neutral-200 dark:border-neutral-800">
+              <ThemeToggle />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -108,39 +122,42 @@ export function Navigation() {
               onOpenChange={setIsMobileMenuOpen}
             >
               <DrawerTrigger asChild>
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="text-neutral-900 dark:text-white">
                   <Menu size={20} />
                 </Button>
               </DrawerTrigger>
-              <DrawerContent className="h-full top-0 right-0 mt-0 w-64 rounded-none">
-                <div className="mx-auto w-16 h-2 flex-shrink-0 rounded-full bg-zinc-300 dark:bg-zinc-500" />
-                <DrawerHeader>
-                  <DrawerTitle>
-                    {/* Logo */}
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      className="text-2xl font-bold text-primary cursor-pointer"
-                      onClick={() => scrollToSection("#home")}
-                    >
+              <DrawerContent className="h-full top-0 right-0 mt-0 w-64 rounded-none bg-white dark:bg-[#060608] border-l border-neutral-200 dark:border-neutral-800">
+                <DrawerHeader className="border-b border-neutral-200 dark:border-neutral-800">
+                  <DrawerTitle className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center font-mono font-bold text-blue-500 text-sm">
                       AE
-                    </motion.div>
+                    </div>
+                    <span className="font-extrabold text-neutral-900 dark:text-white text-base">
+                      Abdallah Edrees
+                    </span>
                   </DrawerTitle>
                 </DrawerHeader>
-                <div className="grid gap-1 p-4">
+                <div className="grid gap-2 p-4">
                   {navItems.map((item) => (
                     <DrawerClose asChild key={item.name}>
                       <button
                         onClick={() => scrollToSection(item.href)}
-                        className={`block w-full text-left px-4 py-2 ${activeSection === item.href ? 'text-primary font-medium bg-primary/10 rounded-md' : 'text-foreground'} hover:text-primary transition-colors`}
+                        className={`block w-full text-left px-4 py-2.5 text-xs font-mono tracking-wider uppercase rounded-xl transition-colors ${
+                          activeSection === item.href
+                            ? "text-blue-500 bg-blue-500/10 font-bold border border-blue-500/20"
+                            : "text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                        }`}
                       >
                         {item.name}
                       </button>
                     </DrawerClose>
                   ))}
                 </div>
-                <DrawerFooter className="mt-auto">
+                <DrawerFooter className="mt-auto border-t border-neutral-200 dark:border-neutral-800">
                   <DrawerClose asChild>
-                    <Button variant="outline">Close</Button>
+                    <Button variant="outline" className="w-full text-xs font-mono">
+                      Close Menu
+                    </Button>
                   </DrawerClose>
                 </DrawerFooter>
               </DrawerContent>

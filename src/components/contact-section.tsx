@@ -10,7 +10,7 @@ import {
   Copy,
   CheckCircle,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BentoCard } from "@/components/ui/bento-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -40,11 +40,9 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-// EmailJS configuration
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "";
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "";
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "";
-
 
 export function ContactSection() {
   const [emailCopied, setEmailCopied] = useState(false);
@@ -52,9 +50,10 @@ export function ContactSection() {
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
   
-  // Initialize EmailJS
   useEffect(() => {
-    emailjs.init(EMAILJS_PUBLIC_KEY);
+    if (EMAILJS_PUBLIC_KEY) {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
   }, []);
 
   const {
@@ -78,7 +77,7 @@ export function ContactSection() {
         message: data.message,
       };
       
-      const response = await emailjs.send(
+      await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         templateParams
@@ -86,12 +85,12 @@ export function ContactSection() {
             
       toast({
         title: (
-          <div className="flex items-center">
+          <div className="flex items-center text-green-500 font-semibold">
             Message sent successfully!
-            <CheckCircle className="ml-2 h-5 w-5 text-green-500" />
+            <CheckCircle className="ml-2 h-5 w-5" />
           </div>
         ),
-        description: "Thank you for reaching out. I'll get back to you soon.",
+        description: "Thank you for reaching out. I'll respond within 24 hours.",
       });
       
       reset();
@@ -99,7 +98,7 @@ export function ContactSection() {
       console.error('Error sending email:', error);
       toast({
         title: "Failed to send message",
-        description: "There was an error sending your message. Please try again later.",
+        description: "There was an error sending your message. Please try again or copy email directly.",
         variant: "destructive",
       });
     } finally {
@@ -113,9 +112,9 @@ export function ContactSection() {
       setEmailCopied(true);
       toast({
         title: (
-          <div className="flex items-center">
+          <div className="flex items-center text-blue-400 font-semibold">
             Email copied!
-            <CheckCircle className="ml-2 h-5 w-5 text-green-500" />
+            <CheckCircle className="ml-2 h-5 w-5" />
           </div>
         ),
         description: "Email address has been copied to your clipboard.",
@@ -152,286 +151,183 @@ export function ContactSection() {
       icon: Github,
       label: "GitHub",
       url: "https://github.com/abdallahedreeso",
-      color: "hover:text-gray-800 dark:hover:text-gray-200",
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
       url: "https://linkedin.com/in/abdallahedreeso/",
-      color: "hover:text-blue-600",
     },
     {
       icon: Mail,
-      label: "Email",
+      label: "Email Direct",
       url: "mailto:abdallahedreeso2@gmail.com",
-      color: "hover:text-red-600",
     },
   ];
 
   return (
-    <section id="contact" className="py-20 bg-muted/30">
+    <section id="contact" className="py-24 relative z-10">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Get In <span className="text-primary">Touch</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono mb-4">
+            Direct Communications
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-white mb-4">
+            Let's Build <span className="text-blue-500">Together</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            I'm always excited to work on new projects and collaborate with
-            amazing people. Let's discuss how we can bring your ideas to life!
+          <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-lg max-w-2xl mx-auto">
+            Have a project in mind or interested in architectural consulting? Send a message directly or connect via channels below.
           </p>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row gap-12">
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="flex-1"
-          >
-            <Card className="shadow-elegant hover:shadow-glow transition-shadow duration-300">
-              <CardHeader>
-                <CardTitle className="text-2xl">Send me a message</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <div className="flex flex-col md:flex-row gap-4">
-                    <div className="space-y-2 flex-1">
-                      <Label htmlFor="name">Name *</Label>
-                      <Input
-                        id="name"
-                        {...register("name")}
-                        placeholder="Your full name"
-                        className={cn(
-                          "transition-colors duration-200",
-                          errors.name
-                            ? "border-destructive focus-visible:ring-destructive"
-                            : "focus-visible:ring-primary"
-                        )}
-                        aria-invalid={!!errors.name}
-                        aria-describedby={
-                          errors.name ? "name-error" : undefined
-                        }
-                      />
-                      {errors.name && (
-                        <p
-                          id="name-error"
-                          className="text-sm text-destructive animate-fade-in"
-                          role="alert"
-                        >
-                          {errors.name.message}
-                        </p>
-                      )}
-                    </div>
-                    <div className="space-y-2 flex-1">
-                      <Label htmlFor="email">Email *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        {...register("email")}
-                        placeholder="your.email@example.com"
-                        className={cn(
-                          "transition-colors duration-200",
-                          errors.email
-                            ? "border-destructive focus-visible:ring-destructive"
-                            : "focus-visible:ring-primary"
-                        )}
-                        aria-invalid={!!errors.email}
-                        aria-describedby={
-                          errors.email ? "email-error" : undefined
-                        }
-                      />
-                      {errors.email && (
-                        <p
-                          id="email-error"
-                          className="text-sm text-destructive animate-fade-in"
-                          role="alert"
-                        >
-                          {errors.email.message}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="subject">Subject *</Label>
-                    <Input
-                      id="subject"
-                      {...register("subject")}
-                      placeholder="What's this about?"
-                      className={cn(
-                        "transition-colors duration-200",
-                        errors.subject
-                          ? "border-destructive focus-visible:ring-destructive"
-                          : "focus-visible:ring-primary"
-                      )}
-                      aria-invalid={!!errors.subject}
-                      aria-describedby={
-                        errors.subject ? "subject-error" : undefined
-                      }
-                    />
-                    {errors.subject && (
-                      <p
-                        id="subject-error"
-                        className="text-sm text-destructive animate-fade-in"
-                        role="alert"
-                      >
-                        {errors.subject.message}
-                      </p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Contact Form Bento Card */}
+          <BentoCard id="contact-form" title="Send a Message" badge="Interactive Form" className="lg:col-span-2">
+            <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="name" className="text-xs font-mono text-neutral-400">YOUR NAME *</Label>
+                  <Input
+                    id="name"
+                    {...register("name")}
+                    placeholder="Abdallah Edrees"
+                    className={cn(
+                      "bg-neutral-100 dark:bg-neutral-900/80 border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white placeholder:text-neutral-500 text-sm focus:border-blue-500 focus:ring-blue-500/20",
+                      errors.name && "border-red-500"
                     )}
-                  </div>
+                  />
+                  {errors.name && (
+                    <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
+                  )}
+                </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message *</Label>
-                    <Textarea
-                      id="message"
-                      {...register("message")}
-                      placeholder="Tell me about your project..."
-                      rows={6}
-                      className={cn(
-                        "transition-colors duration-200 resize-none",
-                        errors.message
-                          ? "border-destructive focus-visible:ring-destructive"
-                          : "focus-visible:ring-primary"
-                      )}
-                      aria-invalid={!!errors.message}
-                      aria-describedby={
-                        errors.message ? "message-error" : undefined
-                      }
-                    />
-                    {errors.message && (
-                      <p
-                        id="message-error"
-                        className="text-sm text-destructive animate-fade-in"
-                        role="alert"
-                      >
-                        {errors.message.message}
-                      </p>
+                <div className="space-y-1.5">
+                  <Label htmlFor="email" className="text-xs font-mono text-neutral-400">EMAIL ADDRESS *</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    {...register("email")}
+                    placeholder="your.email@company.com"
+                    className={cn(
+                      "bg-neutral-100 dark:bg-neutral-900/80 border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white placeholder:text-neutral-500 text-sm focus:border-blue-500 focus:ring-blue-500/20",
+                      errors.email && "border-red-500"
                     )}
+                  />
+                  {errors.email && (
+                    <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="subject" className="text-xs font-mono text-neutral-400">SUBJECT *</Label>
+                <Input
+                  id="subject"
+                  {...register("subject")}
+                  placeholder="Architectural Consultation / New Project Inquiry"
+                  className={cn(
+                    "bg-neutral-100 dark:bg-neutral-900/80 border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white placeholder:text-neutral-500 text-sm focus:border-blue-500 focus:ring-blue-500/20",
+                    errors.subject && "border-red-500"
+                  )}
+                />
+                {errors.subject && (
+                  <p className="text-xs text-red-500 mt-1">{errors.subject.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="message" className="text-xs font-mono text-neutral-400">MESSAGE *</Label>
+                <Textarea
+                  id="message"
+                  {...register("message")}
+                  placeholder="Details regarding your application requirements, timeline, and tech stack goals..."
+                  rows={4}
+                  className={cn(
+                    "bg-neutral-100 dark:bg-neutral-900/80 border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white placeholder:text-neutral-500 text-sm focus:border-blue-500 focus:ring-blue-500/20 resize-none",
+                    errors.message && "border-red-500"
+                  )}
+                />
+                {errors.message && (
+                  <p className="text-xs text-red-500 mt-1">{errors.message.message}</p>
+                )}
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow-lg shadow-blue-500/20 border border-blue-400/30 transition-all duration-300"
+                disabled={isSubmitting || !isValid || sendingEmail}
+              >
+                {isSubmitting || sendingEmail ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Transmitting Message...
                   </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <Send className="h-4 w-4" />
+                    Send Message
+                  </div>
+                )}
+              </Button>
+            </form>
+          </BentoCard>
 
-                  <Button
-                    type="submit"
-                    className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300"
-                    disabled={isSubmitting || !isValid}
-                  >
-                    {isSubmitting || sendingEmail ? (
-                      <div className="flex items-center gap-2">
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Sending...
-                      </div>
-                    ) : (
-                      <div className="flex items-center gap-2">
-                        <Send className="h-4 w-4" />
-                        Send Message
-                      </div>
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="space-y-8 flex-1"
-          >
-            {/* Contact Details */}
-            <Card className="shadow-elegant hover:shadow-glow transition-shadow duration-300">
-              <CardHeader>
-                <CardTitle className="text-2xl">Contact Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {contactInfo.map((info, index) => (
-                  <motion.div
+          {/* Contact Details & Social Links Bento Card */}
+          <div className="space-y-6 lg:col-span-1">
+            <BentoCard id="contact-channels" title="Direct Channels" badge="Reach Out">
+              <div className="space-y-3 mt-2">
+                {contactInfo.map((info) => (
+                  <div
                     key={info.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-4 p-3 rounded-lg hover:bg-accent transition-colors cursor-pointer"
                     onClick={info.action}
+                    className="flex items-center justify-between p-3 rounded-xl bg-neutral-100 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800 hover:border-blue-500/40 transition-colors cursor-pointer group"
                   >
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <info.icon className="h-5 w-5 text-primary" />
-                    </div>
-                    <div className="flex-grow overflow-x-auto md:overflow-auto">
-                      <h4 className="font-semibold text-foreground">
-                        {info.label}
-                      </h4>
-                      <p className="text-muted-foreground">{info.value}</p>
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-blue-500/10 text-blue-500">
+                        <info.icon className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono block">{info.label}</span>
+                        <span className="text-xs font-semibold text-neutral-900 dark:text-white group-hover:text-blue-500 transition-colors">
+                          {info.value}
+                        </span>
+                      </div>
                     </div>
                     {info.label === "Email" && (
-                      <Button variant="ghost" size="sm">
-                        {emailCopied ? (
-                          <CheckCircle className="h-4 w-4 text-green-500" />
-                        ) : (
-                          <Copy className="h-4 w-4" />
-                        )}
+                      <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-neutral-400 hover:text-blue-400">
+                        {emailCopied ? <CheckCircle className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
                       </Button>
                     )}
-                  </motion.div>
+                  </div>
                 ))}
-              </CardContent>
-            </Card>
+              </div>
 
-            {/* Social Links */}
-            <Card className="shadow-elegant hover:shadow-glow transition-shadow duration-300">
-              <CardHeader>
-                <CardTitle className="text-2xl">Connect with me</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-center gap-6">
-                  {socialLinks.map((social, index) => (
-                    <motion.a
-                      key={social.label}
-                      href={social.url}
+              <div className="mt-6 pt-6 border-t border-neutral-200 dark:border-neutral-800">
+                <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono block mb-3 text-center">
+                  SOCIAL ARCHITECTURES
+                </span>
+                <div className="flex justify-center gap-3">
+                  {socialLinks.map((s) => (
+                    <a
+                      key={s.label}
+                      href={s.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                      whileHover={{ scale: 1.1 }}
-                      className={`p-3 bg-muted rounded-full transition-all duration-300 ${social.color}`}
+                      className="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800 hover:border-blue-500 text-neutral-600 dark:text-neutral-300 hover:text-blue-500 transition-all hover:scale-105"
                     >
-                      <social.icon className="h-6 w-6" />
-                    </motion.a>
+                      <s.icon className="h-4 w-4" />
+                    </a>
                   ))}
                 </div>
-                <p className="text-center text-muted-foreground mt-6">
-                  Follow me on social media for updates and insights
-                </p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-        {/* Quick Response Info */}
-        <Card className="mt-10 max-w-3xl mx-auto shadow-elegant hover:shadow-glow transition-shadow duration-300">
-          <CardContent className="p-6 text-center">
-            <div className="mb-4">
-              <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
               </div>
-              <h3 className="font-semibold text-foreground">Quick Response</h3>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              I typically respond to messages within 24 hours. Looking forward
-              to hearing from you!
-            </p>
-          </CardContent>
-        </Card>
+            </BentoCard>
+          </div>
+        </div>
       </div>
     </section>
   );
