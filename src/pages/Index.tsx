@@ -2,6 +2,10 @@ import { lazy, Suspense } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
 import { HeroSection } from "@/components/hero-section";
+import { CanvasProvider } from "@/components/canvas/canvas-context";
+import { NodeCanvas } from "@/components/canvas/node-canvas";
+import { CanvasNavigation } from "@/components/canvas/canvas-navigation";
+import { MiniMap } from "@/components/canvas/mini-map";
 
 // Lazy-loaded below-the-fold sections
 const AboutSection = lazy(() =>
@@ -17,37 +21,49 @@ const ContactSection = lazy(() =>
   import("@/components/contact-section").then((m) => ({ default: m.ContactSection }))
 );
 
-// Fallback loader component for lazy sections
-const SectionLoader = () => (
-  <div className="py-20 flex items-center justify-center">
+// Fallback loader component for lazy sections inside canvas nodes
+const SectionLoader = ({ name }: { name: string }) => (
+  <div className="py-20 flex flex-col items-center justify-center space-y-3">
     <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+    <span className="font-mono text-xs text-muted-foreground">Initializing {name}...</span>
   </div>
 );
 
 const Index = () => {
-  return (
-    <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
-      <div className="min-h-screen bg-background text-foreground">
-        <Navigation />
-        <main>
-          <HeroSection />
-          <Suspense fallback={<SectionLoader />}>
-            <AboutSection />
-            <ProjectsSection />
-            <SkillsSection />
-            <ContactSection />
-          </Suspense>
-        </main>
+  const nodesMap = {
+    hero: <HeroSection />,
+    about: (
+      <Suspense fallback={<SectionLoader name="ABOUT_SYSTEM" />}>
+        <AboutSection />
+      </Suspense>
+    ),
+    projects: (
+      <Suspense fallback={<SectionLoader name="PROJECTS_REGISTRY" />}>
+        <ProjectsSection />
+      </Suspense>
+    ),
+    skills: (
+      <Suspense fallback={<SectionLoader name="TECH_STACK_MATRIX" />}>
+        <SkillsSection />
+      </Suspense>
+    ),
+    contact: (
+      <Suspense fallback={<SectionLoader name="COMMUNICATIONS_GATEWAY" />}>
+        <ContactSection />
+      </Suspense>
+    ),
+  };
 
-        {/* Footer */}
-        <footer className="bg-card border-t border-border py-8">
-          <div className="container mx-auto px-4 lg:px-8 text-center">
-            <p className="text-muted-foreground">
-              &copy;2025 Abdallah Edrees. Built with React.js, TypeScript & Shadcn.
-            </p>
-          </div>
-        </footer>
-      </div>
+  return (
+    <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+      <CanvasProvider>
+        <div className="h-screen w-screen overflow-hidden bg-background text-foreground relative font-sans">
+          <Navigation />
+          <CanvasNavigation />
+          <NodeCanvas nodesMap={nodesMap} />
+          <MiniMap />
+        </div>
+      </CanvasProvider>
     </ThemeProvider>
   );
 };

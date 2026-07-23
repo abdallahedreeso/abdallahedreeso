@@ -2,28 +2,24 @@ import { motion } from "framer-motion"
 import { ChevronDown, Github, Linkedin, Mail, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import chibiEdreeso from "@/assets/chibi-edreeso.webp"
+import { useCanvas } from "./canvas/canvas-context"
 
 export function HeroSection() {
-  const scrollToNext = () => {
-    const aboutSection = document.querySelector("#about")
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: "smooth" })
-    }
-  }
+  const { panToNode } = useCanvas()
 
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center bg-gradient-subtle relative overflow-hidden pt-16"
+      className="flex items-center justify-center relative overflow-hidden py-4"
     >
       {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="w-full relative z-10">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
           {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -35,10 +31,10 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4"
             >
               Abdallah{" "}
-              <span className=" bg-gradient-primary bg-clip-text text-transparent">
+              <span className="bg-gradient-primary bg-clip-text text-transparent">
                 Edrees
               </span>
             </motion.h1>
@@ -49,12 +45,12 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="mb-6"
             >
-              <h2 className="text-xl md:text-2xl text-muted-foreground mb-4">
-                Frontend Developer
+              <h2 className="text-lg md:text-xl text-muted-foreground mb-3 font-medium">
+                Frontend Developer &amp; UI Architect
               </h2>
-              <p className="text-lg text-muted-foreground max-w-lg mx-auto lg:mx-0">
+              <p className="text-sm md:text-base text-muted-foreground max-w-lg mx-auto lg:mx-0 leading-relaxed">
                 Specializing in Vue.js/Nuxt.js and React.js. Known for attention to detail in developing 
-                responsive, user-friendly interfaces and integrating APIs for seamless web experiences.
+                responsive, high-performance web applications and interactive canvas experiences.
               </p>
             </motion.div>
 
@@ -62,10 +58,10 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8"
+              className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-6"
             >
               <Button
-                size="lg"
+                size="default"
                 className="bg-gradient-primary hover:shadow-glow transition-all duration-300"
                 onClick={() => {
                   const link = document.createElement('a')
@@ -81,14 +77,9 @@ export function HeroSection() {
               </Button>
               <Button
                 variant="outline"
-                size="lg"
+                size="default"
                 className="hover:bg-accent transition-all duration-300"
-                onClick={() => {
-                  const contactSection = document.querySelector("#contact")
-                  if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: "smooth" })
-                  }
-                }}
+                onClick={() => panToNode("contact")}
               >
                 Get In Touch
               </Button>
@@ -98,7 +89,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
-              className="flex justify-center lg:justify-start space-x-4"
+              className="flex justify-center lg:justify-start space-x-3"
             >
               <Button variant="ghost" size="sm" className="hover:text-primary" asChild>
                 <a href="https://github.com/abdallahedreeso" target="_blank" rel="noopener noreferrer">
@@ -140,7 +131,7 @@ export function HeroSection() {
                 <img
                   src={chibiEdreeso}
                   alt="Abdallah Edrees - Frontend Developer"
-                  className="w-64 h-64 md:w-80 md:h-80 object-contain"
+                  className="w-48 h-48 md:w-64 md:h-64 object-contain"
                 />
               </motion.div>
               <div className="absolute inset-0 bg-gradient-primary opacity-20 rounded-full blur-2xl scale-110" />
@@ -148,22 +139,18 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
+        {/* Pan Indicator */}
+        <div className="flex justify-center mt-6">
           <Button
             variant="ghost"
             size="sm"
-            onClick={scrollToNext}
-            className="animate-bounce"
+            onClick={() => panToNode("about")}
+            className="animate-bounce text-xs font-mono text-muted-foreground flex items-center space-x-1"
           >
-            <ChevronDown className="h-6 w-6" />
+            <span>Navigate to About Node</span>
+            <ChevronDown className="h-4 w-4" />
           </Button>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
