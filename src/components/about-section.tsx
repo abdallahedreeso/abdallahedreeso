@@ -1,7 +1,7 @@
-import { motion } from "framer-motion"
-import { Calendar, MapPin, Award, Code } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { motion } from "framer-motion";
+import { Calendar, MapPin, Award, Code } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 const experiences = [
   {
@@ -30,22 +30,7 @@ const experiences = [
       "Earned Frontend internship certification"
     ]
   }
-]
-
-const education = [
-  {
-    degree: "Bachelor's Degree",
-    institution: "Faculty of Computers and Informatics, Zagazig University",
-    period: "Sep 2017 - Sep 2021",
-    details: "Graduation Project: Smart Library (Embedded system and Desktop App)"
-  },
-  {
-    degree: "Frontend Development Scholarship",
-    institution: "National Telecommunication Institute (NTI)",
-    period: "Mar 2023 - Apr 2023",
-    details: "Specialized training in modern web development technologies"
-  }
-]
+];
 
 const certifications = [
   {
@@ -68,76 +53,71 @@ const certifications = [
     title: "Coursera (University of Michigan): Frontend Development",
     url: "https://www.coursera.org/account/accomplishments/specialization/certificate/6UHZGQMSYPV9"
   },
-]
+];
 
 const yearsOfExperience = () => {
-  return Math.floor((new Date().getTime() - new Date('2024-07-01').getTime()) / (1000 * 60 * 60 * 24 * 365))
-}
+  return Math.max(1, Math.floor((new Date().getTime() - new Date('2024-07-01').getTime()) / (1000 * 60 * 60 * 24 * 365)));
+};
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-20 bg-background">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section id="about" className="w-full h-full pt-20 pb-20 px-4 lg:px-8 overflow-y-auto allow-inner-scroll">
+      <div className="container mx-auto max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            About <span className="text-primary">Me</span>
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
+            About <span className="text-primary bg-gradient-primary bg-clip-text text-transparent">Me</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            I'm a passionate frontend developer with over {yearsOfExperience()} years of experience creating beautiful,
-            functional, and user-friendly web applications. I love turning complex problems into
-            simple, elegant solutions that users enjoy interacting with.
+          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto">
+            Passionate Frontend Architect with {yearsOfExperience()}+ years of experience building performant,
+            scalable, and accessible web systems. Combining strong UX design instincts with robust React & Vue architectures.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 mb-16">
+        <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {/* Personal Info */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Card className="shadow-elegant hover:shadow-glow transition-shadow duration-300">
+            <Card className="shadow-elegant border-primary/20 bg-card/60 backdrop-blur-md hover:border-primary/40 transition-all duration-300">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Code className="h-5 w-5 text-primary" />
-                  Personal Details
+                <CardTitle className="flex items-center gap-2 text-primary">
+                  <Code className="h-5 w-5" />
+                  Personal Specs
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <h4 className="font-semibold text-sm text-muted-foreground mb-2">Name</h4>
-                    <p className="text-foreground">Abdallah Edrees</p>
+                    <h4 className="font-semibold text-muted-foreground mb-1">Name</h4>
+                    <p className="text-foreground font-medium">Abdallah Edrees</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-sm text-muted-foreground mb-2">Role</h4>
-                    <p className="text-foreground">Frontend Developer</p>
+                    <h4 className="font-semibold text-muted-foreground mb-1">Role</h4>
+                    <p className="text-foreground font-medium">Frontend Developer</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-sm text-muted-foreground mb-2">Experience</h4>
-                    <p className="text-foreground">{yearsOfExperience()}+ Years</p>
+                    <h4 className="font-semibold text-muted-foreground mb-1">Experience</h4>
+                    <p className="text-foreground font-medium">{yearsOfExperience()}+ Years</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-sm text-muted-foreground mb-2">Location</h4>
-                    <p className="text-foreground flex items-center gap-1">
-                      <MapPin className="h-4 w-4" />
-                      Egypt
+                    <h4 className="font-semibold text-muted-foreground mb-1">Location</h4>
+                    <p className="text-foreground font-medium flex items-center gap-1">
+                      <MapPin className="h-4 w-4 text-primary" />
+                      Cairo, Egypt
                     </p>
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-sm text-muted-foreground mb-2">About</h4>
-                  <p className="text-foreground leading-relaxed">
-                    I specialize in creating responsive, accessible, and performant web applications.
-                    When I'm not coding, you'll find me exploring new technologies, contributing to
-                    open source projects, or sharing knowledge with the developer community.
+                  <h4 className="font-semibold text-sm text-muted-foreground mb-1">Bio</h4>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    Dedicated to modern web engineering, responsive user interfaces, and clean component-driven systems.
                   </p>
                 </div>
               </CardContent>
@@ -146,35 +126,26 @@ export function AboutSection() {
 
           {/* Certifications */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <Card className="shadow-elegant hover:shadow-glow transition-shadow duration-300">
+            <Card className="shadow-elegant border-primary/20 bg-card/60 backdrop-blur-md hover:border-primary/40 transition-all duration-300">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Award className="h-5 w-5 text-primary" />
-                  Certifications & Achievements
+                <CardTitle className="flex items-center gap-2 text-primary">
+                  <Award className="h-5 w-5" />
+                  Certifications & Track Record
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid gap-3">
-                  {certifications.map((cert, index) => (
-                    <motion.div
-                      key={cert.title}
-                      initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <a href={cert.url} target="_blank" rel="noopener noreferrer">
-                        <Badge variant="secondary" className="w-full justify-start py-2 px-3">
-                          <Award className="h-4 w-4 mr-2" />
-                          {cert.title}
-                        </Badge>
-                      </a>
-                    </motion.div>
+                <div className="grid gap-2.5">
+                  {certifications.map((cert) => (
+                    <a key={cert.title} href={cert.url} target="_blank" rel="noopener noreferrer" className="block group">
+                      <Badge variant="outline" className="w-full justify-start py-2 px-3 border-primary/20 bg-background/40 group-hover:bg-primary/10 group-hover:border-primary/50 transition-colors">
+                        <Award className="h-4 w-4 mr-2 text-primary group-hover:scale-110 transition-transform" />
+                        <span className="truncate text-xs">{cert.title}</span>
+                      </Badge>
+                    </a>
                   ))}
                 </div>
               </CardContent>
@@ -182,64 +153,51 @@ export function AboutSection() {
           </motion.div>
         </div>
 
-        {/* Experience Timeline */}
+        {/* Experience Journey */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <h3 className="text-3xl font-bold text-center mb-12">
+          <h3 className="text-2xl font-bold text-center mb-6">
             Professional <span className="text-primary">Journey</span>
           </h3>
-          
-          <div className="space-y-8">
+
+          <div className="space-y-6">
             {experiences.map((exp, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="relative"
-              >
-                <Card className="shadow-elegant hover:shadow-glow transition-all duration-300 hover:scale-[1.02]">
-                  <CardHeader>
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                      <CardTitle className="text-xl">{exp.title}</CardTitle>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Calendar className="h-4 w-4" />
-                        {exp.period}
+              <Card key={index} className="border-primary/20 bg-card/60 backdrop-blur-md shadow-elegant hover:border-primary/40 transition-all duration-300">
+                <CardHeader className="pb-3">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                    <CardTitle className="text-lg text-primary">{exp.title}</CardTitle>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
+                      <Calendar className="h-3.5 w-3.5" />
+                      {exp.period}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs">
+                    <span className="font-semibold text-foreground">{exp.company}</span>
+                    <span className="flex items-center gap-1 text-muted-foreground">
+                      <MapPin className="h-3.5 w-3.5" />
+                      {exp.location}
+                    </span>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{exp.description}</p>
+                  <div className="grid md:grid-cols-2 gap-2">
+                    {exp.achievements.map((achievement, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 shrink-0" />
+                        <span>{achievement}</span>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-4 text-sm">
-                      <span className="font-semibold text-primary">{exp.company}</span>
-                      <span className="flex items-center gap-1 text-muted-foreground">
-                        <MapPin className="h-4 w-4" />
-                        {exp.location}
-                      </span>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground mb-4">{exp.description}</p>
-                    <div className="space-y-2">
-                      <h5 className="font-semibold text-sm">Key Achievements:</h5>
-                      <ul className="grid md:grid-cols-2 gap-2">
-                        {exp.achievements.map((achievement, idx) => (
-                          <li key={idx} className="flex items-center gap-2 text-sm">
-                            <div className="w-2 h-2 bg-primary rounded-full" />
-                            {achievement}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

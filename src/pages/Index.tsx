@@ -1,9 +1,12 @@
 import { lazy, Suspense } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
-import { HeroSection } from "@/components/hero-section";
+import { SpatialSliderLayout } from "@/components/spatial-slider/spatial-slider-layout";
 
-// Lazy-loaded below-the-fold sections
+// Performance Protection: Isolated lazy loaded slide components
+const HeroSection = lazy(() =>
+  import("@/components/hero-section").then((m) => ({ default: m.HeroSection }))
+);
 const AboutSection = lazy(() =>
   import("@/components/about-section").then((m) => ({ default: m.AboutSection }))
 );
@@ -17,36 +20,48 @@ const ContactSection = lazy(() =>
   import("@/components/contact-section").then((m) => ({ default: m.ContactSection }))
 );
 
-// Fallback loader component for lazy sections
-const SectionLoader = () => (
-  <div className="py-20 flex items-center justify-center">
-    <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+// High-tech Cyber-Minimalist Suspense Fallback Loader
+const SlideLoader = () => (
+  <div className="w-full h-full flex flex-col items-center justify-center bg-background/80 backdrop-blur-md">
+    <div className="relative flex items-center justify-center">
+      {/* Pulse glow background */}
+      <div className="absolute w-20 h-20 bg-primary/20 rounded-full blur-xl animate-pulse" />
+      {/* Outer spinning ring */}
+      <div className="w-12 h-12 border-2 border-primary/20 border-t-primary border-r-cyan-400 rounded-full animate-spin" />
+      {/* Inner pulsing core */}
+      <div className="absolute w-4 h-4 bg-primary rounded-full shadow-[0_0_10px_rgba(59,130,246,0.8)] animate-ping" />
+    </div>
+    <span className="mt-4 font-mono text-xs text-primary/80 uppercase tracking-widest animate-pulse">
+      Loading Spatial Viewport...
+    </span>
   </div>
 );
 
 const Index = () => {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="portfolio-theme">
-      <div className="min-h-screen bg-background text-foreground">
+    <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+      <div className="w-screen h-screen overflow-hidden bg-background text-foreground relative select-none">
+        {/* Spatial Top Navigation Header */}
         <Navigation />
-        <main>
-          <HeroSection />
-          <Suspense fallback={<SectionLoader />}>
+
+        {/* Spatial Slider Container */}
+        <SpatialSliderLayout>
+          <Suspense fallback={<SlideLoader />}>
+            <HeroSection />
+          </Suspense>
+          <Suspense fallback={<SlideLoader />}>
             <AboutSection />
+          </Suspense>
+          <Suspense fallback={<SlideLoader />}>
             <ProjectsSection />
+          </Suspense>
+          <Suspense fallback={<SlideLoader />}>
             <SkillsSection />
+          </Suspense>
+          <Suspense fallback={<SlideLoader />}>
             <ContactSection />
           </Suspense>
-        </main>
-
-        {/* Footer */}
-        <footer className="bg-card border-t border-border py-8">
-          <div className="container mx-auto px-4 lg:px-8 text-center">
-            <p className="text-muted-foreground">
-              &copy;2025 Abdallah Edrees. Built with React.js, TypeScript & Shadcn.
-            </p>
-          </div>
-        </footer>
+        </SpatialSliderLayout>
       </div>
     </ThemeProvider>
   );

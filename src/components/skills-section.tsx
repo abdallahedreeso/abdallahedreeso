@@ -1,137 +1,105 @@
-import { motion } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 const skillCategories = [
   {
-    title: "Frontend Frameworks & Libraries",
+    title: "Frontend Frameworks & Ecosystem",
     skills: [
-      { name: "Vue.js", icon: "💚" },
-      { name: "Nuxt.js", icon: "💚" },
-      { name: "React.js", icon: "⚛️" },
+      { name: "Vue.js 3 / Composition API", icon: "💚" },
+      { name: "Nuxt.js 3", icon: "💚" },
+      { name: "React.js / Next.js", icon: "⚛️" },
     ]
   },
   {
     title: "Programming Languages",
     skills: [
-      { name: "JavaScript", icon: "🟨" },
       { name: "TypeScript", icon: "🔷" },
-      { name: "HTML5", icon: "🟠" },
-      { name: "CSS3", icon: "🔵" },
+      { name: "JavaScript (ES6+)", icon: "🟨" },
+      { name: "HTML5 / CSS3", icon: "🟠" },
     ]
   },
   {
-    title: "Styling & UI Frameworks",
+    title: "Styling & UI Systems",
     skills: [
       { name: "Tailwind CSS", icon: "🌊" },
-      { name: "Vuetify", icon: "💜" },
-      { name: "Ant Design", icon: "🐜" },
-      { name: "Bootstrap", icon: "🅱️" },
-      { name: "Sass/SCSS", icon: "🎯" },
+      { name: "Shadcn UI", icon: "🎯" },
+      { name: "Ant Design / Vuetify", icon: "💜" },
+      { name: "Sass / SCSS", icon: "🎯" },
     ]
   },
   {
-    title: "State Management & Validation",
+    title: "State Architecture & Motion",
     skills: [
-      { name: "Pinia", icon: "🍍" },
-      { name: "Vuex", icon: "📦" },
-      { name: "VeeValidate", icon: "✅" },
-      { name: "Vuelidate", icon: "✅" },
+      { name: "Framer Motion", icon: "✨" },
+      { name: "Pinia / Zustand", icon: "🍍" },
+      { name: "TanStack Query", icon: "⚡" },
     ]
   },
   {
-    title: "Tools & Technologies",
+    title: "Tools & Testing",
     skills: [
-      { name: "Git & GitHub", icon: "🐙" },
-      { name: "ESLint", icon: "🔍" },
-      { name: "Figma", icon: "🎨" },
-      { name: "Vue Test Utils", icon: "🧪" },
+      { name: "Vite / Webpack", icon: "⚡" },
+      { name: "Git & GitHub Actions", icon: "🐙" },
+      { name: "ESLint / Prettier", icon: "🔍" },
+      { name: "Figma UI/UX", icon: "🎨" },
     ]
   },
   {
-    title: "Backend & Database",
+    title: "Backend & Database Integrations",
     skills: [
-      { name: "Supabase", icon: "⚡" },
-      { name: "Node.js", icon: "🟢" },
-      { name: "Express", icon: "🚂" },
-      { name: "MongoDB", icon: "🍃" },
-      { name: "MySQL", icon: "🐬" },
+      { name: "Supabase / Firebase", icon: "⚡" },
+      { name: "Node.js / REST APIs", icon: "🟢" },
+      { name: "MongoDB / MySQL", icon: "🍃" },
     ]
   },
-  {
-    title: "Additional Languages",
-    skills: [
-      { name: "Python", icon: "🐍" },
-      { name: "Java", icon: "☕" },
-      { name: "C++", icon: "🔧" },
-      { name: "C", icon: "⚙️" },
-    ]
-  }
-]
+];
 
 const tools = [
   "VS Code", "Postman", "Chrome DevTools", "Figma", "Notion", 
-  "Slack", "Jira", "Linear", "Vercel", "Netlify"
-]
+  "Git", "Jira", "Vercel", "Netlify", "Linear"
+];
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="py-20 bg-background">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section id="skills" className="w-full h-full pt-20 pb-20 px-4 lg:px-8 overflow-y-auto allow-inner-scroll">
+      <div className="container mx-auto max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Skills & <span className="text-primary">Expertise</span>
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
+            Technical <span className="bg-gradient-primary bg-clip-text text-transparent">Capabilities</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            I'm passionate about staying up-to-date with the latest technologies and continuously
-            improving my skill set to deliver cutting-edge solutions.
+          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto">
+            Comprehensive domain expertise in modern frontend engineering, responsive component architecture, and spatial interface performance.
           </p>
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
             >
-              <Card className="shadow-elegant hover:shadow-glow transition-all duration-300 hover:scale-[1.02] h-full">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-6 text-center">
+              <Card className="border-primary/20 bg-card/60 backdrop-blur-md shadow-lg hover:border-primary/40 transition-all duration-300 h-full">
+                <CardContent className="p-5">
+                  <h3 className="text-base font-semibold text-primary mb-4 border-b border-primary/10 pb-2">
                     {category.title}
                   </h3>
-                  <div className="space-y-4">
-                    {category.skills.map((skill, skillIndex) => (
-                      <motion.div
-                        key={skill.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          duration: 0.5, 
-                          delay: categoryIndex * 0.1 + skillIndex * 0.05 
-                        }}
-                        viewport={{ once: true }}
-                        className="space-y-2"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg">{skill.icon}</span>
-                            <span className="font-medium text-foreground">{skill.name}</span>
-                          </div>
-                          
+                  <div className="space-y-3">
+                    {category.skills.map((skill) => (
+                      <div key={skill.name} className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-2">
+                          <span>{skill.icon}</span>
+                          <span className="font-medium text-foreground">{skill.name}</span>
                         </div>
-                        
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </CardContent>
@@ -142,36 +110,27 @@ export function SkillsSection() {
 
         {/* Tools & Software */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="text-center"
         >
-          <h3 className="text-3xl font-bold text-foreground mb-8">
-            Tools & <span className="text-primary">Software</span>
+          <h3 className="text-xl font-bold text-foreground mb-6">
+            Ecosystem & <span className="text-primary">Tools</span>
           </h3>
-          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-            {tools.map((tool, index) => (
-              <motion.div
+          <div className="flex flex-wrap justify-center gap-2.5 max-w-3xl mx-auto">
+            {tools.map((tool) => (
+              <Badge
                 key={tool}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05 }}
+                variant="outline"
+                className="px-3.5 py-1.5 text-xs border-primary/20 bg-background/50 text-foreground hover:bg-primary/10 hover:border-primary/50 transition-colors cursor-default"
               >
-                <Badge 
-                  variant="secondary" 
-                  className="px-4 py-2 text-sm hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
-                >
-                  {tool}
-                </Badge>
-              </motion.div>
+                {tool}
+              </Badge>
             ))}
           </div>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
