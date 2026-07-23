@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Scroll, ExternalLink, Github, CheckCircle2, ChevronRight, Sparkles } from "lucide-react";
+import { retroAudio } from "@/utils/retroAudio";
 
 interface Quest {
   id: string;
@@ -86,29 +87,34 @@ export const QuestBoard: React.FC = () => {
         setIsTyping(false);
         clearInterval(timer);
       }
-    }, 15);
+    }, 12);
 
     return () => clearInterval(timer);
   }, [selectedQuest]);
 
+  const handleSelect = (quest: Quest) => {
+    setSelectedQuest(quest);
+    retroAudio.playHoverSound();
+  };
+
   return (
-    <section id="quests" className="py-12 px-4 max-w-6xl mx-auto">
-      <div className="pixel-box-cyan p-4 mb-6 flex items-center justify-between">
+    <section id="quests" className="w-full max-w-6xl mx-auto h-full flex flex-col justify-center px-4 py-2 overflow-y-auto">
+      <div className="pixel-box-cyan p-3 sm:p-4 mb-4 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <Scroll className="w-6 h-6 text-sky-400" />
-          <h2 className="font-pixel text-lg sm:text-xl text-sky-400 pixel-text-shadow">
+          <h2 className="font-pixel text-base sm:text-xl text-sky-400 pixel-text-shadow">
             QUEST BOARD [PROJECT ARCHIVE]
           </h2>
         </div>
-        <span className="font-dialogue text-lg text-emerald-400">
+        <span className="font-dialogue text-base sm:text-lg text-emerald-400">
           QUESTS CLEARED: {QUEST_LIST.length} / {QUEST_LIST.length}
         </span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 overflow-y-auto">
         {/* Left List: Quests */}
-        <div className="lg:col-span-5 pixel-box p-4 space-y-3">
-          <p className="font-pixel text-xs text-slate-400 pb-2 border-b border-slate-800 flex items-center gap-2">
+        <div className="lg:col-span-5 pixel-box p-3 sm:p-4 space-y-3">
+          <p className="font-pixel text-[10px] text-slate-400 pb-2 border-b border-slate-800 flex items-center gap-2">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" /> SELECT QUEST FOR DETAILS
           </p>
 
@@ -119,8 +125,8 @@ export const QuestBoard: React.FC = () => {
               return (
                 <div
                   key={quest.id}
-                  onClick={() => setSelectedQuest(quest)}
-                  onMouseEnter={() => setSelectedQuest(quest)}
+                  onClick={() => handleSelect(quest)}
+                  onMouseEnter={() => handleSelect(quest)}
                   className={`relative cursor-pointer p-3 transition-colors ${
                     isSelected
                       ? "pixel-box-gold bg-amber-950/40 text-amber-300"
@@ -140,10 +146,10 @@ export const QuestBoard: React.FC = () => {
 
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <span className="font-dialogue text-sm text-slate-400 block">
+                      <span className="font-dialogue text-xs text-slate-400 block">
                         LVL {quest.levelReq} • {quest.category}
                       </span>
-                      <h3 className="font-pixel text-xs sm:text-sm text-slate-100 mt-1">
+                      <h3 className="font-pixel text-xs text-slate-100 mt-1">
                         {quest.title}
                       </h3>
                     </div>
@@ -160,37 +166,37 @@ export const QuestBoard: React.FC = () => {
 
         {/* Right Details: RPG Typewriter Dialogue Box */}
         <div className="lg:col-span-7 flex flex-col justify-between">
-          <div className="pixel-box-gold p-6 space-y-4 flex-1 flex flex-col justify-between">
+          <div className="pixel-box-gold p-4 sm:p-5 space-y-4 flex-1 flex flex-col justify-between">
             {/* Header */}
             <div>
-              <div className="flex items-center justify-between border-b-2 border-slate-800 pb-3 mb-3">
+              <div className="flex items-center justify-between border-b-2 border-slate-800 pb-2 mb-3">
                 <span className="font-pixel text-xs text-amber-400 flex items-center gap-2">
                   <ChevronRight className="w-4 h-4 text-amber-400 animate-pulse" />
                   QUEST: {selectedQuest.title}
                 </span>
-                <span className="font-pixel text-xs text-emerald-400 bg-emerald-950/80 px-2 py-1 border border-emerald-500/40">
+                <span className="font-pixel text-[10px] text-emerald-400 bg-emerald-950/80 px-2 py-0.5 border border-emerald-500/40">
                   + {selectedQuest.xpReward} XP
                 </span>
               </div>
 
               {/* Typewriter Text Window */}
-              <div className="min-h-[120px] bg-slate-950 p-4 border-2 border-amber-900/60 text-amber-100 font-dialogue text-xl leading-relaxed tracking-wide">
+              <div className="min-h-[100px] bg-slate-950 p-3 sm:p-4 border-2 border-amber-900/60 text-amber-100 font-dialogue text-lg sm:text-xl leading-relaxed tracking-wide">
                 <p>
                   {displayedText}
-                  {isTyping && <span className="inline-block w-2 h-5 bg-amber-400 ml-1 animate-blink" />}
+                  {isTyping && <span className="inline-block w-2 h-4 bg-amber-400 ml-1 animate-blink" />}
                 </p>
               </div>
             </div>
 
             {/* Tech Stack & Action Links */}
-            <div className="mt-4 pt-4 border-t border-slate-800 space-y-4">
+            <div className="mt-3 pt-3 border-t border-slate-800 space-y-3">
               <div>
-                <p className="font-pixel text-[10px] text-slate-400 mb-2">REQUIRED ITEM STACK:</p>
-                <div className="flex flex-wrap gap-2">
+                <p className="font-pixel text-[9px] text-slate-400 mb-1.5">REQUIRED ITEM STACK:</p>
+                <div className="flex flex-wrap gap-1.5">
                   {selectedQuest.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="font-pixel text-[10px] bg-slate-900 text-sky-300 px-2 py-1 border border-sky-600/40"
+                      className="font-pixel text-[9px] bg-slate-900 text-sky-300 px-2 py-0.5 border border-sky-600/40"
                     >
                       {tech}
                     </span>
@@ -198,15 +204,15 @@ export const QuestBoard: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-wrap gap-3 pt-1">
                 {selectedQuest.demoUrl && (
                   <a
                     href={selectedQuest.demoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="pixel-box-cyan px-4 py-2 font-pixel text-xs text-sky-300 hover:text-white flex items-center gap-2 transition-transform hover:scale-105"
+                    className="pixel-box-cyan px-3 py-1.5 font-pixel text-[11px] text-sky-300 hover:text-white flex items-center gap-2 transition-transform hover:scale-105"
                   >
-                    <ExternalLink className="w-4 h-4" /> LAUNCH DEMO
+                    <ExternalLink className="w-3.5 h-3.5" /> LAUNCH DEMO
                   </a>
                 )}
                 {selectedQuest.githubUrl && (
@@ -214,9 +220,9 @@ export const QuestBoard: React.FC = () => {
                     href={selectedQuest.githubUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="pixel-box px-4 py-2 font-pixel text-xs text-slate-300 hover:text-white flex items-center gap-2 transition-transform hover:scale-105"
+                    className="pixel-box px-3 py-1.5 font-pixel text-[11px] text-slate-300 hover:text-white flex items-center gap-2 transition-transform hover:scale-105"
                   >
-                    <Github className="w-4 h-4" /> VIEW CODE
+                    <Github className="w-3.5 h-3.5" /> VIEW CODE
                   </a>
                 )}
               </div>
@@ -227,3 +233,5 @@ export const QuestBoard: React.FC = () => {
     </section>
   );
 };
+
+export default QuestBoard;

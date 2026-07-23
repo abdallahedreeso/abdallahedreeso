@@ -16,8 +16,12 @@ const TABS: NavTab[] = [
   { id: "contact", label: "CONTACT", icon: <Mail className="w-4 h-4" /> },
 ];
 
-export const RPGHeaderNav: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("status");
+interface RPGHeaderNavProps {
+  activeSection: string;
+  onSelectSection: (id: string) => void;
+}
+
+export const RPGHeaderNav: React.FC<RPGHeaderNavProps> = ({ activeSection, onSelectSection }) => {
   const [soundOn, setSoundOn] = useState(false);
 
   const toggleMusic = () => {
@@ -28,13 +32,9 @@ export const RPGHeaderNav: React.FC = () => {
     }
   };
 
-  const scrollToSection = (id: string) => {
-    setActiveTab(id);
+  const handleTabClick = (id: string) => {
+    onSelectSection(id);
     retroAudio.playSelectSound();
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
   };
 
   return (
@@ -53,12 +53,12 @@ export const RPGHeaderNav: React.FC = () => {
         {/* Tab Navigation Menu */}
         <nav className="flex items-center gap-1 sm:gap-3">
           {TABS.map((tab) => {
-            const isActive = activeTab === tab.id;
+            const isActive = activeSection === tab.id;
 
             return (
               <button
                 key={tab.id}
-                onClick={() => scrollToSection(tab.id)}
+                onClick={() => handleTabClick(tab.id)}
                 onMouseEnter={() => retroAudio.playHoverSound()}
                 className={`relative px-2 sm:px-4 py-1.5 font-pixel text-[10px] sm:text-xs flex items-center gap-1.5 transition-colors ${
                   isActive
