@@ -126,7 +126,8 @@ All colors MUST be HSL.
 }
 body,
 html {
-  overflow-x: hidden  ;
+  overflow-x: hidden;
+  background-color: #090b10;
 }
 @layer base {
   * {
@@ -137,3 +138,77 @@ html {
     @apply bg-background text-foreground;
   }
 }
+
+/* 16-Bit RPG Quest Log Retro CSS Utilities */
+.pixel-box {
+  background-color: #0d1117;
+  border: 4px solid #1e293b;
+  box-shadow: 
+    0 -4px 0 -2px #334155,
+    0 4px 0 -2px #334155,
+    -4px 0 0 -2px #334155,
+    4px 0 0 -2px #334155,
+    inset 0 0 0 2px #0f172a;
+  image-rendering: pixelated;
+}
+
+.pixel-box-gold {
+  background-color: #0f141d;
+  border: 4px solid #fbbf24;
+  box-shadow: 
+    0 -4px 0 -2px #f59e0b,
+    0 4px 0 -2px #f59e0b,
+    -4px 0 0 -2px #f59e0b,
+    4px 0 0 -2px #f59e0b,
+    inset 0 0 0 2px #451a03;
+  image-rendering: pixelated;
+}
+
+.pixel-box-cyan {
+  background-color: #0b1320;
+  border: 4px solid #38bdf8;
+  box-shadow: 
+    0 -4px 0 -2px #0284c7,
+    0 4px 0 -2px #0284c7,
+    -4px 0 0 -2px #0284c7,
+    4px 0 0 -2px #0284c7,
+    inset 0 0 0 2px #0c4a6e;
+  image-rendering: pixelated;
+}
+
+.pixel-box-emerald {
+  background-color: #091712;
+  border: 4px solid #34d399;
+  box-shadow: 
+    0 -4px 0 -2px #059669,
+    0 4px 0 -2px #059669,
+    -4px 0 0 -2px #059669,
+    4px 0 0 -2px #059669,
+    inset 0 0 0 2px #064e3b;
+  image-rendering: pixelated;
+}
+
+.pixel-text-shadow {
+  text-shadow: 2px 2px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000;
+}
+
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99;
+  background: 
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  background-size: 100% 3px, 6px 100%;
+  opacity: 0.6;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 0.8s infinite;
+}

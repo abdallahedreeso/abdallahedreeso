@@ -80,6 +80,8 @@ export default {
 			},
 			fontFamily: {
 				'sans': ['Inter', 'system-ui', 'sans-serif'],
+				'pixel': ['"Press Start 2P"', 'monospace'],
+				'dialogue': ['VT323', 'monospace'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
