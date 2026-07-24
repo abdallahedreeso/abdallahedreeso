@@ -1,9 +1,12 @@
 import { motion } from "framer-motion"
 import { ChevronDown, Github, Linkedin, Mail, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useWindowFocus } from "@/components/os/window-focus-context"
 import chibiEdreeso from "@/assets/chibi-edreeso.webp"
 
 export function HeroSection() {
+  const { isFocused } = useWindowFocus()
+
   const scrollToNext = () => {
     const aboutSection = document.querySelector("#about")
     if (aboutSection) {
@@ -127,14 +130,16 @@ export function HeroSection() {
           >
             <div className="relative">
               <motion.div
-                animate={{
-                  y: [0, -10, 0],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                animate={isFocused ? { y: [0, -10, 0] } : { y: 0 }}
+                transition={
+                  isFocused
+                    ? {
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }
+                    : { duration: 0.3 }
+                }
                 className="relative z-10"
               >
                 <img

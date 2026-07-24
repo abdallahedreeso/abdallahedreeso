@@ -4,6 +4,7 @@ import { usePortfolioStore, WindowId } from "@/store/use-portfolio-store";
 import { TopBar } from "@/components/os/top-bar";
 import { OSDock } from "@/components/os/dock";
 import { OSWindowFrame } from "@/components/os/window-frame";
+import { AmbientCanvasBackground } from "@/components/cybernetic/canvas-background";
 import { Terminal, User, FolderGit2, Cpu, Mail, Sparkles, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -40,7 +41,7 @@ function WindowLoader({ title }: { title: string }) {
 }
 
 export function DesktopWorkspace() {
-  const { windows, openWindow } = usePortfolioStore();
+  const { windows, openWindow, hasMaximizedWindow } = usePortfolioStore();
 
   const openWindowIds = (Object.keys(windows) as WindowId[]).filter(
     (id) => windows[id].isOpen
@@ -48,6 +49,9 @@ export function DesktopWorkspace() {
 
   return (
     <div className="w-screen h-screen relative overflow-hidden bg-slate-100/90 dark:bg-[#030712] text-slate-800 dark:text-zinc-100 flex flex-col select-none transition-colors duration-300">
+      {/* 3D Canvas Background with WebGL Frame Loop Pause on Maximize */}
+      <AmbientCanvasBackground isPaused={hasMaximizedWindow} />
+
       {/* OS Ambient Lighting & Grid Overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(14,165,233,0.12),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(6,182,212,0.15),rgba(255,255,255,0))]" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e140_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e140_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f293710_1px,transparent_1px),linear-gradient(to_bottom,#1f293710_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />

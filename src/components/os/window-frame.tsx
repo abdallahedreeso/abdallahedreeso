@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, useDragControls } from "framer-motion";
 import { usePortfolioStore, WindowId } from "@/store/use-portfolio-store";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { WindowFocusProvider } from "@/components/os/window-focus-context";
 import {
   X,
   Minus,
@@ -44,11 +45,14 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
   const isEffectiveMaximized = win.isMaximized || isMobile;
   const IconComponent = ICON_MAP[win.iconName] || Terminal;
 
+  // Architectural Solution 1: Focus-Based Glassmorphism
+  // Active window gets backdrop-blur-2xl for maximum fidelity.
+  // Inactive background windows dynamically downgrade blur to backdrop-blur-sm with a subtle darkening overlay to eliminate GPU rasterization bottlenecks.
   const blurClass = isDragging
     ? "backdrop-blur-md"
     : isActive
     ? "backdrop-blur-2xl"
-    : "backdrop-blur-xl";
+    : "backdrop-blur-sm";
 
   return (
     <motion.div
@@ -87,10 +91,10 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
               height: Math.min(win.defaultSize.height, window.innerHeight - 130),
             }),
       }}
-      className={`flex flex-col rounded-xl overflow-hidden transition-colors duration-300 ${
+      className={`flex flex-col rounded-xl overflow-hidden transition-all duration-300 ${
         isActive
           ? `bg-white/85 dark:bg-zinc-950/90 ${blurClass} border border-cyan-500/40 dark:border-cyan-500/30 shadow-[0_10px_35px_rgba(6,182,212,0.15)] dark:shadow-[0_0_40px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/30 dark:ring-cyan-500/20 text-slate-900 dark:text-zinc-100`
-          : `bg-white/70 dark:bg-zinc-950/80 ${blurClass} border border-slate-200/80 dark:border-zinc-800 shadow-xl opacity-95 text-slate-800 dark:text-zinc-100`
+          : `bg-slate-900/35 dark:bg-black/50 ${blurClass} border border-slate-300/40 dark:border-zinc-800/80 shadow-lg text-slate-700 dark:text-zinc-300`
       }`}
     >
       {/* Window Titlebar (Drag Handle) */}
@@ -106,7 +110,7 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
         } transition-colors ${
           isActive
             ? "bg-slate-100/90 dark:bg-zinc-900/90 border-slate-200/80 dark:border-white/10 text-slate-900 dark:text-zinc-100"
-            : "bg-slate-100/50 dark:bg-zinc-900/50 border-slate-200/50 dark:border-white/5 text-slate-500 dark:text-zinc-400"
+            : "bg-slate-900/40 dark:bg-zinc-950/60 border-slate-700/30 dark:border-white/5 text-slate-400 dark:text-zinc-400"
         }`}
       >
         {/* macOS Traffic Lights */}
@@ -162,10 +166,16 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
         </div>
       </div>
 
-      {/* Window Body Container */}
-      <div className="flex-1 overflow-auto p-4 md:p-6 custom-scrollbar text-slate-800 dark:text-zinc-100 selection:bg-cyan-500/30">
-        {children}
-      </div>
+      {/* Window Body Container wrapped with WindowFocusProvider */}
+      <WindowFocusProvider isFocused={isActive}>
+        <div className="flex-1 overflow-auto p-4 md:p-6 custom-scrollbar text-slate-800 dark:text-zinc-100 selection:bg-cyan-500/30 relative">
+          {/* Subtle Darkening Overlay for Inactive Windows */}
+          {!isActive && (
+            <div className="absolute inset-0 bg-black/15 dark:bg-black/30 pointer-events-none z-10 transition-opacity duration-300" />
+          )}
+          {children}
+        </div>
+      </WindowFocusProvider>
     </motion.div>
   );
 }

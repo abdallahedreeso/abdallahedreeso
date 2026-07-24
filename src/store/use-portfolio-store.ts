@@ -244,15 +244,20 @@ export const portfolioStoreActions = {
   },
 };
 
-export function usePortfolioStore(): PortfolioState & typeof portfolioStoreActions {
+export function usePortfolioStore(): PortfolioState & { hasMaximizedWindow: boolean } & typeof portfolioStoreActions {
   const state = useSyncExternalStore(
     portfolioStoreActions.subscribe,
     portfolioStoreActions.getState,
     portfolioStoreActions.getState
   );
 
+  const hasMaximizedWindow = Object.values(state.windows).some(
+    (w) => w.isOpen && !w.isMinimized && w.isMaximized
+  );
+
   return {
     ...state,
+    hasMaximizedWindow,
     ...portfolioStoreActions,
   };
 }
