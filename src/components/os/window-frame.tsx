@@ -87,10 +87,10 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
               height: Math.min(win.defaultSize.height, window.innerHeight - 130),
             }),
       }}
-      className={`flex flex-col rounded-xl overflow-hidden transition-shadow duration-300 ${
+      className={`flex flex-col rounded-xl overflow-hidden transition-colors duration-300 ${
         isActive
-          ? `bg-zinc-950/90 ${blurClass} border border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/20`
-          : `bg-zinc-950/80 ${blurClass} border border-zinc-800 shadow-2xl opacity-95`
+          ? `bg-white/85 dark:bg-zinc-950/90 ${blurClass} border border-cyan-500/40 dark:border-cyan-500/30 shadow-[0_10px_35px_rgba(6,182,212,0.15)] dark:shadow-[0_0_40px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/30 dark:ring-cyan-500/20 text-slate-900 dark:text-zinc-100`
+          : `bg-white/70 dark:bg-zinc-950/80 ${blurClass} border border-slate-200/80 dark:border-zinc-800 shadow-xl opacity-95 text-slate-800 dark:text-zinc-100`
       }`}
     >
       {/* Window Titlebar (Drag Handle) */}
@@ -105,8 +105,8 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
           isEffectiveMaximized ? "cursor-default" : "cursor-grab active:cursor-grabbing"
         } transition-colors ${
           isActive
-            ? "bg-zinc-900/90 border-white/10 text-zinc-100"
-            : "bg-zinc-900/50 border-white/5 text-zinc-400"
+            ? "bg-slate-100/90 dark:bg-zinc-900/90 border-slate-200/80 dark:border-white/10 text-slate-900 dark:text-zinc-100"
+            : "bg-slate-100/50 dark:bg-zinc-900/50 border-slate-200/50 dark:border-white/5 text-slate-500 dark:text-zinc-400"
         }`}
       >
         {/* macOS Traffic Lights */}
@@ -152,18 +152,18 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
 
         {/* Window Title & Icon */}
         <div className="flex items-center gap-2 text-xs font-mono font-medium tracking-wide">
-          <IconComponent className={`w-3.5 h-3.5 ${isActive ? "text-cyan-400" : "text-zinc-400"}`} />
+          <IconComponent className={`w-3.5 h-3.5 ${isActive ? "text-cyan-600 dark:text-cyan-400" : "text-slate-400 dark:text-zinc-400"}`} />
           <span>{win.title}</span>
         </div>
 
         {/* Action button right side indicator */}
         <div className="w-12 flex justify-end">
-          <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-cyan-400 shadow-[0_0_6px_rgba(6,182,212,0.8)]" : "bg-zinc-600"}`} />
+          <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-cyan-500 dark:bg-cyan-400 shadow-[0_0_6px_rgba(6,182,212,0.8)]" : "bg-slate-400 dark:bg-zinc-600"}`} />
         </div>
       </div>
 
       {/* Window Body Container */}
-      <div className="flex-1 overflow-auto p-4 md:p-6 custom-scrollbar text-zinc-100 selection:bg-cyan-500/30">
+      <div className="flex-1 overflow-auto p-4 md:p-6 custom-scrollbar text-slate-800 dark:text-zinc-100 selection:bg-cyan-500/30">
         {children}
       </div>
     </motion.div>

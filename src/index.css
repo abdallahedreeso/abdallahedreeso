@@ -132,7 +132,7 @@ body {
   margin: 0;
   padding: 0;
   user-select: none;
-  background-color: #030712;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Cyber OS custom scrollbars inside windows */
@@ -142,16 +142,20 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(3, 7, 18, 0.6);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(148, 163, 184, 0.4);
   border-radius: 9999px;
 }
 
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(6, 182, 212, 0.5);
+  background: rgba(6, 182, 212, 0.6);
 }
 
 @layer base {
