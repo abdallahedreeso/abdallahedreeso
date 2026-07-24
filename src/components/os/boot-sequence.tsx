@@ -64,7 +64,7 @@ export function BootSequence() {
             <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-            <span className="ml-2 font-semibold text-zinc-300">ABDALLAH OS v2.4 BIOS</span>
+            <span className="ml-2 font-semibold text-zinc-300">EDREESO OS v2.4 BIOS</span>
           </div>
           <span className="text-cyan-400/80 animate-pulse">BOOTING</span>
         </div>
