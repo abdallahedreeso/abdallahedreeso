@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, useDragControls } from "framer-motion";
 import { usePortfolioStore, WindowId } from "@/store/use-portfolio-store";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   X,
   Minus,
@@ -30,6 +31,8 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
   const { windows, activeWindowId, closeWindow, minimizeWindow, toggleMaximizeWindow, focusWindow } =
     usePortfolioStore();
   const dragControls = useDragControls();
+  const isMobile = useIsMobile();
+  const [isDragging, setIsDragging] = useState(false);
 
   const win = windows[id];
 
@@ -38,7 +41,14 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
   }
 
   const isActive = activeWindowId === id;
+  const isEffectiveMaximized = win.isMaximized || isMobile;
   const IconComponent = ICON_MAP[win.iconName] || Terminal;
+
+  const blurClass = isDragging
+    ? "backdrop-blur-md"
+    : isActive
+    ? "backdrop-blur-2xl"
+    : "backdrop-blur-xl";
 
   return (
     <motion.div
@@ -50,15 +60,17 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
       }}
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
       transition={{ type: "spring", stiffness: 350, damping: 28 }}
-      drag={!win.isMaximized}
+      drag={!isEffectiveMaximized}
       dragControls={dragControls}
       dragListener={false}
       dragMomentum={false}
+      onDragStart={() => setIsDragging(true)}
+      onDragEnd={() => setIsDragging(false)}
       onPointerDown={() => focusWindow(id)}
       style={{
         zIndex: win.zIndex,
         position: "absolute",
-        ...(win.isMaximized
+        ...(isEffectiveMaximized
           ? {
               top: "44px",
               left: "12px",
@@ -77,19 +89,21 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
       }}
       className={`flex flex-col rounded-xl overflow-hidden transition-shadow duration-300 ${
         isActive
-          ? "bg-zinc-950/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/20"
-          : "bg-zinc-950/80 backdrop-blur-xl border border-zinc-800 shadow-2xl opacity-95"
+          ? `bg-zinc-950/90 ${blurClass} border border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/20`
+          : `bg-zinc-950/80 ${blurClass} border border-zinc-800 shadow-2xl opacity-95`
       }`}
     >
       {/* Window Titlebar (Drag Handle) */}
       <div
         onPointerDown={(e) => {
           focusWindow(id);
-          if (!win.isMaximized) {
+          if (!isEffectiveMaximized) {
             dragControls.start(e);
           }
         }}
-        className={`h-10 px-4 flex items-center justify-between border-b select-none cursor-grab active:cursor-grabbing transition-colors ${
+        className={`h-10 px-4 flex items-center justify-between border-b select-none ${
+          isEffectiveMaximized ? "cursor-default" : "cursor-grab active:cursor-grabbing"
+        } transition-colors ${
           isActive
             ? "bg-zinc-900/90 border-white/10 text-zinc-100"
             : "bg-zinc-900/50 border-white/5 text-zinc-400"
@@ -125,10 +139,10 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
               toggleMaximizeWindow(id);
             }}
             className="w-3 h-3 rounded-full bg-emerald-500/80 hover:bg-emerald-500 border border-emerald-600/50 flex items-center justify-center group transition-colors"
-            title={win.isMaximized ? "Restore" : "Maximize"}
+            title={isEffectiveMaximized ? "Restore" : "Maximize"}
             aria-label="Maximize Window"
           >
-            {win.isMaximized ? (
+            {isEffectiveMaximized ? (
               <Minimize2 className="w-2 h-2 text-zinc-950 opacity-0 group-hover:opacity-100 transition-opacity" />
             ) : (
               <Maximize2 className="w-2 h-2 text-zinc-950 opacity-0 group-hover:opacity-100 transition-opacity" />

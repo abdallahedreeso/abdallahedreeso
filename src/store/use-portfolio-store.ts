@@ -89,6 +89,53 @@ const emitChange = () => {
   listeners.forEach((listener) => listener());
 };
 
+const BASELINE_Z_INDEX = 10;
+const MAX_Z_INDEX_THRESHOLD = 100;
+
+function calculateNextZState(
+  state: PortfolioState,
+  targetId: WindowId
+): { windows: Record<WindowId, WindowState>; highestZIndex: number } {
+  const nextZ = state.highestZIndex + 1;
+
+  if (nextZ <= MAX_Z_INDEX_THRESHOLD) {
+    return {
+      windows: {
+        ...state.windows,
+        [targetId]: {
+          ...state.windows[targetId],
+          zIndex: nextZ,
+        },
+      },
+      highestZIndex: nextZ,
+    };
+  }
+
+  // Normalize z-indexes back to baseline starting from 10 while strictly preserving relative stacking order
+  const otherWindows = Object.values(state.windows)
+    .filter((w) => w.id !== targetId)
+    .sort((a, b) => a.zIndex - b.zIndex);
+
+  const updatedWindows = { ...state.windows };
+  otherWindows.forEach((win, index) => {
+    updatedWindows[win.id] = {
+      ...win,
+      zIndex: BASELINE_Z_INDEX + index,
+    };
+  });
+
+  const topZ = BASELINE_Z_INDEX + otherWindows.length;
+  updatedWindows[targetId] = {
+    ...state.windows[targetId],
+    zIndex: topZ,
+  };
+
+  return {
+    windows: updatedWindows,
+    highestZIndex: topZ,
+  };
+}
+
 export const portfolioStoreActions = {
   getState: () => currentState,
 
@@ -100,18 +147,17 @@ export const portfolioStoreActions = {
   },
 
   openWindow: (id: WindowId) => {
-    const nextZ = currentState.highestZIndex + 1;
+    const { windows, highestZIndex } = calculateNextZState(currentState, id);
     currentState = {
       ...currentState,
-      highestZIndex: nextZ,
+      highestZIndex,
       activeWindowId: id,
       windows: {
-        ...currentState.windows,
+        ...windows,
         [id]: {
-          ...currentState.windows[id],
+          ...windows[id],
           isOpen: true,
           isMinimized: false,
-          zIndex: nextZ,
         },
       },
     };
@@ -168,17 +214,16 @@ export const portfolioStoreActions = {
     if (currentState.activeWindowId === id && !currentState.windows[id].isMinimized) {
       return;
     }
-    const nextZ = currentState.highestZIndex + 1;
+    const { windows, highestZIndex } = calculateNextZState(currentState, id);
     currentState = {
       ...currentState,
-      highestZIndex: nextZ,
+      highestZIndex,
       activeWindowId: id,
       windows: {
-        ...currentState.windows,
+        ...windows,
         [id]: {
-          ...currentState.windows[id],
+          ...windows[id],
           isMinimized: false,
-          zIndex: nextZ,
         },
       },
     };
