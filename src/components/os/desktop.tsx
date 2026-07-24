@@ -5,6 +5,7 @@ import { TopBar } from "@/components/os/top-bar";
 import { OSDock } from "@/components/os/dock";
 import { OSWindowFrame } from "@/components/os/window-frame";
 import { AmbientCanvasBackground } from "@/components/cybernetic/canvas-background";
+import { BootSequence } from "@/components/os/boot-sequence";
 import { Terminal, User, FolderGit2, Cpu, Mail, Sparkles, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -41,7 +42,7 @@ function WindowLoader({ title }: { title: string }) {
 }
 
 export function DesktopWorkspace() {
-  const { windows, openWindow, hasMaximizedWindow } = usePortfolioStore();
+  const { windows, openWindow, hasMaximizedWindow, hasBooted } = usePortfolioStore();
 
   const openWindowIds = (Object.keys(windows) as WindowId[]).filter(
     (id) => windows[id].isOpen
@@ -49,6 +50,9 @@ export function DesktopWorkspace() {
 
   return (
     <div className="w-screen h-screen relative overflow-hidden bg-slate-100/90 dark:bg-[#030712] text-slate-800 dark:text-zinc-100 flex flex-col select-none transition-colors duration-300">
+      {/* BIOS Boot Sequence Overlay */}
+      <AnimatePresence>{!hasBooted && <BootSequence />}</AnimatePresence>
+
       {/* 3D Canvas Background with WebGL Frame Loop Pause on Maximize */}
       <AmbientCanvasBackground isPaused={hasMaximizedWindow} />
 

@@ -18,9 +18,11 @@ interface PortfolioState {
   windows: Record<WindowId, WindowState>;
   activeWindowId: WindowId | null;
   highestZIndex: number;
+  hasBooted: boolean;
 }
 
 const INITIAL_STATE: PortfolioState = {
+  hasBooted: false,
   activeWindowId: "hero",
   highestZIndex: 20,
   windows: {
@@ -226,6 +228,14 @@ export const portfolioStoreActions = {
           isMinimized: false,
         },
       },
+    };
+    emitChange();
+  },
+
+  completeBoot: () => {
+    currentState = {
+      ...currentState,
+      hasBooted: true,
     };
     emitChange();
   },
