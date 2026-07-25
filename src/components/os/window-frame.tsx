@@ -66,15 +66,17 @@ export const OSWindowFrame = React.memo(function OSWindowFrame({ id, children }:
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.94, y: 15 }}
+      initial={{ opacity: 0, scale: 0.93, y: 15 }}
       animate={
-        isEffectiveMaximized
+        win.isMinimized
+          ? { opacity: 0, scale: 0.75, y: 55, x: 0 }
+          : isEffectiveMaximized
           ? { opacity: 1, scale: 1, x: 0, y: 0 }
           : { opacity: 1, scale: 1 }
       }
-      exit={{ opacity: 0, scale: 0.9, y: 20 }}
-      transition={{ type: "spring", stiffness: 350, damping: 28 }}
-      drag={!isEffectiveMaximized}
+      exit={{ opacity: 0, scale: 0.9, y: 18 }}
+      transition={{ type: "spring", stiffness: 380, damping: 28, mass: 0.8 }}
+      drag={!isEffectiveMaximized && !win.isMinimized}
       dragControls={dragControls}
       dragConstraints={dragConstraints}
       dragElastic={0.05}
@@ -84,7 +86,9 @@ export const OSWindowFrame = React.memo(function OSWindowFrame({ id, children }:
       style={{
         zIndex: win.zIndex,
         position: "absolute",
-        display: win.isMinimized ? "none" : "flex",
+        display: "flex",
+        pointerEvents: win.isMinimized ? "none" : "auto",
+        willChange: "transform, opacity",
         ...(isEffectiveMaximized
           ? {
               top: "44px",
