@@ -5,6 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import realestateProject from "@/assets/projects/real-state.webp"
+import dreamPlaceProject from "@/assets/projects/dream-place.webp"
+import headphoneStoreProject from "@/assets/projects/headphone-store.webp"
+import tradexPlatformProject from "@/assets/projects/tradex-platform.webp"
 
 interface ProjectItem {
   title: string
@@ -31,7 +34,7 @@ const projects: ProjectItem[] = [
   {
     title: "My Dream Place",
     description: "A comprehensive room booking web application developed during my internship at Algoriza. Features real-time data updates through open-source APIs, ensuring an efficient and intuitive booking process for users.",
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+    image: dreamPlaceProject,
     imageDimensions: { width: 600, height: 400 },
     tech: ["Vue.js", "Tailwind", "API Integration", "Real-time Updates"],
     liveDemo: "#",
@@ -41,7 +44,7 @@ const projects: ProjectItem[] = [
   {
     title: "Headphone Store Landing Page",
     description: "A modern and responsive landing page for a headphone store, featuring elegant design, smooth animations, and optimized performance for better user engagement.",
-    image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&h=400&fit=crop",
+    image: headphoneStoreProject,
     imageDimensions: { width: 600, height: 400 },
     tech: ["HTML5", "CSS3", "JavaScript", "Responsive Design"],
     liveDemo: "#",
@@ -51,7 +54,7 @@ const projects: ProjectItem[] = [
   {
     title: "Tradex Platform",
     description: "A trading platform interface designed for financial operations, featuring real-time data visualization and user-friendly trading tools.",
-    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=400&fit=crop",
+    image: tradexPlatformProject,
     imageDimensions: { width: 600, height: 400 },
     tech: ["React.js", "TypeScript", "Chart.js", "API Integration"],
     liveDemo: "#",
@@ -73,9 +76,9 @@ const FeaturedProjectCard = React.memo(function FeaturedProjectCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, delay: index * 0.1 }}
     >
       <Card className="group shadow-elegant hover:shadow-glow transition-all duration-500 overflow-hidden hover:scale-[1.02]">
         <div className="relative overflow-hidden">
@@ -134,9 +137,9 @@ const OtherProjectCard = React.memo(function OtherProjectCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, delay: index * 0.08 }}
     >
       <Card className="group shadow-elegant hover:shadow-glow transition-all duration-300 hover:scale-[1.02] h-full flex flex-col">
         <div className="relative overflow-hidden">
@@ -194,9 +197,9 @@ export const ProjectsSection = React.memo(function ProjectsSection() {
     <section id="projects" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -217,9 +220,9 @@ export const ProjectsSection = React.memo(function ProjectsSection() {
 
         {/* Other Projects */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
           className="mb-8"
         >
           <h3 className="text-3xl font-bold text-center mb-12">
@@ -236,4 +239,5 @@ export const ProjectsSection = React.memo(function ProjectsSection() {
     </section>
   )
 })
+
 
