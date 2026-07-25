@@ -178,9 +178,9 @@ export const AboutSection = React.memo(function AboutSection() {
                       transition={{ duration: 0.4, delay: index * 0.05 }}
                     >
                       <a href={cert.url} target="_blank" rel="noopener noreferrer" className="block group">
-                        <Badge variant="secondary" className="w-full justify-start py-2.5 px-3.5 hover:bg-accent transition-colors text-xs font-medium">
-                          <Award className="h-4 w-4 mr-2 text-primary shrink-0 group-hover:scale-110 transition-transform" />
-                          <span className="truncate">{cert.title}</span>
+                        <Badge variant="secondary" className="w-full justify-start py-2.5 px-3.5 hover:bg-accent transition-colors text-xs font-medium h-auto whitespace-normal leading-relaxed text-left items-start">
+                          <Award className="h-4 w-4 mr-2 text-primary shrink-0 group-hover:scale-110 transition-transform mt-0.5" />
+                          <span className="break-words">{cert.title}</span>
                         </Badge>
                       </a>
                     </motion.div>
@@ -198,7 +198,7 @@ export const AboutSection = React.memo(function AboutSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <h3 className="text-2xl md:text-3xl font-bold text-center mb-8 flex items-center justify-center gap-2">
-            <Briefcase className="h-6 w-6 text-primary" />
+            <Briefcase className="h-6 w-6 text-primary shrink-0" />
             Professional <span className="text-primary">Experience</span>
           </h3>
           
@@ -213,12 +213,12 @@ export const AboutSection = React.memo(function AboutSection() {
                 <Card className="shadow-elegant hover:shadow-glow transition-all duration-300 hover:scale-[1.005]">
                   <CardHeader className="pb-3">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                      <CardTitle className="text-lg md:text-xl font-bold flex items-center gap-2">
-                        {exp.title}
+                      <CardTitle className="text-base sm:text-lg md:text-xl font-bold flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                        <span>{exp.title}</span>
                         <span className="text-primary font-semibold">@ {exp.company}</span>
                       </CardTitle>
-                      <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground bg-muted/50 px-2.5 py-1 rounded-md w-fit">
-                        <Calendar className="h-3.5 w-3.5 text-primary" />
+                      <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground bg-muted/50 px-2.5 py-1 rounded-md w-fit shrink-0">
+                        <Calendar className="h-3.5 w-3.5 text-primary shrink-0" />
                         {exp.period}
                       </div>
                     </div>

@@ -169,7 +169,7 @@ export const ContactSection = React.memo(function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-muted/30">
+    <section id="contact" className="py-12 bg-muted/30">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -359,11 +359,11 @@ export const ContactSection = React.memo(function ContactSection() {
                     <div className="p-2 bg-primary/10 rounded-lg">
                       <info.icon className="h-5 w-5 text-primary" />
                     </div>
-                    <div className="flex-grow overflow-x-auto md:overflow-auto">
-                      <h4 className="font-semibold text-foreground">
+                    <div className="flex-grow min-w-0">
+                      <h4 className="font-semibold text-foreground text-sm">
                         {info.label}
                       </h4>
-                      <p className="text-muted-foreground">{info.value}</p>
+                      <p className="text-muted-foreground text-xs md:text-sm break-all">{info.value}</p>
                     </div>
                     {info.label === "Email" && (
                       <Button variant="ghost" size="sm">
