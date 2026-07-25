@@ -137,7 +137,7 @@ export const OSDock = React.memo(function OSDock() {
   const handleDownloadResume = () => {
     const link = document.createElement("a");
     link.href = "/resume.pdf";
-    link.download = "Abdallah_Edrees_Resume.pdf";
+    link.download = "Abdallah_Edrees_Frontend_CV.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
