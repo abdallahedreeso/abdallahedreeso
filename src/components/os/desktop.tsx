@@ -83,13 +83,13 @@ const DesktopBioCard = React.memo(function DesktopBioCard({
             <Terminal className="w-4 h-4" />
             Terminal
           </Button>
-          <Button
+          {/* <Button
             onClick={() => onOpenWindow("projects")}
             className="bg-slate-200/60 hover:bg-slate-200/90 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-300/60 dark:border-white/15 text-slate-700 dark:text-zinc-200 text-xs gap-2"
           >
             <FolderGit2 className="w-4 h-4 text-blue-500 dark:text-blue-400" />
             Projects
-          </Button>
+          </Button> */}
           <Button
             onClick={() => onOpenWindow("about")}
             className="bg-slate-200/60 hover:bg-slate-200/90 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-300/60 dark:border-white/15 text-slate-700 dark:text-zinc-200 text-xs gap-2"

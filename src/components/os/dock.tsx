@@ -41,12 +41,14 @@ const DOCK_ITEMS: DockItemConfig[] = [
     icon: User,
     gradient: "from-indigo-500 to-purple-400",
   },
+  /*
   {
     id: "projects",
     label: "Selected Projects",
     icon: FolderGit2,
     gradient: "from-cyan-500 to-blue-500",
   },
+  */
   {
     id: "skills",
     label: "Technical Skills",
