@@ -136,6 +136,20 @@ function calculateNextZState(
   };
 }
 
+function findNextActiveWindowId(
+  windows: Record<WindowId, WindowState>,
+  excludeId: WindowId
+): WindowId | null {
+  const eligibleWindows = Object.values(windows).filter(
+    (w) => w.id !== excludeId && w.isOpen && !w.isMinimized
+  );
+
+  if (eligibleWindows.length === 0) return null;
+
+  eligibleWindows.sort((a, b) => b.zIndex - a.zIndex);
+  return eligibleWindows[0].id;
+}
+
 export const portfolioStoreActions = {
   getState: () => currentState,
 
@@ -166,32 +180,47 @@ export const portfolioStoreActions = {
 
   closeWindow: (id: WindowId) => {
     const isCurrentActive = currentState.activeWindowId === id;
+    const updatedWindows = {
+      ...currentState.windows,
+      [id]: {
+        ...currentState.windows[id],
+        isOpen: false,
+        isMinimized: false,
+      },
+    };
+
+    let nextActiveId = currentState.activeWindowId;
+    if (isCurrentActive) {
+      nextActiveId = findNextActiveWindowId(updatedWindows, id);
+    }
+
     currentState = {
       ...currentState,
-      activeWindowId: isCurrentActive ? null : currentState.activeWindowId,
-      windows: {
-        ...currentState.windows,
-        [id]: {
-          ...currentState.windows[id],
-          isOpen: false,
-          isMinimized: false,
-        },
-      },
+      activeWindowId: nextActiveId,
+      windows: updatedWindows,
     };
     emitChange();
   },
 
   minimizeWindow: (id: WindowId) => {
+    const isCurrentActive = currentState.activeWindowId === id;
+    const updatedWindows = {
+      ...currentState.windows,
+      [id]: {
+        ...currentState.windows[id],
+        isMinimized: true,
+      },
+    };
+
+    let nextActiveId = currentState.activeWindowId;
+    if (isCurrentActive) {
+      nextActiveId = findNextActiveWindowId(updatedWindows, id);
+    }
+
     currentState = {
       ...currentState,
-      activeWindowId: currentState.activeWindowId === id ? null : currentState.activeWindowId,
-      windows: {
-        ...currentState.windows,
-        [id]: {
-          ...currentState.windows[id],
-          isMinimized: true,
-        },
-      },
+      activeWindowId: nextActiveId,
+      windows: updatedWindows,
     };
     emitChange();
   },
