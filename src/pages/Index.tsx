@@ -8,7 +8,7 @@ const Index = () => {
   const [isBooting, setIsBooting] = useState(true);
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+    <ThemeProvider defaultTheme="system" storageKey="portfolio-theme">
       <DesktopWorkspace />
       <AnimatePresence>
         {isBooting && <BootSequence onComplete={() => setIsBooting(false)} />}
