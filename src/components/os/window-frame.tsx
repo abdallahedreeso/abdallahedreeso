@@ -40,13 +40,15 @@ export const OSWindowFrame = React.memo(function OSWindowFrame({ id, children }:
   const isMobile = useIsMobile();
   const dragConstraints = React.useMemo(() => {
     if (typeof window === "undefined" || !win) return undefined;
+    const startX = win.defaultPosition.x;
+    const startY = win.defaultPosition.y;
     return {
-      top: -win.defaultPosition.y + 44,
-      left: -win.defaultPosition.x + 12,
-      right: Math.max(0, window.innerWidth - win.defaultPosition.x - 200),
-      bottom: Math.max(0, window.innerHeight - win.defaultPosition.y - 120),
+      top: -startY + 44,
+      left: -startX + 12,
+      right: Math.max(0, window.innerWidth - startX - win.defaultSize.width - 12),
+      bottom: Math.max(0, window.innerHeight - startY - 120),
     };
-  }, [win?.defaultPosition.x, win?.defaultPosition.y]);
+  }, [win?.defaultPosition.x, win?.defaultPosition.y, win?.defaultSize.width]);
 
   if (!win || !win.isOpen) {
     return null;
@@ -64,12 +66,12 @@ export const OSWindowFrame = React.memo(function OSWindowFrame({ id, children }:
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.92, y: 15 }}
-      animate={{
-        opacity: 1,
-        scale: 1,
-        y: 0,
-      }}
+      initial={{ opacity: 0, scale: 0.94, y: 15 }}
+      animate={
+        isEffectiveMaximized
+          ? { opacity: 1, scale: 1, x: 0, y: 0 }
+          : { opacity: 1, scale: 1 }
+      }
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
       transition={{ type: "spring", stiffness: 350, damping: 28 }}
       drag={!isEffectiveMaximized}
