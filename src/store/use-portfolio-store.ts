@@ -244,6 +244,71 @@ export const portfolioStoreActions = {
   },
 };
 
+// Cached referentially-stable snapshots for array / computed selectors
+let cachedOpenWindowIds: WindowId[] = (Object.keys(INITIAL_STATE.windows) as WindowId[]).filter(
+  (id) => INITIAL_STATE.windows[id].isOpen
+);
+let cachedWindowsRef: Record<WindowId, WindowState> | null = INITIAL_STATE.windows;
+
+function getOpenWindowIdsSnapshot(): WindowId[] {
+  if (currentState.windows !== cachedWindowsRef) {
+    cachedWindowsRef = currentState.windows;
+    const nextOpenWindowIds = (Object.keys(currentState.windows) as WindowId[]).filter(
+      (id) => currentState.windows[id].isOpen
+    );
+    if (
+      nextOpenWindowIds.length !== cachedOpenWindowIds.length ||
+      nextOpenWindowIds.some((id, idx) => id !== cachedOpenWindowIds[idx])
+    ) {
+      cachedOpenWindowIds = nextOpenWindowIds;
+    }
+  }
+  return cachedOpenWindowIds;
+}
+
+// Granular Hooks
+export function useWindow(id: WindowId): WindowState {
+  return useSyncExternalStore(
+    portfolioStoreActions.subscribe,
+    () => currentState.windows[id],
+    () => currentState.windows[id]
+  );
+}
+
+export function useActiveWindowId(): WindowId | null {
+  return useSyncExternalStore(
+    portfolioStoreActions.subscribe,
+    () => currentState.activeWindowId,
+    () => currentState.activeWindowId
+  );
+}
+
+export function useOpenWindowIds(): WindowId[] {
+  return useSyncExternalStore(
+    portfolioStoreActions.subscribe,
+    getOpenWindowIdsSnapshot,
+    getOpenWindowIdsSnapshot
+  );
+}
+
+export function useActiveWindowTitle(): string | null {
+  return useSyncExternalStore(
+    portfolioStoreActions.subscribe,
+    () => {
+      const activeId = currentState.activeWindowId;
+      return activeId ? currentState.windows[activeId]?.title ?? null : null;
+    },
+    () => {
+      const activeId = currentState.activeWindowId;
+      return activeId ? currentState.windows[activeId]?.title ?? null : null;
+    }
+  );
+}
+
+export function usePortfolioActions() {
+  return portfolioStoreActions;
+}
+
 export function usePortfolioStore(): PortfolioState & typeof portfolioStoreActions {
   const state = useSyncExternalStore(
     portfolioStoreActions.subscribe,

@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion, useDragControls } from "framer-motion";
-import { usePortfolioStore, WindowId } from "@/store/use-portfolio-store";
+import {
+  useWindow,
+  useActiveWindowId,
+  usePortfolioActions,
+  WindowId,
+} from "@/store/use-portfolio-store";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   X,
@@ -27,16 +32,23 @@ const ICON_MAP: Record<string, React.ElementType> = {
   Mail,
 };
 
-export function OSWindowFrame({ id, children }: WindowFrameProps) {
-  const { windows, activeWindowId, closeWindow, minimizeWindow, toggleMaximizeWindow, focusWindow } =
-    usePortfolioStore();
+export const OSWindowFrame = React.memo(function OSWindowFrame({ id, children }: WindowFrameProps) {
+  const win = useWindow(id);
+  const activeWindowId = useActiveWindowId();
+  const { closeWindow, minimizeWindow, toggleMaximizeWindow, focusWindow } = usePortfolioActions();
   const dragControls = useDragControls();
   const isMobile = useIsMobile();
-  const [isDragging, setIsDragging] = useState(false);
+  const dragConstraints = React.useMemo(() => {
+    if (typeof window === "undefined" || !win) return undefined;
+    return {
+      top: -win.defaultPosition.y + 44,
+      left: -win.defaultPosition.x + 12,
+      right: Math.max(0, window.innerWidth - win.defaultPosition.x - 200),
+      bottom: Math.max(0, window.innerHeight - win.defaultPosition.y - 120),
+    };
+  }, [win?.defaultPosition.x, win?.defaultPosition.y]);
 
-  const win = windows[id];
-
-  if (!win || !win.isOpen || win.isMinimized) {
+  if (!win || !win.isOpen) {
     return null;
   }
 
@@ -44,11 +56,11 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
   const isEffectiveMaximized = win.isMaximized || isMobile;
   const IconComponent = ICON_MAP[win.iconName] || Terminal;
 
-  const blurClass = isDragging
-    ? "backdrop-blur-md"
-    : isActive
-    ? "backdrop-blur-2xl"
-    : "backdrop-blur-xl";
+  const handleFocus = () => {
+    if (activeWindowId !== id) {
+      focusWindow(id);
+    }
+  };
 
   return (
     <motion.div
@@ -62,14 +74,15 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
       transition={{ type: "spring", stiffness: 350, damping: 28 }}
       drag={!isEffectiveMaximized}
       dragControls={dragControls}
+      dragConstraints={dragConstraints}
+      dragElastic={0.05}
       dragListener={false}
       dragMomentum={false}
-      onDragStart={() => setIsDragging(true)}
-      onDragEnd={() => setIsDragging(false)}
-      onPointerDown={() => focusWindow(id)}
+      onPointerDown={handleFocus}
       style={{
         zIndex: win.zIndex,
         position: "absolute",
+        display: win.isMinimized ? "none" : "flex",
         ...(isEffectiveMaximized
           ? {
               top: "44px",
@@ -83,20 +96,22 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
           : {
               left: win.defaultPosition.x,
               top: win.defaultPosition.y,
-              width: Math.min(win.defaultSize.width, window.innerWidth - 32),
-              height: Math.min(win.defaultSize.height, window.innerHeight - 130),
+              width: win.defaultSize.width,
+              height: win.defaultSize.height,
+              maxWidth: "calc(100vw - 24px)",
+              maxHeight: "calc(100vh - 120px)",
             }),
       }}
-      className={`flex flex-col rounded-xl overflow-hidden transition-colors duration-300 ${
+      className={`flex flex-col rounded-xl overflow-hidden backdrop-blur-xl transition-colors duration-300 ${
         isActive
-          ? `bg-white/85 dark:bg-zinc-950/90 ${blurClass} border border-cyan-500/40 dark:border-cyan-500/30 shadow-[0_10px_35px_rgba(6,182,212,0.15)] dark:shadow-[0_0_40px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/30 dark:ring-cyan-500/20 text-slate-900 dark:text-zinc-100`
-          : `bg-white/70 dark:bg-zinc-950/80 ${blurClass} border border-slate-200/80 dark:border-zinc-800 shadow-xl opacity-95 text-slate-800 dark:text-zinc-100`
+          ? `bg-white/85 dark:bg-zinc-950/90 border border-cyan-500/40 dark:border-cyan-500/30 shadow-[0_10px_35px_rgba(6,182,212,0.15)] dark:shadow-[0_0_40px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/30 dark:ring-cyan-500/20 text-slate-900 dark:text-zinc-100`
+          : `bg-white/70 dark:bg-zinc-950/80 border border-slate-200/80 dark:border-zinc-800 shadow-xl opacity-95 text-slate-800 dark:text-zinc-100`
       }`}
     >
       {/* Window Titlebar (Drag Handle) */}
       <div
         onPointerDown={(e) => {
-          focusWindow(id);
+          handleFocus();
           if (!isEffectiveMaximized) {
             dragControls.start(e);
           }
@@ -163,9 +178,9 @@ export function OSWindowFrame({ id, children }: WindowFrameProps) {
       </div>
 
       {/* Window Body Container */}
-      <div className="flex-1 overflow-auto p-4 md:p-6 custom-scrollbar text-slate-800 dark:text-zinc-100 selection:bg-cyan-500/30">
+      <div className="flex-1 overflow-auto p-4 md:p-6 custom-scrollbar text-slate-800 dark:text-zinc-100 selection:bg-cyan-500/30 overscroll-contain">
         {children}
       </div>
     </motion.div>
   );
-}
+});

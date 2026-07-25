@@ -1,3 +1,4 @@
+import React from "react"
 import { motion } from "framer-motion"
 import { Calendar, MapPin, Award, Code } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -74,15 +75,14 @@ const yearsOfExperience = () => {
   return Math.floor((new Date().getTime() - new Date('2024-07-01').getTime()) / (1000 * 60 * 60 * 24 * 365))
 }
 
-export function AboutSection() {
+export const AboutSection = React.memo(function AboutSection() {
   return (
     <section id="about" className="py-20 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -98,10 +98,9 @@ export function AboutSection() {
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {/* Personal Info */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
             <Card className="shadow-elegant hover:shadow-glow transition-shadow duration-300">
               <CardHeader>
@@ -146,10 +145,9 @@ export function AboutSection() {
 
           {/* Certifications */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Card className="shadow-elegant hover:shadow-glow transition-shadow duration-300">
               <CardHeader>
@@ -164,9 +162,8 @@ export function AboutSection() {
                     <motion.div
                       key={cert.title}
                       initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.05 }}
                     >
                       <a href={cert.url} target="_blank" rel="noopener noreferrer">
                         <Badge variant="secondary" className="w-full justify-start py-2 px-3">
@@ -184,10 +181,9 @@ export function AboutSection() {
 
         {/* Experience Timeline */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
           <h3 className="text-3xl font-bold text-center mb-12">
             Professional <span className="text-primary">Journey</span>
@@ -197,10 +193,9 @@ export function AboutSection() {
             {experiences.map((exp, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="relative"
               >
                 <Card className="shadow-elegant hover:shadow-glow transition-all duration-300 hover:scale-[1.02]">
@@ -242,4 +237,4 @@ export function AboutSection() {
       </div>
     </section>
   )
-}
+})

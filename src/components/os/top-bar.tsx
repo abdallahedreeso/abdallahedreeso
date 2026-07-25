@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
-import { usePortfolioStore } from "@/store/use-portfolio-store";
+import React, { useState, useEffect } from "react";
+import { useActiveWindowTitle } from "@/store/use-portfolio-store";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Cpu, Wifi, ShieldCheck, Terminal } from "lucide-react";
 
-export function TopBar() {
-  const { windows, activeWindowId } = usePortfolioStore();
+const ClockDisplay = React.memo(function ClockDisplay() {
   const [timeStr, setTimeStr] = useState<string>("");
 
   useEffect(() => {
@@ -24,7 +23,15 @@ export function TopBar() {
     return () => clearInterval(interval);
   }, []);
 
-  const activeWindow = activeWindowId ? windows[activeWindowId] : null;
+  return (
+    <div className="text-[11px] font-mono text-slate-800 dark:text-zinc-200 border-l border-slate-200/80 dark:border-white/10 pl-3">
+      {timeStr || "12:00 PM"}
+    </div>
+  );
+});
+
+export const TopBar = React.memo(function TopBar() {
+  const activeWindowTitle = useActiveWindowTitle();
 
   return (
     <header className="h-9 w-full bg-white/70 dark:bg-zinc-950/80 backdrop-blur-md border-b border-slate-200/80 dark:border-white/10 px-4 flex items-center justify-between text-xs text-slate-700 dark:text-zinc-300 z-40 select-none transition-colors duration-300">
@@ -46,10 +53,10 @@ export function TopBar() {
 
       {/* Center: Active Window Title */}
       <div className="hidden md:flex items-center gap-2 text-slate-700 dark:text-zinc-300 font-medium">
-        {activeWindow ? (
+        {activeWindowTitle ? (
           <div className="flex items-center gap-1.5 bg-slate-200/60 dark:bg-white/5 border border-slate-300/60 dark:border-white/10 px-2.5 py-0.5 rounded-full text-[11px]">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 dark:bg-cyan-400" />
-            <span>{activeWindow.title}</span>
+            <span>{activeWindowTitle}</span>
           </div>
         ) : (
           <span className="text-slate-400 dark:text-zinc-500 text-[11px] font-mono">Desktop Active</span>
@@ -68,9 +75,7 @@ export function TopBar() {
           <Wifi className="w-3.5 h-3.5 text-slate-600 dark:text-zinc-300" />
         </div>
 
-        <div className="text-[11px] font-mono text-slate-800 dark:text-zinc-200 border-l border-slate-200/80 dark:border-white/10 pl-3">
-          {timeStr || "12:00 PM"}
-        </div>
+        <ClockDisplay />
 
         <div className="border-l border-slate-200/80 dark:border-white/10 pl-2">
           <ThemeToggle />
@@ -78,4 +83,4 @@ export function TopBar() {
       </div>
     </header>
   );
-}
+});

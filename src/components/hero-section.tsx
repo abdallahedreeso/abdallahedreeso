@@ -1,9 +1,10 @@
+import React from "react"
 import { motion } from "framer-motion"
 import { ChevronDown, Github, Linkedin, Mail, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import chibiEdreeso from "@/assets/chibi-edreeso.webp"
 
-export function HeroSection() {
+export const HeroSection = React.memo(function HeroSection() {
   const scrollToNext = () => {
     const aboutSection = document.querySelector("#about")
     if (aboutSection) {
@@ -140,6 +141,9 @@ export function HeroSection() {
                 <img
                   src={chibiEdreeso}
                   alt="Abdallah Edrees - Frontend Developer"
+                  decoding="async"
+                  width={320}
+                  height={320}
                   className="w-64 h-64 md:w-80 md:h-80 object-contain"
                 />
               </motion.div>
@@ -167,4 +171,4 @@ export function HeroSection() {
       </div>
     </section>
   )
-}
+})

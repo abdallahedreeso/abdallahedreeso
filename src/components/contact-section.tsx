@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Mail,
@@ -46,7 +46,7 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "";
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "";
 
 
-export function ContactSection() {
+export const ContactSection = React.memo(function ContactSection() {
   const [emailCopied, setEmailCopied] = useState(false);
   const [sendingEmail, setSendingEmail] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -172,10 +172,9 @@ export function ContactSection() {
     <section id="contact" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -190,10 +189,9 @@ export function ContactSection() {
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="flex-1"
           >
             <Card className="shadow-elegant hover:shadow-glow transition-shadow duration-300">
@@ -341,10 +339,9 @@ export function ContactSection() {
 
           {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-8 flex-1"
           >
             {/* Contact Details */}
@@ -353,13 +350,9 @@ export function ContactSection() {
                 <CardTitle className="text-2xl">Contact Information</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {contactInfo.map((info, index) => (
-                  <motion.div
+                {contactInfo.map((info) => (
+                  <div
                     key={info.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
                     className="flex items-center gap-4 p-3 rounded-lg hover:bg-accent transition-colors cursor-pointer"
                     onClick={info.action}
                   >
@@ -381,7 +374,7 @@ export function ContactSection() {
                         )}
                       </Button>
                     )}
-                  </motion.div>
+                  </div>
                 ))}
               </CardContent>
             </Card>
@@ -393,21 +386,16 @@ export function ContactSection() {
               </CardHeader>
               <CardContent>
                 <div className="flex justify-center gap-6">
-                  {socialLinks.map((social, index) => (
-                    <motion.a
+                  {socialLinks.map((social) => (
+                    <a
                       key={social.label}
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                      whileHover={{ scale: 1.1 }}
                       className={`p-3 bg-muted rounded-full transition-all duration-300 ${social.color}`}
                     >
                       <social.icon className="h-6 w-6" />
-                    </motion.a>
+                    </a>
                   ))}
                 </div>
                 <p className="text-center text-muted-foreground mt-6">
@@ -435,4 +423,4 @@ export function ContactSection() {
       </div>
     </section>
   );
-}
+});

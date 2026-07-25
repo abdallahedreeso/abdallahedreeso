@@ -158,6 +158,16 @@ body {
   background: rgba(6, 182, 212, 0.6);
 }
 
+/* Targeted performance & smooth rendering utilities */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.custom-scrollbar {
+  overscroll-behavior: contain;
+}
+
 @layer base {
   * {
     @apply border-border;

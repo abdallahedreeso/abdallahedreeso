@@ -1,7 +1,7 @@
+import React from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
 
 const skillCategories = [
   {
@@ -75,15 +75,14 @@ const tools = [
   "Slack", "Jira", "Linear", "Vercel", "Netlify"
 ]
 
-export function SkillsSection() {
+export const SkillsSection = React.memo(function SkillsSection() {
   return (
     <section id="skills" className="py-20 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -100,10 +99,9 @@ export function SkillsSection() {
           {skillCategories.map((category, categoryIndex) => (
             <motion.div
               key={category.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: categoryIndex * 0.08 }}
             >
               <Card className="shadow-elegant hover:shadow-glow transition-all duration-300 hover:scale-[1.02] h-full">
                 <CardContent className="p-6">
@@ -111,16 +109,9 @@ export function SkillsSection() {
                     {category.title}
                   </h3>
                   <div className="space-y-4">
-                    {category.skills.map((skill, skillIndex) => (
-                      <motion.div
+                    {category.skills.map((skill) => (
+                      <div
                         key={skill.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          duration: 0.5, 
-                          delay: categoryIndex * 0.1 + skillIndex * 0.05 
-                        }}
-                        viewport={{ once: true }}
                         className="space-y-2"
                       >
                         <div className="flex items-center justify-between">
@@ -128,10 +119,8 @@ export function SkillsSection() {
                             <span className="text-lg">{skill.icon}</span>
                             <span className="font-medium text-foreground">{skill.name}</span>
                           </div>
-                          
                         </div>
-                        
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </CardContent>
@@ -142,10 +131,9 @@ export function SkillsSection() {
 
         {/* Tools & Software */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           className="text-center"
         >
           <h3 className="text-3xl font-bold text-foreground mb-8">
@@ -155,10 +143,9 @@ export function SkillsSection() {
             {tools.map((tool, index) => (
               <motion.div
                 key={tool}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                viewport={{ once: true }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.03 }}
                 whileHover={{ scale: 1.05 }}
               >
                 <Badge 
@@ -174,4 +161,4 @@ export function SkillsSection() {
       </div>
     </section>
   )
-}
+})
