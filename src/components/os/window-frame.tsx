@@ -48,7 +48,7 @@ export const OSWindowFrame = React.memo(function OSWindowFrame({ id, children }:
       right: Math.max(0, window.innerWidth - startX - win.defaultSize.width - 12),
       bottom: Math.max(0, window.innerHeight - startY - 120),
     };
-  }, [win?.defaultPosition.x, win?.defaultPosition.y, win?.defaultSize.width]);
+  }, [win]);
 
   if (!win || !win.isOpen) {
     return null;
