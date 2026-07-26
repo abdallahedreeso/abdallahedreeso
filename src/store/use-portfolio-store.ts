@@ -91,6 +91,47 @@ const emitChange = () => {
 
 const BASELINE_Z_INDEX = 10;
 const MAX_Z_INDEX_THRESHOLD = 100;
+const MAX_ACTIVE_WINDOWS = 2;
+
+// Track active (open & unminimized) windows order for FIFO memory management
+let activeWindowQueue: WindowId[] = (
+  Object.keys(INITIAL_STATE.windows) as WindowId[]
+).filter(
+  (id) =>
+    INITIAL_STATE.windows[id].isOpen && !INITIAL_STATE.windows[id].isMinimized
+);
+
+function pushActiveWindowAndEnforceLimit(
+  targetId: WindowId,
+  windowsState: Record<WindowId, WindowState>
+): Record<WindowId, WindowState> {
+  const updatedWindows = { ...windowsState };
+
+  // Keep only currently active windows, excluding targetId before pushing
+  activeWindowQueue = activeWindowQueue.filter(
+    (id) => id !== targetId && updatedWindows[id]?.isOpen && !updatedWindows[id]?.isMinimized
+  );
+
+  // Push targetId as the most recently activated window
+  activeWindowQueue.push(targetId);
+
+  // If active windows exceed MAX_ACTIVE_WINDOWS, minimize oldest window in queue
+  while (activeWindowQueue.length > MAX_ACTIVE_WINDOWS) {
+    const oldestId = activeWindowQueue.shift();
+    if (oldestId && updatedWindows[oldestId]) {
+      updatedWindows[oldestId] = {
+        ...updatedWindows[oldestId],
+        isMinimized: true,
+      };
+    }
+  }
+
+  return updatedWindows;
+}
+
+function removeActiveWindowFromQueue(id: WindowId) {
+  activeWindowQueue = activeWindowQueue.filter((windowId) => windowId !== id);
+}
 
 function calculateNextZState(
   state: PortfolioState,
@@ -162,23 +203,28 @@ export const portfolioStoreActions = {
 
   openWindow: (id: WindowId) => {
     const { windows, highestZIndex } = calculateNextZState(currentState, id);
+    const windowsWithOpen = {
+      ...windows,
+      [id]: {
+        ...windows[id],
+        isOpen: true,
+        isMinimized: false,
+      },
+    };
+
+    const finalWindows = pushActiveWindowAndEnforceLimit(id, windowsWithOpen);
+
     currentState = {
       ...currentState,
       highestZIndex,
       activeWindowId: id,
-      windows: {
-        ...windows,
-        [id]: {
-          ...windows[id],
-          isOpen: true,
-          isMinimized: false,
-        },
-      },
+      windows: finalWindows,
     };
     emitChange();
   },
 
   closeWindow: (id: WindowId) => {
+    removeActiveWindowFromQueue(id);
     const isCurrentActive = currentState.activeWindowId === id;
     const updatedWindows = {
       ...currentState.windows,
@@ -203,6 +249,7 @@ export const portfolioStoreActions = {
   },
 
   minimizeWindow: (id: WindowId) => {
+    removeActiveWindowFromQueue(id);
     const isCurrentActive = currentState.activeWindowId === id;
     const updatedWindows = {
       ...currentState.windows,
@@ -240,21 +287,26 @@ export const portfolioStoreActions = {
   },
 
   focusWindow: (id: WindowId) => {
-    if (currentState.activeWindowId === id && !currentState.windows[id].isMinimized) {
+    const isTargetMinimized = currentState.windows[id]?.isMinimized;
+    if (currentState.activeWindowId === id && !isTargetMinimized) {
       return;
     }
     const { windows, highestZIndex } = calculateNextZState(currentState, id);
+    const windowsWithFocused = {
+      ...windows,
+      [id]: {
+        ...windows[id],
+        isMinimized: false,
+      },
+    };
+
+    const finalWindows = pushActiveWindowAndEnforceLimit(id, windowsWithFocused);
+
     currentState = {
       ...currentState,
       highestZIndex,
       activeWindowId: id,
-      windows: {
-        ...windows,
-        [id]: {
-          ...windows[id],
-          isMinimized: false,
-        },
-      },
+      windows: finalWindows,
     };
     emitChange();
   },
