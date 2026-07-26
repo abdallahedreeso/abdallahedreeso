@@ -181,8 +181,7 @@ export const ContactSection = React.memo(function ContactSection() {
             Get In <span className="text-primary">Touch</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            I'm always excited to work on new projects and collaborate with
-            amazing people. Let's discuss how we can bring your ideas to life!
+            Open to professional frontend engineering opportunities, enterprise platform development, and technical collaboration. Feel free to reach out directly or send a message.
           </p>
         </motion.div>
 

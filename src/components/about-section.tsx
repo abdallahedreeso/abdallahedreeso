@@ -70,10 +70,6 @@ const certifications = [
   {
     title: "Coursera (University of Michigan): Frontend Development",
     url: "https://www.coursera.org/account/accomplishments/specialization/certificate/6UHZGQMSYPV9"
-  },
-  {
-    title: "Algoriza: Frontend Internship Certification",
-    url: "https://interns.algoriza.com/"
   }
 ]
 
@@ -91,7 +87,7 @@ export const AboutSection = React.memo(function AboutSection() {
             About <span className="text-primary">Me</span>
           </h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Frontend Engineer with 2+ years of experience building and maintaining enterprise ERP and SaaS applications using Vue.js, Nuxt.js, React.js, TypeScript, and Inertia.js. Experienced in leading frontend features, contributing to technical decisions, mentoring developers, and leveraging AI coding tools and agents across the SDLC—from technical planning to performance optimization, testing, and responsive UI delivery.
+            Frontend Engineer specializing in production ERP and enterprise SaaS applications. Experienced in architecting complex feature workflows, leading Vue 2 to Vue 3 framework migrations, building scalable UI component systems, and leveraging modern AI coding agents across the development lifecycle to deliver maintainable, high-performance web applications.
           </p>
         </motion.div>
 

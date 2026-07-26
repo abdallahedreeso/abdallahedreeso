@@ -70,7 +70,7 @@ const DesktopBioCard = React.memo(function DesktopBioCard({
         </h1>
 
         <p className="text-slate-600 dark:text-zinc-400 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
-          Frontend Engineer specializing in scalable web applications, modern frontend architecture (Vue.js, React.js, TypeScript), and AI-assisted workflows. 
+          Frontend Engineer with 2+ years of experience building enterprise ERP & SaaS applications (Vue.js, Nuxt.js, React.js, TypeScript). 
           Click any Dock icon below or quick launchers to explore modules.
         </p>
 

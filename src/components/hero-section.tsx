@@ -174,7 +174,7 @@ export const HeroSection = React.memo(function HeroSection() {
               >
                 <img
                   src={chibiEdreeso}
-                  alt="Abdallah Edrees - Frontend Developer"
+                  alt="Abdallah Edrees - Frontend Engineer"
                   decoding="async"
                   width={320}
                   height={320}
