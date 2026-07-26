@@ -1,6 +1,6 @@
 import React from "react"
 import { motion } from "framer-motion"
-import { Calendar, MapPin, Award, Code, Briefcase, GraduationCap, Sparkles } from "lucide-react"
+import { Calendar, MapPin, Award, Code, Briefcase, GraduationCap, Sparkles, ExternalLink } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
@@ -173,11 +173,21 @@ export const AboutSection = React.memo(function AboutSection() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.4, delay: index * 0.05 }}
                     >
-                      <a href={cert.url} target="_blank" rel="noopener noreferrer" className="block group">
-                        <Badge variant="secondary" className="w-full justify-start py-2.5 px-3.5 hover:bg-accent transition-colors text-xs font-medium h-auto whitespace-normal leading-relaxed text-left items-start">
-                          <Award className="h-4 w-4 mr-2 text-primary shrink-0 group-hover:scale-110 transition-transform mt-0.5" />
-                          <span className="break-words">{cert.title}</span>
-                        </Badge>
+                      <a 
+                        href={cert.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="group flex items-center justify-between gap-3 p-3 rounded-xl border border-border/70 bg-background/60 hover:bg-primary/5 hover:border-primary/40 dark:bg-muted/40 dark:hover:bg-primary/10 dark:hover:border-primary/50 transition-all duration-200 shadow-sm hover:shadow-md hover:shadow-primary/5 cursor-pointer"
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
+                            <Award className="h-4 w-4 transition-transform group-hover:scale-110" />
+                          </div>
+                          <span className="text-xs sm:text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-relaxed">
+                            {cert.title}
+                          </span>
+                        </div>
+                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0 ml-1" />
                       </a>
                     </motion.div>
                   ))}
