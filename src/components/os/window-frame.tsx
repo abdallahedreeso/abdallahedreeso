@@ -94,9 +94,9 @@ export const OSWindowFrame = React.memo(function OSWindowFrame({ id, children }:
               top: "44px",
               left: "12px",
               right: "12px",
-              bottom: "76px",
+              bottom: "48px",
               width: "calc(100vw - 24px)",
-              height: "calc(100vh - 120px)",
+              height: "calc(100vh - 92px)",
               transform: "none",
             }
           : {
@@ -105,7 +105,7 @@ export const OSWindowFrame = React.memo(function OSWindowFrame({ id, children }:
               width: win.defaultSize.width,
               height: win.defaultSize.height,
               maxWidth: "calc(100vw - 24px)",
-              maxHeight: "calc(100vh - 120px)",
+              maxHeight: "calc(100vh - 92px)",
             }),
       }}
       className={`flex flex-col rounded-xl overflow-hidden backdrop-blur-xl transition-colors duration-300 ${

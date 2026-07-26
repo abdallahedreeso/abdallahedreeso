@@ -1,8 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   useWindow,
   useActiveWindowId,
+  useOpenWindowIds,
   usePortfolioActions,
   WindowId,
 } from "@/store/use-portfolio-store";
@@ -13,6 +14,8 @@ import {
   Cpu,
   Mail,
   Download,
+  ChevronUp,
+  GripHorizontal,
 } from "lucide-react";
 import {
   Tooltip,
@@ -41,14 +44,6 @@ const DOCK_ITEMS: DockItemConfig[] = [
     icon: User,
     gradient: "from-indigo-500 to-purple-400",
   },
-  /*
-  {
-    id: "projects",
-    label: "Selected Projects",
-    icon: FolderGit2,
-    gradient: "from-cyan-500 to-blue-500",
-  },
-  */
   {
     id: "skills",
     label: "Technical Skills",
@@ -85,7 +80,7 @@ const OSDockItem = React.memo(function OSDockItem({
           aria-label={item.label}
         >
           <motion.div
-            whileHover={{ scale: 1.25, y: -6 }}
+            whileHover={{ scale: 1.2, y: -4 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
             className={`relative w-11 h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${
@@ -125,7 +120,7 @@ const OSDockItem = React.memo(function OSDockItem({
       <TooltipContent
         side="top"
         sideOffset={12}
-        className="bg-slate-900/90 dark:bg-zinc-900/90 backdrop-blur-md border border-slate-700 dark:border-white/15 text-slate-100 font-sans text-xs px-2.5 py-1 rounded-lg"
+        className="bg-slate-900/90 dark:bg-zinc-900/90 backdrop-blur-md border border-slate-700 dark:border-white/15 text-slate-100 font-sans text-xs px-2.5 py-1 rounded-lg z-[60]"
       >
         {item.label}
       </TooltipContent>
@@ -135,6 +130,20 @@ const OSDockItem = React.memo(function OSDockItem({
 
 export const OSDock = React.memo(function OSDock() {
   const { toggleWindow } = usePortfolioActions();
+  const activeWindowId = useActiveWindowId();
+  const openWindowIds = useOpenWindowIds();
+  const activeWindow = useWindow(activeWindowId ?? "hero");
+
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  // Compact handle mode triggers when at least one window is open and active (not minimized)
+  const hasActiveWindowOnScreen =
+    openWindowIds.length > 0 &&
+    activeWindowId !== null &&
+    activeWindow?.isOpen &&
+    !activeWindow?.isMinimized;
+
+  const isCompactMode = hasActiveWindowOnScreen && !isHovered;
 
   const handleDownloadResume = () => {
     const link = document.createElement("a");
@@ -147,43 +156,94 @@ export const OSDock = React.memo(function OSDock() {
 
   return (
     <TooltipProvider delayDuration={100}>
-      <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 select-none max-w-[95vw]">
-        <div className="flex items-center gap-2 md:gap-3 px-3 py-2.5 rounded-2xl bg-white/70 dark:bg-zinc-900/60 backdrop-blur-2xl border border-white/60 dark:border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_35px_rgba(0,0,0,0.6)] transition-colors duration-300">
-          {DOCK_ITEMS.map((item) => (
-            <OSDockItem key={item.id} item={item} onToggle={toggleWindow} />
-          ))}
-
-          <div className="h-8 w-px bg-slate-300/60 dark:bg-white/15 mx-1" />
-
-          {/* Quick Resume Button */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                onClick={handleDownloadResume}
-                className="relative group flex flex-col items-center focus:outline-none"
-                aria-label="Download Resume"
+      <nav
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 select-none max-w-[95vw] transition-all duration-300"
+      >
+        <motion.div
+          layout
+          transition={{ type: "spring", stiffness: 350, damping: 28 }}
+          className={`relative flex items-center justify-center rounded-2xl bg-white/80 dark:bg-zinc-900/75 backdrop-blur-2xl border border-white/60 dark:border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.15)] dark:shadow-[0_15px_35px_rgba(0,0,0,0.7)] transition-all duration-300 ${
+            isCompactMode
+              ? "px-4 py-2 cursor-pointer hover:border-cyan-500/50 dark:hover:border-cyan-400/40 hover:shadow-cyan-500/10"
+              : "px-3 py-2.5"
+          }`}
+          onClick={() => {
+            if (isCompactMode) setIsHovered(true);
+          }}
+        >
+          <AnimatePresence mode="wait">
+            {isCompactMode ? (
+              <motion.div
+                key="compact-handle"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-2.5 text-xs font-mono text-slate-600 dark:text-zinc-300"
               >
-                <motion.div
-                  whileHover={{ scale: 1.25, y: -6 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 transition-colors"
-                >
-                  <Download className="w-5 h-5 md:w-6 md:h-6" />
-                </motion.div>
-                <div className="h-1.5 mt-1" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent
-              side="top"
-              sideOffset={12}
-              className="bg-slate-900/90 dark:bg-zinc-900/90 backdrop-blur-md border border-cyan-500/40 text-cyan-300 font-sans text-xs px-2.5 py-1 rounded-lg"
-            >
-              Resume PDF
-            </TooltipContent>
-          </Tooltip>
-        </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400 animate-pulse shadow-[0_0_6px_rgba(6,182,212,0.8)]" />
+                  <span className="text-[11px] font-medium tracking-wide uppercase text-slate-700 dark:text-zinc-200">
+                    DOCK
+                  </span>
+                </div>
+
+                <div className="h-3 w-px bg-slate-300 dark:bg-zinc-700" />
+
+                <div className="w-8 h-1 rounded-full bg-slate-400/60 dark:bg-zinc-600/80 group-hover:bg-cyan-400 transition-colors" />
+
+                <ChevronUp className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 animate-bounce" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="full-dock"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-2 md:gap-3"
+              >
+                {DOCK_ITEMS.map((item) => (
+                  <OSDockItem key={item.id} item={item} onToggle={toggleWindow} />
+                ))}
+
+                <div className="h-8 w-px bg-slate-300/60 dark:bg-white/15 mx-1" />
+
+                {/* Quick Resume Button */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={handleDownloadResume}
+                      className="relative group flex flex-col items-center focus:outline-none"
+                      aria-label="Download Resume"
+                    >
+                      <motion.div
+                        whileHover={{ scale: 1.2, y: -4 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                        className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 transition-colors"
+                      >
+                        <Download className="w-5 h-5 md:w-6 md:h-6" />
+                      </motion.div>
+                      <div className="h-1.5 mt-1" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent
+                    side="top"
+                    sideOffset={12}
+                    className="bg-slate-900/90 dark:bg-zinc-900/90 backdrop-blur-md border border-cyan-500/40 text-cyan-300 font-sans text-xs px-2.5 py-1 rounded-lg z-[60]"
+                  >
+                    Resume PDF
+                  </TooltipContent>
+                </Tooltip>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </nav>
     </TooltipProvider>
   );
 });
+
