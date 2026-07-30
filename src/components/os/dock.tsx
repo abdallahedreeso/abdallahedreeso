@@ -135,6 +135,7 @@ export const OSDock = React.memo(function OSDock() {
   const activeWindow = useWindow(activeWindowId ?? "hero");
 
   const [isHovered, setIsHovered] = React.useState(false);
+  const navRef = React.useRef<HTMLElement>(null);
 
   // Compact handle mode triggers when at least one window is open and active (not minimized)
   const hasActiveWindowOnScreen =
@@ -144,6 +145,30 @@ export const OSDock = React.memo(function OSDock() {
     !activeWindow?.isMinimized;
 
   const isCompactMode = hasActiveWindowOnScreen && !isHovered;
+
+  // Auto-collapse dock when clicking/tapping outside on touch / small screens
+  React.useEffect(() => {
+    if (!hasActiveWindowOnScreen || !isHovered) return;
+
+    const handlePointerDownOutside = (event: MouseEvent | TouchEvent | PointerEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setIsHovered(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDownOutside);
+    document.addEventListener("touchstart", handlePointerDownOutside);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDownOutside);
+      document.removeEventListener("touchstart", handlePointerDownOutside);
+    };
+  }, [hasActiveWindowOnScreen, isHovered]);
+
+  const handleToggleWindow = (id: WindowId) => {
+    toggleWindow(id);
+    setIsHovered(false);
+  };
 
   const handleDownloadResume = () => {
     const link = document.createElement("a");
@@ -157,6 +182,7 @@ export const OSDock = React.memo(function OSDock() {
   return (
     <TooltipProvider delayDuration={100}>
       <nav
+        ref={navRef}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 select-none max-w-[95vw] transition-all duration-300"
@@ -206,7 +232,7 @@ export const OSDock = React.memo(function OSDock() {
                 className="flex items-center gap-2 md:gap-3"
               >
                 {DOCK_ITEMS.map((item) => (
-                  <OSDockItem key={item.id} item={item} onToggle={toggleWindow} />
+                  <OSDockItem key={item.id} item={item} onToggle={handleToggleWindow} />
                 ))}
 
                 <div className="h-8 w-px bg-slate-300/60 dark:bg-white/15 mx-1" />
