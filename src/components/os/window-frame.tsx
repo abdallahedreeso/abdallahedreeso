@@ -43,10 +43,10 @@ export const OSWindowFrame = React.memo(function OSWindowFrame({ id, children }:
     const startX = win.defaultPosition.x;
     const startY = win.defaultPosition.y;
     return {
-      top: -startY + 44,
-      left: -startX + 12,
-      right: Math.max(0, window.innerWidth - startX - win.defaultSize.width - 12),
-      bottom: Math.max(0, window.innerHeight - startY - 120),
+      top: -startY,
+      left: -startX,
+      right: Math.max(0, window.innerWidth - startX - win.defaultSize.width),
+      bottom: Math.max(0, window.innerHeight - 36 - startY - 80),
     };
   }, [win]);
 
@@ -91,12 +91,12 @@ export const OSWindowFrame = React.memo(function OSWindowFrame({ id, children }:
         willChange: "transform, opacity",
         ...(isEffectiveMaximized
           ? {
-              top: "44px",
-              left: "12px",
-              right: "12px",
-              bottom: "48px",
-              width: "calc(100vw - 24px)",
-              height: "calc(100vh - 92px)",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: "76px",
+              width: "100%",
+              height: "calc(100% - 76px)",
               transform: "none",
             }
           : {
@@ -104,14 +104,16 @@ export const OSWindowFrame = React.memo(function OSWindowFrame({ id, children }:
               top: win.defaultPosition.y,
               width: win.defaultSize.width,
               height: win.defaultSize.height,
-              maxWidth: "calc(100vw - 24px)",
-              maxHeight: "calc(100vh - 92px)",
+              maxWidth: "100%",
+              maxHeight: "calc(100vh - 116px)",
             }),
       }}
-      className={`flex flex-col rounded-xl overflow-hidden backdrop-blur-xl transition-colors duration-300 ${
+      className={`flex flex-col overflow-hidden backdrop-blur-xl transition-colors duration-300 ${
+        isEffectiveMaximized ? "rounded-t-none rounded-b-xl border-t-0" : "rounded-xl border"
+      } ${
         isActive
-          ? `bg-white/85 dark:bg-zinc-950/90 border border-cyan-500/40 dark:border-cyan-500/30 shadow-[0_10px_35px_rgba(6,182,212,0.15)] dark:shadow-[0_0_40px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/30 dark:ring-cyan-500/20 text-slate-900 dark:text-zinc-100`
-          : `bg-white/70 dark:bg-zinc-950/80 border border-slate-200/80 dark:border-zinc-800 shadow-xl opacity-95 text-slate-800 dark:text-zinc-100`
+          ? `bg-white/85 dark:bg-zinc-950/90 border-cyan-500/40 dark:border-cyan-500/30 shadow-[0_10px_35px_rgba(6,182,212,0.15)] dark:shadow-[0_0_40px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/30 dark:ring-cyan-500/20 text-slate-900 dark:text-zinc-100`
+          : `bg-white/70 dark:bg-zinc-950/80 border-slate-200/80 dark:border-zinc-800 shadow-xl opacity-95 text-slate-800 dark:text-zinc-100`
       }`}
     >
       {/* Window Titlebar (Drag Handle) */}
