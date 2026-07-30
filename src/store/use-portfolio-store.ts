@@ -21,17 +21,17 @@ interface PortfolioState {
 }
 
 const INITIAL_STATE: PortfolioState = {
-  activeWindowId: "hero",
+  activeWindowId: null,
   highestZIndex: 20,
   windows: {
     hero: {
       id: "hero",
       title: "Terminal / Overview",
       iconName: "Terminal",
-      isOpen: true,
+      isOpen: false,
       isMinimized: false,
       isMaximized: false,
-      zIndex: 20,
+      zIndex: 10,
       defaultPosition: { x: 30, y: 30 },
       defaultSize: { width: 800, height: 520 },
     },
