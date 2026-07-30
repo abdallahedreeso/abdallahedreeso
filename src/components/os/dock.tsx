@@ -17,6 +17,7 @@ import {
   ChevronUp,
   GripHorizontal,
 } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Tooltip,
   TooltipContent,
@@ -133,18 +134,19 @@ export const OSDock = React.memo(function OSDock() {
   const activeWindowId = useActiveWindowId();
   const openWindowIds = useOpenWindowIds();
   const activeWindow = useWindow(activeWindowId ?? "hero");
+  const isMobile = useIsMobile();
 
   const [isHovered, setIsHovered] = React.useState(false);
   const navRef = React.useRef<HTMLElement>(null);
 
-  // Compact handle mode triggers when at least one window is open and active (not minimized)
+  // Compact handle mode triggers ONLY on mobile screens when a window is open and active
   const hasActiveWindowOnScreen =
     openWindowIds.length > 0 &&
     activeWindowId !== null &&
     activeWindow?.isOpen &&
     !activeWindow?.isMinimized;
 
-  const isCompactMode = hasActiveWindowOnScreen && !isHovered;
+  const isCompactMode = isMobile && hasActiveWindowOnScreen && !isHovered;
 
   // Auto-collapse dock when clicking/tapping outside on touch / small screens
   React.useEffect(() => {
