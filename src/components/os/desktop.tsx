@@ -53,29 +53,29 @@ const DesktopBioCard = React.memo(function DesktopBioCard({
   onOpenWindow: (id: WindowId) => void;
 }) {
   return (
-    <div className="absolute inset-0 flex items-center justify-center p-6 z-0 pointer-events-none">
+    <div className="absolute top-0 left-0 right-0 bottom-20 flex items-center justify-center p-4 sm:p-6 z-0 pointer-events-none overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        className="pointer-events-auto max-w-2xl w-full p-8 rounded-3xl bg-white/70 dark:bg-zinc-950/40 backdrop-blur-md border border-slate-200/80 dark:border-white/10 shadow-2xl shadow-slate-200/50 dark:shadow-2xl text-center space-y-6 transition-colors duration-300"
+        className="pointer-events-auto max-w-2xl w-full p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-white/70 dark:bg-zinc-950/40 backdrop-blur-md border border-slate-200/80 dark:border-white/10 shadow-2xl text-center space-y-4 sm:space-y-5 md:space-y-6 transition-colors duration-300 my-auto"
       >
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 text-xs font-mono">
           <span className="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400 animate-ping" />
           PORTFOLIO DESKTOP ENVIRONMENT
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white">
           Abdallah <span className="bg-gradient-to-r from-cyan-600 via-sky-500 to-blue-600 dark:from-cyan-400 dark:via-sky-400 dark:to-blue-500 bg-clip-text text-transparent">Edrees</span>
         </h1>
 
-        <p className="text-slate-600 dark:text-zinc-400 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
+        <p className="text-slate-600 dark:text-zinc-400 text-xs sm:text-sm md:text-base max-w-lg mx-auto leading-relaxed">
           Frontend Engineer with 2+ years of experience building enterprise ERP & SaaS applications (Vue.js, Nuxt.js, React.js, TypeScript). 
           Click any Dock icon below or quick launchers to explore modules.
         </p>
 
         {/* Quick Launcher Shortcuts */}
-        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-1 sm:pt-2">
           <Button
             onClick={() => onOpenWindow("hero")}
             className="bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/40 text-cyan-700 dark:text-cyan-300 text-xs gap-2 shadow-sm"
@@ -83,13 +83,6 @@ const DesktopBioCard = React.memo(function DesktopBioCard({
             <Terminal className="w-4 h-4" />
             Terminal
           </Button>
-          {/* <Button
-            onClick={() => onOpenWindow("projects")}
-            className="bg-slate-200/60 hover:bg-slate-200/90 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-300/60 dark:border-white/15 text-slate-700 dark:text-zinc-200 text-xs gap-2"
-          >
-            <FolderGit2 className="w-4 h-4 text-blue-500 dark:text-blue-400" />
-            Projects
-          </Button> */}
           <Button
             onClick={() => onOpenWindow("about")}
             className="bg-slate-200/60 hover:bg-slate-200/90 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-300/60 dark:border-white/15 text-slate-700 dark:text-zinc-200 text-xs gap-2"
