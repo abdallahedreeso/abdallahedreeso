@@ -9,6 +9,7 @@ import {
   Send,
   Copy,
   CheckCircle,
+  ExternalLink,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -40,10 +41,11 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-// EmailJS configuration
-const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "";
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "";
-const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "";
+// EmailJS configuration with robust defaults
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_cb0wru4";
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_1x1sqan";
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "DnZGUzJxWWvVUShSZ";
+
 
 
 export const ContactSection = React.memo(function ContactSection() {
@@ -73,15 +75,20 @@ export const ContactSection = React.memo(function ContactSection() {
       
       const templateParams = {
         name: data.name,
+        from_name: data.name,
         email: data.email,
+        from_email: data.email,
+        reply_to: data.email,
         subject: data.subject,
         message: data.message,
+        to_name: "Abdallah Edrees",
       };
       
-      const response = await emailjs.send(
+      await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
-        templateParams
+        templateParams,
+        EMAILJS_PUBLIC_KEY
       );
             
       toast({
@@ -96,11 +103,34 @@ export const ContactSection = React.memo(function ContactSection() {
       
       reset();
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error sending email via EmailJS:', error);
+
+      const mailtoUrl = `mailto:abdallahedreeso2@gmail.com?subject=${encodeURIComponent(
+        data.subject
+      )}&body=${encodeURIComponent(
+        `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`
+      )}`;
+
       toast({
-        title: "Failed to send message",
-        description: "There was an error sending your message. Please try again later.",
+        title: "Failed to send message automatically",
+        description: (
+          <div className="space-y-2 mt-1">
+            <p className="text-xs md:text-sm">
+              There was an issue sending your message through the automated service.
+            </p>
+            <Button
+              size="sm"
+              className="mt-3 text-xs w-full bg-white hover:bg-slate-100 text-red-600 dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:text-red-400 border border-red-200 dark:border-red-900/60 font-semibold shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
+              onClick={() => window.open(mailtoUrl, "_blank")}
+            >
+              <Mail className="h-3.5 w-3.5 text-red-500" />
+              <span>Send via Email App</span>
+              <ExternalLink className="h-3 w-3 opacity-70" />
+            </Button>
+          </div>
+        ),
         variant: "destructive",
+        duration: 10000,
       });
     } finally {
       setSendingEmail(false);
@@ -317,7 +347,7 @@ export const ContactSection = React.memo(function ContactSection() {
                   <Button
                     type="submit"
                     className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300"
-                    disabled={isSubmitting || !isValid}
+                    disabled={isSubmitting || sendingEmail}
                   >
                     {isSubmitting || sendingEmail ? (
                       <div className="flex items-center gap-2">
