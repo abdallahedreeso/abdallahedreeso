@@ -5,8 +5,9 @@
 [![Vite](https://img.shields.io/badge/Vite-5.4.1-646CFF?style=flat-square&logo=vite)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.11-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.23.5-0055FF?style=flat-square&logo=framer)](https://www.framer.com/motion/)
+[![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=flat-square&logo=vercel)](https://abdallahedreeso.vercel.app/)
 
-An interactive, high-performance **Web OS Desktop Environment** portfolio website presenting my frontend engineering experience, core competencies, project portfolio, and professional background as a Frontend Developer.
+An interactive, high-performance **Web OS Desktop Environment** portfolio presenting my frontend engineering experience, core technical competencies, featured project portfolio, and professional background as a Frontend Developer specializing in enterprise ERP & SaaS applications.
 
 ---
 
@@ -40,45 +41,44 @@ The portfolio is deployed and live at: **[abdallahedreeso.vercel.app](https://ab
 
 ## ✨ Features
 
-### Web OS Desktop Experience
-- **Interactive Desktop Workspace**: Multi-window environment complete with desktop ambient bio card, quick launchers, top status bar, and glassmorphic dock.
-- **Window Management**: Windows can be opened, closed, minimized, maximized, focused, and dragged across the workspace.
-- **Z-Index Stacking & Focus Engine**: Dynamic window z-index management with relative order preservation and baseline normalization to ensure active windows always stay focused on top.
-- **Responsive Mobile Adaptation**: Windows auto-maximize on mobile viewports for optimal readability and touch navigation.
-- **Futuristic Boot Sequence**: Animated system boot-up sequence with kernel log initialization before launching the desktop workspace.
+### 🖥️ Web OS Desktop Experience
+- **Interactive Desktop Workspace**: Multi-window desktop environment equipped with a custom bio card, top system bar, theme switcher, and glassmorphic dock launcher.
+- **Window Management System**: Complete OS window controls supporting open, close, minimize, maximize/restore, position drag-and-drop, and active focus state tracking.
+- **Z-Index Stacking & Stacking Engine**: Custom z-index manager with relative elevation ordering and baseline normalization (prevents unbounded integer growth when switching active windows).
+- **Futuristic Boot Sequence**: Animated system kernel initialization log before displaying the main desktop environment.
+- **FOUC-Free Theme Engine**: Dark/Light mode toggle powered by `next-themes` with an inline hydration script in `index.html` to eliminate theme flashes on load.
+- **Responsive Mobile Adaptation**: Windows automatically adjust and auto-maximize on mobile viewports for optimal readability and touch navigation.
 
-### Portfolio Modules & Content
-- **Terminal / Overview (`hero`)**: Command-line style developer overview detailing role, stack, experience, and direct resume download.
-- **About Me (`about`)**: Detailed breakdown of 2+ years professional experience (Numo Training, SolutionPlus, Algoriza), credentials, education, and AI-assisted workflows.
-- **Technical Skills (`skills`)**: Categorized technical competencies spanning Vue.js, Nuxt.js, React.js, TypeScript, testing frameworks (Vitest, Vue Test Utils), and AI developer tools (Claude Code, Antigravity, Gemini, Cursor).
-- **Selected Projects (`projects`)**: Showcase of featured and secondary applications with tech stack badges, live demo links, and GitHub repositories.
-- **Get In Touch (`contact`)**: Interactive contact window with direct EmailJS client integration, Zod schema validation, phone launcher, and one-click email clipboard copy.
-
-### Design System & UX
-- **Dual Theme Engine**: Dark and light mode toggle with glassmorphic frosted elements and smooth state transitions.
-- **Cyber-Minimalist Aesthetics**: Tailored gradient accents, ambient grid overlays, and subtle glowing borders.
-- **Physics-Based Motion**: Framer Motion spring physics for window dragging, minimize/maximize transitions, and dock icon hover scaling.
+### 💼 Portfolio Modules & Content
+- **Terminal / Overview (`hero`)**: Command-line developer intro featuring role overview, stack highlights, custom Chibi Edreeso avatar (`chibi-edreeso.webp`), and instant resume download (`Abdallah_Edrees_Frontend_CV.pdf`).
+- **About Me (`about`)**: In-depth timeline covering 2+ years of professional engineering experience (Numo Training, SolutionPlus, Algoriza), credentials, education, and AI-assisted development workflows.
+- **Technical Skills (`skills`)**: Categorized technical stack including Vue.js, Nuxt.js, React.js, TypeScript, Inertia.js, unit testing frameworks (Vitest, Vue Test Utils), and AI developer tooling (Claude Code, Antigravity, Gemini, Cursor).
+- **Selected Projects (`projects`)**: Portfolio showcase featuring TradeX Platform, Real Estate Portal, Dream Place, and Headphone Store with tech badges, GitHub links, live demos, and webp visual previews.
+- **Get In Touch (`contact`)**: Interactive contact window powered by EmailJS client integration, Zod schema validation, phone launcher, and one-click clipboard copy functionality.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Core Framework & Tooling
-- **React 18.3**: UI library for building component-driven interfaces.
-- **TypeScript 5.5**: Type safety across windows, store, and component interfaces.
-- **Vite 5.4**: Next-generation frontend build tool and hot module replacement.
+- **React 18.3**: UI framework for building declarative component hierarchies.
+- **TypeScript 5.5**: Strict type safety across window state management, store contracts, and component props.
+- **Vite 5.4**: Fast build system with Hot Module Replacement (HMR) and production bundling.
+- **Sharp 0.35**: Image and icon processing for multi-resolution favicons and optimized WebP visual assets.
 
-### UI & Styling
-- **Tailwind CSS 3.4**: Utility-first styling framework with custom design tokens.
-- **Shadcn UI & Radix UI**: Accessible UI component primitives.
-- **Framer Motion 12.23**: Declarative spring animations and gesture-based window drag controls.
-- **Lucide React**: Vector icons for OS controls, window headers, and dock items.
+### UI & Animation Architecture
+- **Tailwind CSS 3.4**: Utility-first CSS framework with extended design tokens and cyber-minimalist dark mode accents.
+- **Shadcn UI & Radix UI**: Accessible, unstyled component primitives for dialogs, cards, popovers, and tooltips.
+- **Framer Motion 12.23**: Declarative spring animations, gesture drag controls, and dock icon magnification.
+- **Lucide React**: Vector icon set for OS controls, system status indicators, and window headers.
+- **Typography**: Google Fonts integration using `Inter` for clean body UI and `Fira Code` for terminal aesthetics.
 
-### State & Form Management
-- **React `useSyncExternalStore`**: Zero-overhead, custom reactive state store (`use-portfolio-store.ts`) for window management with referentially-stable snapshots.
-- **React Hook Form**: Form state management with performance optimization.
-- **Zod**: TypeScript-first schema validation.
-- **EmailJS**: Client-side email dispatch for contact inquiries.
+### State, Data & Services
+- **React `useSyncExternalStore`**: Zero-dependency reactive state store (`use-portfolio-store.ts`) for window management with referentially stable snapshots.
+- **TanStack React Query 5.56**: Async state and data fetching primitives.
+- **Supabase JS 2.51**: Backend-as-a-Service integration for cloud storage and data persistence.
+- **React Hook Form & Zod**: Form state handling and schema validation for contact forms.
+- **EmailJS**: Client-side email dispatch service for incoming inquiries.
 
 ---
 
@@ -113,50 +113,62 @@ flowchart TD
 ```text
 abdallahedreeso/
 ├── docs/
-│   └── screenshots/              # Real high-res Web OS screenshots
+│   └── screenshots/                  # High-resolution Web OS screenshots
 │       ├── desktop-overview.png
 │       ├── hero-terminal.png
 │       ├── about-window.png
 │       ├── skills-window.png
 │       ├── projects-window.png
 │       └── contact-window.png
-├── public/                       # Static public assets (resume.pdf, favicon)
+├── public/                           # Static assets
+│   ├── Abdallah_Edrees_Frontend_CV.pdf # Resume PDF
+│   ├── favicon.ico                   # Custom icon
+│   ├── og-image.png                  # OpenGraph preview card (1200x630)
+│   └── robots.txt
 ├── src/
-│   ├── assets/                   # WebP images & project assets
+│   ├── assets/                       # Visual assets & project graphics
+│   │   ├── chibi-edreeso.webp        # Custom Chibi developer avatar
+│   │   ├── chibi-edreeso-favicon.ico # Favicon source icon
+│   │   └── projects/                 # Project preview graphics
+│   │       ├── dream-place.webp
+│   │       ├── headphone-store.webp
+│   │       ├── real-state.webp
+│   │       └── tradex-platform.webp
 │   ├── components/
-│   │   ├── os/                   # Web OS Architecture Components
-│   │   │   ├── boot-sequence.tsx # Animated OS boot sequence
-│   │   │   ├── desktop.tsx       # Desktop canvas & lazy window loader
-│   │   │   ├── dock.tsx          # Glassmorphic dock & quick resume button
-│   │   │   ├── top-bar.tsx       # System status bar & theme toggle
-│   │   │   └── window-frame.tsx  # Drag, resize, traffic lights window frame
-│   │   ├── ui/                   # Reusable Shadcn UI primitives
-│   │   ├── about-section.tsx     # About Me module
-│   │   ├── contact-section.tsx   # Contact form module
-│   │   ├── hero-section.tsx      # Terminal / Overview module
-│   │   ├── projects-section.tsx  # Selected Projects module
-│   │   └── skills-section.tsx    # Technical Skills module
-│   ├── hooks/                    # Custom hooks (mobile detection, toast)
-│   ├── pages/                    # Router entry page (Index.tsx)
-│   ├── store/                    # Lightweight custom store (use-portfolio-store.ts)
-│   ├── App.tsx                   # App router & QueryClient setup
-│   ├── index.css                 # Global CSS & Tailwind design tokens
-│   └── main.tsx                  # React DOM root entry point
-├── package.json
-├── tailwind.config.ts
-├── tsconfig.json
-└── vite.config.ts
+│   │   ├── os/                       # Web OS Desktop Architecture
+│   │   │   ├── boot-sequence.tsx     # Animated boot sequence
+│   │   │   ├── desktop.tsx           # Desktop workspace & window manager
+│   │   │   ├── dock.tsx              # Glassmorphic application dock
+│   │   │   ├── top-bar.tsx           # System status bar & theme controls
+│   │   │   └── window-frame.tsx      # Window controls, drag, resize frame
+│   │   ├── ui/                       # Shadcn UI reusable primitives
+│   │   ├── about-section.tsx         # Experience, credentials & timeline
+│   │   ├── contact-section.tsx       # Contact form & EmailJS integration
+│   │   ├── hero-section.tsx          # Terminal overview & bio card
+│   │   ├── projects-section.tsx      # Project showcase & tech badges
+│   │   └── skills-section.tsx        # Categorized technical competencies
+│   ├── hooks/                        # Custom React hooks (use-mobile, use-toast)
+│   ├── pages/                        # App routes (Index.tsx, NotFound.tsx)
+│   ├── store/                        # Custom reactive window store (use-portfolio-store.ts)
+│   ├── App.tsx                       # App router & QueryClient setup
+│   ├── index.css                     # Design tokens & global CSS
+│   └── main.tsx                      # Application root entry
+├── index.html                        # HTML5 template with SEO & FOUC script
+├── package.json                      # Dependency declarations & scripts
+├── tailwind.config.ts                # Tailwind design token configuration
+├── tsconfig.json                     # TypeScript compiler configuration
+└── vite.config.ts                    # Vite build configuration
 ```
 
 ---
 
 ## ⚡ Performance & Engineering Details
 
-- **Code Splitting & Lazy Window Loading**: All window section components (`HeroSection`, `AboutSection`, `SkillsSection`, `ProjectsSection`, `ContactSection`) are dynamically imported via `React.lazy` and `Suspense` fallbacks to minimize initial bundle payload.
-- **Custom Reactive Store (`useSyncExternalStore`)**: Window state management uses React's native `useSyncExternalStore` API with memoized snapshots (`getOpenWindowIdsSnapshot`), avoiding third-party store bundle overhead and preventing unnecessary re-renders.
-- **Z-Index Boundary Protection**: Normalizes stacking order once highest z-index reaches threshold 100 while strictly maintaining relative window depth.
-- **Hardware Acceleration**: Drag operations utilize Framer Motion's `useDragControls` and hardware-accelerated CSS `willChange: transform, opacity` properties for 60fps window movement.
-- **Asset Optimization**: High-resolution images utilize WebP formats and async decoding (`decoding="async"`, `loading="lazy"`).
+- **Code Splitting & Lazy Window Loading**: All window section modules (`HeroSection`, `AboutSection`, `SkillsSection`, `ProjectsSection`, `ContactSection`) are dynamically imported using `React.lazy()` and wrapped in `Suspense` fallbacks to minimize initial bundle size and speed up first contentful paint.
+- **Micro State Engine (`useSyncExternalStore`)**: State operations for opening, closing, minimizing, focusing, and ordering windows utilize React's native `useSyncExternalStore` hook with referentially memoized snapshot selectors (`getOpenWindowIdsSnapshot`), ensuring zero unnecessary component re-renders.
+- **Z-Index Stacking Protection**: Window z-index calculation maintains explicit relative depth while automatically normalizing stack levels once the max threshold reaches 100 to prevent layout memory inflation.
+- **Hardware-Accelerated Window Physics**: Window movements leverage Framer Motion drag controls along with explicit CSS `will-change: transform, opacity` hints for smooth 60fps window interactions.
+- **SEO & Social Sharing Metadata**: Fully configured OpenGraph meta tags, Twitter summary card metadata, JSON-LD Schema.org Person structured data, and canonical URL tags for optimum search engine visibility.
 
 ---
 
@@ -179,7 +191,7 @@ abdallahedreeso/
    npm install
    ```
 
-3. Start the development server:
+3. Start the local development server:
    ```bash
    npm run dev
    ```
@@ -189,14 +201,24 @@ abdallahedreeso/
    npm run build
    ```
 
-5. Preview production build locally:
+5. Preview the production build locally:
    ```bash
    npm run preview
    ```
 
+### NPM Scripts
+
+| Command | Description |
+| :--- | :--- |
+| `npm run dev` | Starts Vite local development server |
+| `npm run build` | Compiles production assets |
+| `npm run build:dev` | Compiles development mode build |
+| `npm run preview` | Serves production build locally |
+| `npm run lint` | Runs ESLint code quality check |
+
 ---
 
-## 📬 Contact & Links
+## 📬 Contact & Social Links
 
 - **Author**: Abdallah Edrees
 - **Email**: [abdallahedreeso2@gmail.com](mailto:abdallahedreeso2@gmail.com)
