@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { ChevronDown, Github, Linkedin, Mail, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import chibiEdreeso from "@/assets/chibi-edreeso.webp"
+import { portfolioStoreActions } from "@/store/use-portfolio-store"
 
 export const HeroSection = React.memo(function HeroSection() {
   const scrollToNext = () => {
@@ -119,6 +120,11 @@ export const HeroSection = React.memo(function HeroSection() {
                 size="lg"
                 className="hover:bg-accent transition-all duration-300"
                 onClick={() => {
+                  try {
+                    portfolioStoreActions.openWindow("contact")
+                  } catch (e) {
+                    console.error("Failed to open contact window:", e)
+                  }
                   const contactSection = document.querySelector("#contact")
                   if (contactSection) {
                     contactSection.scrollIntoView({ behavior: "smooth" })
