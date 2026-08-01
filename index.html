@@ -3,22 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Abdallah Edrees | Frontend Developer</title>
-    <meta name="description" content="Portfolio of Abdallah Edrees, a Frontend Developer specializing in React.js, Vue.js/Nuxt.js, and modern TypeScript web development." />
+    <title>Abdallah Edrees — Frontend Engineer</title>
+    <meta name="description" content="Portfolio of Abdallah Edrees, a Frontend Engineer specializing in enterprise ERP & SaaS applications, Vue.js, Nuxt.js, React.js, and TypeScript. Building scalable frontend systems and production-ready web applications." />
     <meta name="author" content="Abdallah Edrees" />
-    <meta name="keywords" content="Frontend Developer, React, Vue.js, TypeScript, JavaScript, Tailwind CSS, Web Development, UI/UX" />
+    <meta name="keywords" content="Abdallah Edrees, Frontend Engineer, Vue.js, Nuxt.js, React.js, TypeScript, JavaScript, Inertia.js, Tailwind CSS, ERP, SaaS, Web Engineering" />
+    <link rel="canonical" href="https://abdallahedreeso.vercel.app/" />
 
     <!-- Open Graph Metadata -->
-    <meta property="og:title" content="Abdallah Edrees | Frontend Developer" />
-    <meta property="og:description" content="Portfolio of Abdallah Edrees, a Frontend Developer specializing in React.js, Vue.js/Nuxt.js, and modern TypeScript web development." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/preview-image.webp" />
+    <meta property="og:url" content="https://abdallahedreeso.vercel.app/" />
+    <meta property="og:title" content="Abdallah Edrees — Frontend Engineer" />
+    <meta property="og:description" content="Frontend Engineer specializing in enterprise ERP & SaaS applications, Vue.js, Nuxt.js, React.js, and TypeScript. Building scalable frontend systems and production-ready web applications." />
+    <meta property="og:image" content="https://abdallahedreeso.vercel.app/og-image.png" />
+    <meta property="og:image:secure_url" content="https://abdallahedreeso.vercel.app/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Abdallahedreeso" />
 
     <!-- Twitter Metadata -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Abdallah Edrees | Frontend Developer" />
-    <meta name="twitter:description" content="Portfolio of Abdallah Edrees, a Frontend Developer specializing in React.js, Vue.js/Nuxt.js, and modern TypeScript web development." />
-    <meta name="twitter:image" content="/preview-image.webp" />
+    <meta name="twitter:url" content="https://abdallahedreeso.vercel.app/" />
+    <meta name="twitter:title" content="Abdallah Edrees — Frontend Engineer" />
+    <meta name="twitter:description" content="Frontend Engineer specializing in enterprise ERP & SaaS applications, Vue.js, Nuxt.js, React.js, and TypeScript. Building scalable frontend systems and production-ready web applications." />
+    <meta name="twitter:image" content="https://abdallahedreeso.vercel.app/og-image.png" />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -26,34 +34,51 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Abdallah Edrees",
-      "jobTitle": "Frontend Developer",
-      "description": "Frontend Developer specializing in React.js, Vue.js/Nuxt.js, and modern TypeScript web development.",
-      "url": "https://github.com/abdallahedreeso",
+      "jobTitle": "Frontend Engineer",
+      "description": "Frontend Engineer specializing in enterprise ERP & SaaS applications using Vue.js, Nuxt.js, React.js, and TypeScript.",
+      "url": "https://abdallahedreeso.vercel.app/",
+      "image": "https://abdallahedreeso.vercel.app/og-image.png",
       "sameAs": [
         "https://github.com/abdallahedreeso",
         "https://linkedin.com/in/abdallahedreeso/"
       ],
       "knowsAbout": [
-        "React.js",
         "Vue.js",
         "Nuxt.js",
+        "React.js",
         "TypeScript",
         "JavaScript",
+        "Inertia.js",
         "Tailwind CSS",
-        "HTML5",
-        "CSS3",
-        "Frontend Development"
+        "Frontend Engineering",
+        "ERP & SaaS Applications"
       ]
     }
     </script>
 
     <!-- Favicon -->
-    <link rel="icon" href="/src/assets/chibi-edreeso.webp" type="image/webp">
+    <link rel="icon" type="image/x-icon" href="/src/assets/chibi-edreeso-favicon.ico" />
     
     <!-- Optimized Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Prevent Theme Flash (FOUC) on Boot -->
+    <script>
+      (function() {
+        try {
+          var storageKey = "portfolio-theme";
+          var theme = localStorage.getItem(storageKey) || localStorage.getItem("vite-ui-theme") || "system";
+          var isDark = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (isDark) {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
 
   <body>
