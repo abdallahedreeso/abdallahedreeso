@@ -17,25 +17,24 @@ The portfolio is deployed and live at: **[abdallahedreeso.vercel.app](https://ab
 
 ---
 
-## 📷 Screenshots
+## 📷 Interface Showcase
 
-### Desktop Environment Overview
+### 🖥️ Desktop Workspace (Light Mode)
+Multi-window desktop environment equipped with reactive window stacking, glassmorphic dock launcher, and developer bio card.
 ![Desktop Overview](docs/screenshots/desktop-overview.png)
 
-### Hero / Terminal Window
-![Hero Terminal](docs/screenshots/hero-terminal.png)
+### 🌙 Cyberpunk Environment (Dark Theme)
+FOUC-free dark mode highlighting glowing neon accents, active window focus management, and system status controls.
+![Dark Theme Experience](docs/screenshots/dark-mode.png)
 
-### About Window
-![About Window](docs/screenshots/about-window.png)
+### 💼 Selected Projects Showcase
+Featured project window presenting enterprise ERP platforms, tech badges, live deployment links, and WebP media cards.
+![Projects Showcase](docs/screenshots/projects-showcase.png)
 
-### Technical Skills Window
-![Skills Window](docs/screenshots/skills-window.png)
+### 📱 Responsive Mobile Adaptation
+Touch-optimized Web OS layout featuring auto-maximized windows, fluid responsive scaling, and collapsible mobile dock.
+![Mobile View](docs/screenshots/mobile-view.png)
 
-### Selected Projects Window
-![Projects Window](docs/screenshots/projects-window.png)
-
-### Contact Window
-![Contact Window](docs/screenshots/contact-window.png)
 
 ---
 
@@ -113,13 +112,11 @@ flowchart TD
 ```text
 abdallahedreeso/
 ├── docs/
-│   └── screenshots/                  # High-resolution Web OS screenshots
-│       ├── desktop-overview.png
-│       ├── hero-terminal.png
-│       ├── about-window.png
-│       ├── skills-window.png
-│       ├── projects-window.png
-│       └── contact-window.png
+│   └── screenshots/                  # Curated Web OS showcase screenshots
+│       ├── desktop-overview.png      # Desktop environment (Light mode)
+│       ├── dark-mode.png             # Cyberpunk environment (Dark theme)
+│       ├── projects-showcase.png     # Featured projects module
+│       └── mobile-view.png           # Mobile responsive layout
 ├── public/                           # Static assets
 │   ├── Abdallah_Edrees_Frontend_CV.pdf # Resume PDF
 │   ├── favicon.ico                   # Custom icon
